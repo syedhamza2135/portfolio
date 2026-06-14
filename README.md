@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Syed Hamza — portfolio
 
-## Getting Started
+A single-page portfolio whose copy, design, and one interactive demo *are* the portfolio.
+Built from PRD v1.2. The site is the proof: every sentence is a writing sample, every
+build decision an engineering sample.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16.2** (App Router, `output: 'export'` — pure static, no server)
+- **React 19.2**
+- **Tailwind CSS v4** (CSS-first: tokens live in `app/globals.css`, no `tailwind.config.js`)
+- Self-hosted fonts via `next/font` — Newsreader / Instrument Sans / JetBrains Mono
+- One client island (the Voice Engine demo); theme toggle + scroll reveals are hand-rolled
+  vanilla JS (`lib/scripts.ts`). No animation library, no UI framework.
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev        # http://localhost:3000  (Turbopack, default in 16)
+npm run build      # static export -> ./out
+npx serve out      # preview the production build locally
+npm run og         # regenerate public/og.png from scripts/generate-og.mjs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+  layout.tsx        fonts, metadata, no-FOUC theme script, nav/footer, analytics
+  page.tsx          section assembly + JSON-LD (Person + ProfilePage)
+  globals.css       Tailwind v4 @theme + light/dark tokens (PRD 4.5)
+  styleguide/       token preview (light + dark); not linked, noindex
+  sitemap.ts, robots.ts, icon.svg
+components/          Hero, Problem, System(+VoiceEngine), Services, Proof, About, CTA, Nav, Footer
+lib/
+  voice.ts          client-side heuristic analyzer (honest, falsifiable output)
+  samples.ts        three distinct-voice example texts
+  site.ts           shared constants (URLs, email) - see TODOs below
+  scripts.ts        inline theme + reveal + tracking JS
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Theming
 
-## Learn More
+Tokens are CSS custom properties on `:root` / `[data-theme="dark"]`, mapped into Tailwind via
+`@theme inline`. Swapping `data-theme` re-themes the whole page. The dark theme is *designed*,
+not inverted: the warm-ink shell stays distinct from the cooler green-black terminal, and the
+CTA block flips (ink-on-ivory <-> ivory-on-ink). Default follows `prefers-color-scheme`; the
+nav toggle cycles light -> dark -> auto and persists in `localStorage`. A `<head>` script sets
+the theme before first paint (no flash).
 
-To learn more about Next.js, take a look at the following resources:
+## Before launch — content you must supply
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+These are PRD open items the code stubs out. Search the codebase for `TODO`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Where | What |
+|-------|------|
+| `lib/site.ts` | `SITE_URL` (custom domain), `CALENDLY_URL` (real booking link), `CONTACT_EMAIL` |
+| `components/System.tsx` | Verify the real Voice Engine draft count before stating a number |
+| `components/Proof.tsx` | Swap the specific-anonymous tags for the named client once permission lands; add the attributed `TESTIMONIAL` |
+| `components/About.tsx` | Replace the `SH` initials block with the real face photo — AVIF/WebP, ~264px |
 
-## Deploy on Vercel
+`SITE_URL`, `CALENDLY_URL`, and `CONTACT_EMAIL` also read from `NEXT_PUBLIC_*` env vars, so you
+can set them in Vercel without editing code.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy (Vercel)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Import the GitHub repo into Vercel. Framework preset: **Next.js** (it respects `output: 'export'`).
+2. Add the custom domain and the `NEXT_PUBLIC_*` env vars above.
+3. Enable **Web Analytics** in the Vercel dashboard (the `<Analytics/>` component is already wired).

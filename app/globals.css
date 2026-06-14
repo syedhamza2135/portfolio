@@ -1,26 +1,245 @@
 @import "tailwindcss";
 
+/*
+  Theming model (§4.5, §7):
+  - Raw design tokens live as CSS custom properties on :root (light) and [data-theme="dark"].
+  - @theme inline maps them into Tailwind so `bg-shell`, `text-ink`, etc. are real utilities
+    that reference the vars — swapping [data-theme] re-themes the whole page with no rebuild.
+  - The terminal module keeps ONE identity across both themes. The contrast IS the message.
+*/
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Editorial-warm shell — Option A / oxblood (§4.2) */
+  --shell-bg: #f7f3ea;
+  --ink: #211d14;
+  --muted: #5f5e5a;       /* §7.5 contrast fix: never #888780 for informational text */
+  --faint: #8a877c;       /* decorative marks only */
+  --hairline: #e8e2d2;
+  --card: #fdfbf5;
+  --accent: #5e1f2e;      /* oxblood */
+  --accent-fill: #f5e9ec;
+  --cta-bg: #211d14;
+  --cta-text: #f7f3ea;
+
+  /* Terminal module — identical in both themes */
+  --term-bg: #131512;
+  --term-panel: #1b1e1a;
+  --term-border: #262923;
+  --term-text: #b4b2a9;
+  --term-bright: #f1efe8;
+  --term-teal: #5dcaa5;
+  --term-muted: #7c7a72;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  /* Warm-ink shell — must read as a DIFFERENT material than the terminal's green-black */
+  --shell-bg: #171410;
+  --ink: #f1efe8;
+  --muted: #b4b2a9;
+  --faint: #6f6c63;
+  --hairline: #2c2820;
+  --card: #1e1a14;
+  --accent: #c98a99;      /* lifted oxblood-rose — raw oxblood fails AA on dark */
+  --accent-fill: #3a222a;
+  --cta-bg: #f7f3ea;
+  --cta-text: #211d14;
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-shell: var(--shell-bg);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-hairline: var(--hairline);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent-fill: var(--accent-fill);
+  --color-cta-bg: var(--cta-bg);
+  --color-cta-text: var(--cta-text);
+
+  --color-term-bg: var(--term-bg);
+  --color-term-panel: var(--term-panel);
+  --color-term-border: var(--term-border);
+  --color-term-text: var(--term-text);
+  --color-term-bright: var(--term-bright);
+  --color-term-teal: var(--term-teal);
+  --color-term-muted: var(--term-muted);
+
+  --font-serif: var(--font-newsreader);
+  --font-sans: var(--font-instrument);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------- base ---------- */
+
+* {
+  border-color: var(--hairline);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--shell-bg);
+  color: var(--ink);
+  font-family: var(--font-instrument), system-ui, -apple-system, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--accent-fill);
+  color: var(--accent);
+}
+
+[data-theme="dark"] ::selection {
+  background: var(--accent-fill);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- focus + a11y (§7.5) ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  z-index: 100;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  padding: 0.6rem 1rem;
+  border-radius: 0.4rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.85rem;
+  transition: top 0.18s ease;
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- reusable type/treatment helpers ---------- */
+
+.mono {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-feature-settings: "ss01";
+}
+
+.section-label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-transform: none; /* sentence-case mono labels (§4.4) */
+}
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.link-underline {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+.link-underline:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  background: var(--card);
+}
+
+/* ---------- scroll reveals (§7) — class toggled by the vanilla enhancement script ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* High-contrast / forced-colors sanity (§7.5) */
+@media (forced-colors: active) {
+  .pill,
+  .hairline,
+  * {
+    border-color: CanvasText;
+  }
+  :focus-visible {
+    outline-color: Highlight;
+  }
 }
