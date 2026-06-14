@@ -76,7 +76,9 @@
   --font-mono: var(--font-jetbrains);
 }
 
-/* ---------- base ---------- */
+/* ---------- base (in @layer base so Tailwind text-*/border-* utilities can override) ---------- */
+
+@layer base {
 
 * {
   border-color: var(--hairline);
@@ -128,6 +130,8 @@ a {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+} /* end @layer base */
 
 .skip-link {
   position: absolute;
