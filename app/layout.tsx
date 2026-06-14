@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Newsreader, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -81,7 +82,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${serif.variable} ${sans.variable} ${mono.variable}`}
     >
       <head>
-        {/* No-FOUC: set data-theme before first paint. Mandatory with static export (§4.5). */}
+        {/* No-FOUC: set data-theme before first paint. Mandatory with static export (§4.5).
+            Inline in <head> so it runs synchronously during HTML parse, before any paint.
+            React 19 logs a dev-only "script in component" notice on Fast-Refresh re-renders;
+            in the static production HTML the script is server-rendered and runs once. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
       </head>
       <body>
@@ -93,7 +97,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <Analytics />
         {/* Hand-rolled enhancement: reveals, theme toggle, CTA tracking (§4.5, §7). */}
-        <script dangerouslySetInnerHTML={{ __html: ENHANCE }} />
+        <Script
+          id="enhance"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: ENHANCE }}
+        />
       </body>
     </html>
   );
