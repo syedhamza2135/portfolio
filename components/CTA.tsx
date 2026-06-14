@@ -13,9 +13,9 @@ export default function CTA() {
           Have a content bottleneck?
         </h2>
         <p className="mt-5 max-w-xl text-lg opacity-90">
-          20 minutes, your timezone. I&rsquo;m based in Pakistan and work US hours —
-          async-first, weekly Loom updates, and you&rsquo;ll never wait a day for a reply. If
-          I&rsquo;m not the right fit, I&rsquo;ll tell you who is.
+          20 minutes, your timezone. I&rsquo;m based in Pakistan and work US hours:
+          async-first, with weekly Loom updates, and you won&rsquo;t wait a day for a reply.
+          If I&rsquo;m not the right fit, I&rsquo;ll tell you who is.
         </p>
         <a
           href={CALENDLY_URL}

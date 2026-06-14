@@ -14,8 +14,8 @@ export default function Hero() {
       </h1>
 
       <p className="mt-7 max-w-xl text-lg text-muted">
-        Content pipelines for US agencies — voice cloning, technical content, editorial
-        automation. One contractor; writing and code included.
+        Content pipelines for US agencies: voice cloning, technical content, editorial
+        automation. One contractor, writing and code included.
       </p>
 
       <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">

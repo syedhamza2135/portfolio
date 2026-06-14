@@ -8,9 +8,9 @@ import SectionLabel from "@/components/SectionLabel";
 const CASES = [
   {
     tag: "AI observability · $10M-funded startup",
-    required: "Technical content on LLM evaluation and observability — accurate enough for a developer audience, on agency deadlines.",
+    required: "Technical content on LLM evaluation and observability, accurate enough for a developer audience and held to agency deadlines.",
     shipped: "Long-form technical articles and docs explaining evaluation, tracing, and observability to engineers.",
-    outcome: "Shipped on schedule, cleared technical review without a rewrite cycle.",
+    outcome: "Delivered on schedule and cleared technical review without a rewrite cycle.",
   },
   {
     tag: "Venture capital · mid-size firm",
@@ -35,7 +35,7 @@ export default function Proof() {
       <div className="mx-auto max-w-5xl px-5 sm:px-8">
         <SectionLabel num="04" label="proof" />
         <h2 id="proof-h" className="reveal mt-6 max-w-2xl text-3xl font-medium sm:text-4xl">
-          Work that shipped, on real deadlines.
+          Work that went live, on real deadlines.
         </h2>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2">

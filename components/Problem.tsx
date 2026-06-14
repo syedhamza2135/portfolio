@@ -25,10 +25,10 @@ export default function Problem() {
             yourself and you become the bottleneck you hired around.
           </p>
           <p>
-            That tension — volume against voice against the quality bar — doesn&rsquo;t get
-            solved by adding another writer to the pile. It gets solved by building the
-            thing that holds the voice steady while the volume scales. That&rsquo;s a
-            systems problem, and it&rsquo;s the one I build for.
+            Adding another writer doesn&rsquo;t fix that. It splits the same problem across
+            more people. The fix is a system that keeps the voice steady as the volume
+            climbs, so quality stops depending on who picked up the brief. That&rsquo;s the
+            work I do.
           </p>
         </div>
       </div>

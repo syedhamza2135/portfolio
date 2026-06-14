@@ -1,12 +1,12 @@
 import SectionLabel from "@/components/SectionLabel";
 
 const TIMELINE = [
-  { tag: "foundation", text: "CS degree — so I think in systems, and I write the Python myself." },
-  { tag: "markets", text: "Years in trading and finance — fintech and VC content without faking the fluency." },
-  { tag: "shipping", text: "Freelance dev — real clients, real deadlines, code that goes live." },
+  { tag: "foundation", text: "CS degree. I think in systems and write the Python myself." },
+  { tag: "markets", text: "Years in trading and finance, so I write fintech and VC content without faking the fluency." },
+  { tag: "shipping", text: "Freelance dev work: real clients, real deadlines, code that goes live." },
   {
     tag: "the merge",
-    text: "Agency content for AI and VC clients — then I built the voice pipeline when the volume outgrew the writers.",
+    text: "Ran agency content for AI and VC clients, then built the voice pipeline when the volume outgrew the writers.",
   },
 ];
 
@@ -50,10 +50,10 @@ export default function About() {
               I&rsquo;m the contractor agencies call when the work sits between two job titles.
             </h2>
             <p className="reveal mt-6 max-w-2xl text-lg text-muted">
-              Most people who write well can&rsquo;t ship the tool, and most people who ship
-              the tool can&rsquo;t write the page. I do both, on one invoice — which is exactly
-              what an agency needs when a project doesn&rsquo;t fit neatly into &ldquo;writer&rdquo;
-              or &ldquo;developer.&rdquo;
+              Strong writers usually can&rsquo;t build the tool. Strong builders usually write
+              like engineers. I do both and bill it as one line item, which is what an agency
+              wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
+              &ldquo;developer.&rdquo;
             </p>
           </div>
         </div>

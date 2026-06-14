@@ -5,7 +5,7 @@ const OFFERS = [
   {
     marker: "a",
     title: "Content pipelines",
-    body: "Voice cloning, brief-to-draft automation, editing systems. 3× the output on the same headcount — and it still sounds like the client.",
+    body: "Voice cloning, brief-to-draft automation, editing systems. 3× the output on the same headcount, and it still sounds like the client.",
   },
   {
     marker: "b",
@@ -15,7 +15,7 @@ const OFFERS = [
   {
     marker: "c",
     title: "Copy + code, one invoice",
-    body: "Landing pages, programmatic SEO, and the small internal tools that make a content team faster. Written and shipped by the same person.",
+    body: "Landing pages, programmatic SEO, and the small internal tools that make a content team faster. Written and built by the same person.",
   },
 ];
 

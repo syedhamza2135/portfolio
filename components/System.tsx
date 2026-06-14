@@ -16,8 +16,8 @@ export default function System() {
           The voice pipeline, running live.
         </h2>
         <p className="reveal mt-5 mb-8 max-w-2xl text-lg text-muted">
-          It reads a writing sample and compiles a reusable voice profile — the same first
-          step the production pipeline runs before it drafts anything.
+          It reads a writing sample and compiles a reusable voice profile. That&rsquo;s the
+          first step the production pipeline runs before it drafts anything.
         </p>
 
         <VoiceEngine />
@@ -32,11 +32,11 @@ export default function System() {
         </p>
 
         <p className="reveal mt-6 max-w-2xl text-base text-muted">
-          The production version is built with Python and Claude. It ingests a client&rsquo;s
-          back catalogue, builds a richer profile than these client-side heuristics can, and
-          hands every draft a voice + editing skill — so the first pass already sounds like
-          the client instead of like a model. This page runs the lightweight version so you
-          can see the idea without waiting on a server.
+          The production version runs on Python and Claude. It reads a client&rsquo;s back
+          catalogue, builds a deeper profile than these client-side heuristics can, and gives
+          every draft a voice and editing skill to work from. The first pass already sounds
+          like the client, not like a model. This page runs the lightweight version so you
+          can see how it works without a server.
         </p>
       </div>
     </section>
