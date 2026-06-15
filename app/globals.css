@@ -11,17 +11,18 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  /* Editorial-warm shell — Option A / oxblood (§4.2) */
-  --shell-bg: #f7f3ea;
-  --ink: #211d14;
-  --muted: #5f5e5a;       /* §7.5 contrast fix: never #888780 for informational text */
-  --faint: #8a877c;       /* decorative marks only */
-  --hairline: #e8e2d2;
-  --card: #fdfbf5;
-  --accent: #5e1f2e;      /* oxblood */
-  --accent-fill: #f5e9ec;
-  --cta-bg: #211d14;
-  --cta-text: #f7f3ea;
+  /* "Signal" — paper canvas, vermilion signal accent */
+  --shell-bg: #f5f4f0;
+  --ink: #15161a;
+  --muted: #5b5c61;       /* AA on paper for informational text */
+  --faint: #8a8b8f;       /* decorative marks only */
+  --hairline: #e4e3dc;
+  --card: #fbfbf8;
+  --accent: #c0341a;      /* text-safe vermilion (AA on paper) */
+  --accent-fill: #fbe6df;
+  --signal: #ff4d1c;      /* bright vermilion — graphic/fills only, never body text */
+  --cta-bg: #15161a;
+  --cta-text: #f5f4f0;
 
   /* Terminal module — identical in both themes */
   --term-bg: #131512;
@@ -36,17 +37,18 @@
 }
 
 [data-theme="dark"] {
-  /* Warm-ink shell — must read as a DIFFERENT material than the terminal's green-black */
-  --shell-bg: #171410;
-  --ink: #f1efe8;
-  --muted: #b4b2a9;
-  --faint: #6f6c63;
-  --hairline: #2c2820;
-  --card: #1e1a14;
-  --accent: #c98a99;      /* lifted oxblood-rose — raw oxblood fails AA on dark */
-  --accent-fill: #3a222a;
-  --cta-bg: #f7f3ea;
-  --cta-text: #211d14;
+  /* Ink canvas — a different material than the terminal's green-black */
+  --shell-bg: #0e0f12;
+  --ink: #ecece6;
+  --muted: #a9aaa4;
+  --faint: #6b6c66;
+  --hairline: #232427;
+  --card: #16171b;
+  --accent: #ff6a3d;      /* bright vermilion — AA on ink */
+  --accent-fill: #2a1610;
+  --signal: #ff4d1c;
+  --cta-bg: #f5f4f0;
+  --cta-text: #15161a;
 
   color-scheme: dark;
 }
@@ -60,6 +62,7 @@
   --color-card: var(--card);
   --color-accent: var(--accent);
   --color-accent-fill: var(--accent-fill);
+  --color-signal: var(--signal);
   --color-cta-bg: var(--cta-bg);
   --color-cta-text: var(--cta-text);
 
@@ -71,12 +74,12 @@
   --color-term-teal: var(--term-teal);
   --color-term-muted: var(--term-muted);
 
-  --font-serif: var(--font-newsreader);
-  --font-sans: var(--font-instrument);
-  --font-mono: var(--font-jetbrains);
+  --font-serif: var(--ff-display);
+  --font-sans: var(--ff-body);
+  --font-mono: var(--ff-mono);
 }
 
-/* ---------- base (in @layer base so Tailwind text-*/border-* utilities can override) ---------- */
+/* ---------- base (in @layer base so Tailwind text- / border- utilities can override) ---------- */
 
 @layer base {
 
@@ -93,7 +96,7 @@ html {
 body {
   background: var(--shell-bg);
   color: var(--ink);
-  font-family: var(--font-instrument), system-ui, -apple-system, sans-serif;
+  font-family: var(--ff-body), system-ui, -apple-system, sans-serif;
   font-size: 1.0625rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -103,9 +106,9 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
-  letter-spacing: -0.015em;
-  line-height: 1.08;
+  font-family: var(--ff-display), "Bricolage Grotesque", system-ui, sans-serif;
+  letter-spacing: -0.022em;
+  line-height: 1.04;
   text-wrap: balance;
 }
 
@@ -142,7 +145,7 @@ a {
   color: var(--cta-text);
   padding: 0.6rem 1rem;
   border-radius: 0.4rem;
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--ff-mono), monospace;
   font-size: 0.85rem;
   transition: top 0.18s ease;
 }
@@ -165,12 +168,12 @@ a {
 /* ---------- reusable type/treatment helpers ---------- */
 
 .mono {
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-family: var(--ff-mono), ui-monospace, monospace;
   font-feature-settings: "ss01";
 }
 
 .section-label {
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--ff-mono), monospace;
   font-size: 0.78rem;
   letter-spacing: 0.02em;
   color: var(--accent);
@@ -196,7 +199,7 @@ a {
 .pill {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-jetbrains), monospace;
+  font-family: var(--ff-mono), monospace;
   font-size: 0.72rem;
   letter-spacing: 0.01em;
   color: var(--muted);
@@ -204,6 +207,28 @@ a {
   border-radius: 999px;
   padding: 0.3rem 0.7rem;
   background: var(--card);
+}
+
+/* ---------- "Signal" hero treatments ---------- */
+
+/* Faint blueprint grid fading out from the top-left — the lazy 3D pipeline scene lands here. */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(120% 90% at 16% -10%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(120% 90% at 16% -10%, #000 0%, transparent 70%);
+  opacity: 0.55;
+}
+
+/* Signal "marker" underline under the key phrase — the signature mark. */
+.hero-accent {
+  background-image: linear-gradient(var(--signal), var(--signal));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 0.12em;
+  padding-bottom: 0.04em;
 }
 
 /* ---------- scroll reveals (§7) — class toggled by the vanilla enhancement script ---------- */

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Newsreader, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -9,25 +9,26 @@ import { THEME_INIT, ENHANCE } from "@/lib/scripts";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-// All fonts self-hosted at build time via next/font (§4.3, §7) — zero third-party requests
-// at runtime. Faces chosen to avoid the AI-defaulted Fraunces/Playfair (§4.3 constraint).
-const serif = Newsreader({
+// All fonts self-hosted at build time via next/font — zero third-party requests at runtime.
+// "Signal" pairing: a characterful grotesque display + a clean humanist body + mono for the
+// instrument labels and terminal. Deliberately avoids the AI-defaulted Fraunces/Playfair serif.
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--ff-display",
+  display: "swap",
+});
+const body = Hanken_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
-const sans = Instrument_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-instrument",
+  variable: "--ff-body",
   display: "swap",
 });
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-jetbrains",
+  variable: "--ff-mono",
   display: "swap",
 });
 
@@ -69,8 +70,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f3ea" },
-    { media: "(prefers-color-scheme: dark)", color: "#171410" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f4f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e0f12" },
   ],
   colorScheme: "light dark",
 };
@@ -80,7 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <head>
         {/* No-FOUC: set data-theme before first paint. Mandatory with static export (§4.5).
