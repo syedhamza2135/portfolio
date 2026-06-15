@@ -231,6 +231,25 @@ a {
   padding-bottom: 0.04em;
 }
 
+/* Face photo: full colour on touch (no hover); desaturated → colour on hover for pointers. */
+.photo-treat {
+  filter: none;
+  transition: filter 0.5s ease;
+}
+@media (hover: hover) {
+  .photo-treat {
+    filter: grayscale(1);
+  }
+  .photo-frame:hover .photo-treat {
+    filter: grayscale(0);
+  }
+}
+
+/* Active section link — toggled by the scroll-spy in the enhancement script. */
+.nav-link.is-active {
+  color: var(--ink);
+}
+
 /* ---------- scroll reveals (§7) — class toggled by the vanilla enhancement script ---------- */
 
 .reveal {

@@ -1,18 +1,11 @@
-import SectionLabel from "@/components/SectionLabel";
+import Section from "@/components/Section";
 import VoiceEngine from "@/components/VoiceEngine";
 
 // §02 — The system. Server-rendered shell around the one client island (the demo).
 export default function System() {
   return (
-    <section
-      id="system"
-      tabIndex={-1}
-      aria-labelledby="system-h"
-      className="border-t border-hairline py-20 sm:py-28"
-    >
-      <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <SectionLabel num="02" label="the system" />
-        <h2 id="system-h" className="reveal mt-6 max-w-2xl text-3xl font-medium sm:text-4xl">
+    <Section id="system" num="02" label="the system" labelledBy="system-h">
+        <h2 id="system-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
           The voice pipeline, running live.
         </h2>
         <p className="reveal mt-5 mb-8 max-w-2xl text-lg text-muted">
@@ -38,7 +31,6 @@ export default function System() {
           like the client, not like a model. This page runs the lightweight version so you
           can see how it works without a server.
         </p>
-      </div>
-    </section>
+    </Section>
   );
 }

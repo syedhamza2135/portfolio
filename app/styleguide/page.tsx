@@ -16,6 +16,7 @@ const SHELL_TOKENS = [
   "--card",
   "--accent",
   "--accent-fill",
+  "--signal",
   "--cta-bg",
   "--cta-text",
 ];
@@ -54,9 +55,9 @@ export default function Styleguide() {
       <section className="mt-12">
         <h2 className="text-2xl font-medium">Type scale</h2>
         <div className="mt-5 space-y-3">
-          <p className="font-serif text-6xl">Newsreader display 6xl</p>
-          <p className="font-serif text-4xl italic">Newsreader italic 4xl</p>
-          <p className="text-lg">Instrument Sans body — the quick brown fox jumps over the lazy dog.</p>
+          <p className="font-serif text-6xl">Bricolage Grotesque display 6xl</p>
+          <p className="text-lg">Hanken Grotesk body — the quick brown fox jumps over the lazy dog.</p>
+          <p className="font-sans text-lg italic">Hanken Grotesk italic — editorial emphasis.</p>
           <p className="mono text-sm text-accent">JetBrains Mono · section label · sentence case</p>
         </div>
       </section>
@@ -94,7 +95,7 @@ export default function Styleguide() {
           <a className="link-underline text-accent" href="#">
             accent link
           </a>
-          <button className="inline-flex min-h-[44px] items-center rounded-full bg-accent px-5 text-sm font-medium text-shell">
+          <button className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-5 text-sm font-medium text-[#15161a]">
             primary button
           </button>
         </div>

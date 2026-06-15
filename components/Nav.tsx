@@ -7,14 +7,22 @@ export default function Nav() {
     <header className="sticky top-0 z-50 border-b border-hairline bg-shell/85 backdrop-blur-md">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8"
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8"
       >
         <a
           href="#main"
-          className="font-serif text-lg italic tracking-tight text-ink"
+          className="flex items-center gap-2.5"
           aria-label={`${NAME} — back to top`}
         >
-          {NAME}
+          <span
+            aria-hidden="true"
+            className="mono grid h-7 w-7 place-items-center rounded-md bg-signal text-[0.7rem] font-bold text-[#15161a]"
+          >
+            SH
+          </span>
+          <span className="font-serif text-[1.05rem] font-semibold tracking-tight text-ink">
+            {NAME}
+          </span>
         </a>
 
         <div className="flex items-center gap-5">
@@ -23,7 +31,8 @@ export default function Nav() {
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  className="mono text-[0.78rem] text-muted transition-colors hover:text-ink"
+                  data-spy={s.id}
+                  className="nav-link mono text-[0.78rem] text-muted transition-colors hover:text-ink"
                 >
                   <span className="text-accent">{s.num}</span>{" "}
                   <span>{s.label}</span>

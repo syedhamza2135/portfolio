@@ -5,7 +5,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-hairline">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-5 py-10 text-center sm:flex-row sm:justify-between sm:px-8 sm:text-left">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-5 py-10 text-center sm:flex-row sm:justify-between sm:px-8 sm:text-left">
         <p className="mono text-[0.75rem] text-muted">
           {NAME} · built by hand, no template · {year}
         </p>

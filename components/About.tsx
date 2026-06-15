@@ -1,4 +1,5 @@
-import SectionLabel from "@/components/SectionLabel";
+import Image from "next/image";
+import Section from "@/components/Section";
 
 const TIMELINE = [
   { tag: "foundation", text: "CS degree. I think in systems and write the Python myself." },
@@ -21,29 +22,23 @@ const PILLS = [
 
 export default function About() {
   return (
-    <section
-      id="about"
-      tabIndex={-1}
-      aria-labelledby="about-h"
-      className="border-t border-hairline py-20 sm:py-28"
-    >
-      <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <SectionLabel num="05" label="who you're hiring" />
-
-        <div className="mt-8 grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
-          {/*
-            T3 — real face photo is the top trust signal for an overseas contractor → US buyer.
-            Replace this initials block with:
-              <Image src="/me.avif" alt="Syed Hamza" width={132} height={132}
-                     className="h-[132px] w-[132px] rounded-xl object-cover" priority={false} />
-            Produce the photo as AVIF/WebP at 2× (264px) — natural light, plain background (§7 Images).
-          */}
-          <div
-            aria-hidden="true"
-            className="reveal flex h-[132px] w-[132px] items-center justify-center rounded-xl border border-hairline bg-accent-fill"
-          >
-            <span className="font-serif text-4xl italic text-accent">SH</span>
-          </div>
+    <Section id="about" num="05" label="who you're hiring" labelledBy="about-h">
+        <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
+          {/* Real face photo (§7) — hand-cropped + sized to 432px, served unoptimized under
+              output:export. Full colour on touch; desaturated → colour on hover for pointers. */}
+          <figure className="photo-frame reveal relative m-0 h-[140px] w-[140px] shrink-0 overflow-hidden rounded-xl border border-hairline">
+            <Image
+              src="/me.jpg"
+              alt="Syed Hamza"
+              width={140}
+              height={140}
+              className="photo-treat h-full w-full object-cover"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute bottom-0 left-0 h-[3px] w-9 bg-signal"
+            />
+          </figure>
 
           <div>
             <h2 id="about-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
@@ -76,10 +71,9 @@ export default function About() {
         </ul>
 
         {/* The proverb joke lands exactly once, as a wink (§2, §8). */}
-        <p className="reveal mt-12 max-w-2xl font-serif text-xl italic text-muted">
+        <p className="reveal mt-12 max-w-2xl font-sans text-xl italic text-muted">
           Jack of all trades, master of none — though oftentimes better than master of one.
         </p>
-      </div>
-    </section>
+    </Section>
   );
 }
