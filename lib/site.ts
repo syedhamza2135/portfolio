@@ -4,10 +4,10 @@
 
 export const NAME = "Syed Hamza";
 
-// PRD T5 / open item #7 — a *.vercel.app URL undermines the professionalism claim.
-// Set NEXT_PUBLIC_SITE_URL once the custom domain is live.
+// Custom domain (PRD T5). Drives metadataBase, canonical, OG absolute URL, sitemap, JSON-LD.
+// NEXT_PUBLIC_SITE_URL can still override (e.g. for a preview environment).
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://yourdomain.com";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://syedhamza.xyz";
 
 // PRD open item #7 — real Calendly/Cal.com link, US-overlap availability windows.
 export const CALENDLY_URL =
