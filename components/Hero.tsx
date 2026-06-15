@@ -9,13 +9,13 @@ export default function Hero() {
       </p>
 
       <h1 className="mt-6 max-w-3xl text-balance text-4xl font-medium leading-[1.06] sm:text-5xl md:text-6xl">
-        Most agencies don&rsquo;t need another writer. They need a{" "}
-        <em className="italic text-accent">system.</em>
+        Publish like a ten-person content team. With{" "}
+        <em className="italic text-accent">one contractor.</em>
       </h1>
 
       <p className="mt-7 max-w-xl text-lg text-muted">
         Content pipelines for US agencies: voice cloning, technical content, editorial
-        automation. One contractor, writing and code included.
+        automation. Writing and code included.
       </p>
 
       <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">

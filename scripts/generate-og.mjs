@@ -13,9 +13,9 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <rect width="1200" height="630" fill="#f7f3ea"/>
   <rect x="0" y="0" width="1200" height="8" fill="#5e1f2e"/>
   <text x="80" y="120" font-family="Consolas, monospace" font-size="22" letter-spacing="1" fill="#5f5e5a">content systems · technical writing · code</text>
-  <text x="78" y="250" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" fill="#211d14">Most agencies don&#8217;t need</text>
-  <text x="78" y="340" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" fill="#211d14">another writer. They need a</text>
-  <text x="78" y="430" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" font-style="italic" fill="#5e1f2e">system.</text>
+  <text x="78" y="250" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" fill="#211d14">Publish like a ten-person</text>
+  <text x="78" y="340" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" fill="#211d14">content team.</text>
+  <text x="78" y="430" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" font-style="italic" fill="#5e1f2e">With one contractor.</text>
   <text x="80" y="560" font-family="Consolas, monospace" font-size="24" fill="#211d14">Syed Hamza</text>
   <text x="80" y="592" font-family="Consolas, monospace" font-size="19" fill="#5f5e5a">based in Pakistan · works US hours</text>
   <g transform="translate(980,470)">
