@@ -76,7 +76,7 @@
   --font-mono: var(--font-jetbrains);
 }
 
-/* ---------- base (in @layer base so Tailwind text-*/border-* utilities can override) ---------- */
+/* ---------- base (in @layer base so Tailwind text- / border- utilities can override) ---------- */
 
 @layer base {
 
