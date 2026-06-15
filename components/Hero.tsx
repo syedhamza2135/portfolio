@@ -26,7 +26,7 @@ export default function Hero() {
           data-track="cta_hero"
           className="inline-flex min-h-[44px] items-center rounded-full bg-accent px-6 text-[0.95rem] font-medium text-shell shadow-sm transition-transform hover:-translate-y-0.5"
         >
-          Book a 20-min call
+          Book a 30-min call
         </a>
         <a href="#system" className="mono text-[0.82rem] text-muted link-underline">
           or see the system below ↓

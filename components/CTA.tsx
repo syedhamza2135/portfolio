@@ -13,7 +13,7 @@ export default function CTA() {
           Have a content bottleneck?
         </h2>
         <p className="mt-5 max-w-xl text-lg opacity-90">
-          20 minutes, your timezone. I&rsquo;m based in Pakistan and work US hours:
+          30 minutes, your timezone. I&rsquo;m based in Pakistan and work US hours:
           async-first, with weekly Loom updates, and you won&rsquo;t wait a day for a reply.
           If I&rsquo;m not the right fit, I&rsquo;ll tell you who is.
         </p>
@@ -24,7 +24,7 @@ export default function CTA() {
           data-track="cta_book_main"
           className="mt-8 inline-flex min-h-[44px] items-center rounded-full bg-cta-text px-6 text-[0.95rem] font-medium text-cta-bg transition-transform hover:-translate-y-0.5"
         >
-          Book a 20-min call
+          Book a 30-min call
         </a>
       </div>
     </section>

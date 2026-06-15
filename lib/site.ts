@@ -9,9 +9,9 @@ export const NAME = "Syed Hamza";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://syedhamza.xyz";
 
-// PRD open item #7 — real Calendly/Cal.com link, US-overlap availability windows.
+// Booking link (30-min intro call). NEXT_PUBLIC_CALENDLY_URL overrides if needed.
 export const CALENDLY_URL =
-  process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/your-handle/20min";
+  process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/syedhamza2135/30min";
 
 // Footer "fire exit" mailto (§5 Footer). Swap for a domain address once the domain is live.
 export const CONTACT_EMAIL =
