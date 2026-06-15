@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Newsreader, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { NAME, SITE_URL, TAGLINE } from "@/lib/site";
 import { THEME_INIT, ENHANCE } from "@/lib/scripts";
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main">{children}</main>
         <Footer />
         <Analytics />
+        <SpeedInsights />
         {/* Hand-rolled enhancement: reveals, theme toggle, CTA tracking (§4.5, §7). */}
         <Script
           id="enhance"
