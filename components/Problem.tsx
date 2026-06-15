@@ -1,19 +1,12 @@
-import SectionLabel from "@/components/SectionLabel";
+import Section from "@/components/Section";
 
 // §01. Written AT the agency owner. This is the highest copy bar on the page (§5.01).
 export default function Problem() {
   return (
-    <section
-      id="problem"
-      tabIndex={-1}
-      aria-labelledby="problem-h"
-      className="border-t border-hairline py-20 sm:py-28"
-    >
-      <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <SectionLabel num="01" label="the problem" />
+    <Section id="problem" num="01" label="the problem" labelledBy="problem-h">
         <h2
           id="problem-h"
-          className="reveal mt-6 max-w-3xl text-3xl font-medium sm:text-4xl"
+          className="reveal max-w-3xl text-3xl font-medium sm:text-4xl"
         >
           You sold the retainer. Now you&rsquo;re drowning in production.
         </h2>
@@ -31,7 +24,6 @@ export default function Problem() {
             work I do.
           </p>
         </div>
-      </div>
-    </section>
+    </Section>
   );
 }

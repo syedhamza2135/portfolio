@@ -1,4 +1,4 @@
-import SectionLabel from "@/components/SectionLabel";
+import Section from "@/components/Section";
 
 // §03 — What I build for agencies. Moved up before proof/about (§5 revision).
 const OFFERS = [
@@ -21,15 +21,8 @@ const OFFERS = [
 
 export default function Services() {
   return (
-    <section
-      id="services"
-      tabIndex={-1}
-      aria-labelledby="services-h"
-      className="border-t border-hairline py-20 sm:py-28"
-    >
-      <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <SectionLabel num="03" label="what i build for agencies" />
-        <h2 id="services-h" className="reveal mt-6 max-w-2xl text-3xl font-medium sm:text-4xl">
+    <Section id="services" num="03" label="what i build for agencies" labelledBy="services-h">
+        <h2 id="services-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
           Three ways to put me to work.
         </h2>
 
@@ -47,7 +40,6 @@ export default function Services() {
             </li>
           ))}
         </ul>
-      </div>
-    </section>
+    </Section>
   );
 }

@@ -14,7 +14,7 @@ import Footer from "@/components/Footer";
 // instrument labels and terminal. Deliberately avoids the AI-defaulted Fraunces/Playfair serif.
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   variable: "--ff-display",
   display: "swap",
 });

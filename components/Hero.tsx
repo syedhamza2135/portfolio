@@ -8,7 +8,7 @@ export default function Hero() {
     <section className="relative overflow-hidden">
       <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0" />
 
-      <div className="relative mx-auto max-w-5xl px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28">
+      <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28">
         <p className="mono flex items-center gap-2 text-[0.78rem] tracking-wide text-muted">
           <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-term-teal" />
           content systems · technical writing · code

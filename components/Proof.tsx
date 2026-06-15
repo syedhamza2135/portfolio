@@ -1,4 +1,4 @@
-import SectionLabel from "@/components/SectionLabel";
+import Section from "@/components/Section";
 
 /*
   §04 — Proof. Using the PRD T1 *specific-anonymous* fallback (no client named yet).
@@ -26,15 +26,8 @@ const TESTIMONIAL: { quote: string; name: string; title: string } | null = null;
 
 export default function Proof() {
   return (
-    <section
-      id="proof"
-      tabIndex={-1}
-      aria-labelledby="proof-h"
-      className="border-t border-hairline py-20 sm:py-28"
-    >
-      <div className="mx-auto max-w-5xl px-5 sm:px-8">
-        <SectionLabel num="04" label="proof" />
-        <h2 id="proof-h" className="reveal mt-6 max-w-2xl text-3xl font-medium sm:text-4xl">
+    <Section id="proof" num="04" label="proof" labelledBy="proof-h">
+        <h2 id="proof-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
           Work that went live, on real deadlines.
         </h2>
 
@@ -65,7 +58,7 @@ export default function Proof() {
 
         {TESTIMONIAL && (
           <figure className="reveal mt-8 max-w-2xl border-l-2 border-accent pl-5">
-            <blockquote className="font-serif text-xl italic">
+            <blockquote className="font-sans text-xl italic">
               &ldquo;{TESTIMONIAL.quote}&rdquo;
             </blockquote>
             <figcaption className="mono mt-3 text-[0.78rem] text-muted">
@@ -73,7 +66,6 @@ export default function Proof() {
             </figcaption>
           </figure>
         )}
-      </div>
-    </section>
+    </Section>
   );
 }
