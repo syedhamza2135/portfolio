@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "npm run dev"],
+      "port": 3000
+    },
+    {
+      "name": "portfolio-static",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "npx --yes serve out -l 3100"],
+      "port": 3100
+    }
+  ]
+}
