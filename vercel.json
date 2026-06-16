@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/google241c72b6f870a340.html",
-      "destination": "/google241c72b6f870a340"
+      "destination": "/google241c72b6f870a340/"
     }
   ]
 }
