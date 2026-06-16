@@ -56,7 +56,7 @@ export default function Hero() {
             Your readers know when a post was written by a committee. This one wasn&rsquo;t.
           </p>
           <p className="draft mt-6 text-[0.74rem] text-faint">
-            ✎ matched to the client&rsquo;s voice — first pass, no rewrite.
+            ✎ matched to the client&rsquo;s voice. First pass, no rewrite.
           </p>
         </figure>
       </div>

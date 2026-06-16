@@ -94,14 +94,14 @@ export function analyze(raw: string): AnalysisResult {
     return {
       ok: false,
       reason: "too_short",
-      message: `give me a little more to work with — about ${MIN_WORDS} words (${wordCount} so far). a paragraph or two is plenty.`,
+      message: `give me a little more to work with, about ${MIN_WORDS} words (${wordCount} so far). a paragraph or two is plenty.`,
     };
   }
   if (looksLikeCodeOrList(text)) {
     return {
       ok: false,
       reason: "not_prose",
-      message: "this looks like code or a bullet list — paste a few sentences of prose and i'll read the voice.",
+      message: "this looks like code or a bullet list. paste a few sentences of prose and i'll read the voice.",
     };
   }
 
@@ -160,17 +160,17 @@ export function analyze(raw: string): AnalysisResult {
 
   const addressText =
     person === "second"
-      ? 'second person — direct address ("you")'
+      ? 'second person: direct address ("you")'
       : person === "first"
         ? 'first person ("I" / "we")'
-        : "third person — impersonal";
+        : "third person: impersonal";
 
   const contractionText =
     contractionCount === 0
-      ? "none — formal register"
+      ? "none, formal register"
       : contractionPer <= 18
-        ? `contraction-heavy — 1 per ${contractionPer} words`
-        : `light — 1 per ${contractionPer} words`;
+        ? `contraction-heavy, 1 per ${contractionPer} words`
+        : `light, 1 per ${contractionPer} words`;
 
   const punctText = `${emDashCount} em-dash${emDashCount === 1 ? "" : "es"} · ${semicolonCount} semicolon${semicolonCount === 1 ? "" : "s"}`;
 
@@ -180,7 +180,7 @@ export function analyze(raw: string): AnalysisResult {
     { key: "contractions", value: contractionText },
     { key: "adverbs", value: `${adverbLyPct}% "-ly" (${adverbLyCount}) · ${adverbLyPct < 2.5 ? "sparing" : "moderate"}` },
     { key: "punctuation", value: punctText },
-    { key: "questions", value: questionCount ? `${questionPct}% of sentences` : "none — declarative" },
+    { key: "questions", value: questionCount ? `${questionPct}% of sentences` : "none, declarative" },
   ];
 
   // Rules mirror the measured register (§6.4) — concrete, falsifiable, draftable.
@@ -192,32 +192,32 @@ export function analyze(raw: string): AnalysisResult {
   );
   rules.push(
     person === "second"
-      ? 'Address the reader directly as "you" — never "users" or "one".'
+      ? 'Address the reader directly as "you", not "users" or "one".'
       : person === "first"
         ? 'Stay in first person; let the writer\'s "I/we" carry the authority.'
-        : "Keep it impersonal — third person, no direct address."
+        : "Keep it impersonal: third person, no direct address."
   );
   rules.push(
     contractionCount === 0
-      ? "Avoid contractions — the register is formal."
-      : "Use contractions freely — it's, you're, don't. The register is conversational."
+      ? "Avoid contractions. The register is formal."
+      : "Use contractions freely: it's, you're, don't. The register is conversational."
   );
   if (emDashCount > 0) {
-    rules.push("Use em-dashes for asides — sparingly, the way the source does.");
+    rules.push("Use em-dashes for asides, sparingly, the way the source does.");
   } else if (semicolonCount > 0) {
     rules.push("Allow semicolons to join closely related clauses.");
   } else {
     rules.push("Lead each paragraph with the claim, then the evidence.");
   }
 
-  const summary = `Voice profile compiled: ${addressText.split(" — ")[0]}, ${metrics.avgSentenceLen} words per sentence on average, ${contractionCount === 0 ? "no contractions" : "contraction-heavy"}. ${rules.length} voice rules generated.`;
+  const summary = `Voice profile compiled: ${addressText.split(": ")[0]}, ${metrics.avgSentenceLen} words per sentence on average, ${contractionCount === 0 ? "no contractions" : "contraction-heavy"}. ${rules.length} voice rules generated.`;
 
   return {
     ok: true,
     metrics,
     profile,
     rules,
-    compiled: "✓ voice skill compiled — ready to draft in this voice.",
+    compiled: "✓ voice skill compiled, ready to draft in this voice.",
     summary,
   };
 }

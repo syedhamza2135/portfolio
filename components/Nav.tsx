@@ -12,7 +12,7 @@ export default function Nav() {
         <a
           href="#main"
           className="flex items-center gap-2.5"
-          aria-label={`${NAME} — back to top`}
+          aria-label={`${NAME}, back to top`}
         >
           <span aria-hidden="true" className="h-5 w-[3px] bg-accent" />
           <span className="font-serif text-[1.2rem] tracking-tight text-ink">{NAME}</span>

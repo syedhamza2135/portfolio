@@ -50,21 +50,21 @@ export default function Styleguide() {
       <p className="section-label">styleguide</p>
       <h1 className="mt-4 text-4xl font-medium">Design tokens</h1>
       <p className="mt-3 text-muted">
-        Toggle the theme in the nav — every token below re-themes with no reload and no flash.
+        Toggle the theme in the nav. Every token below re-themes with no reload and no flash.
       </p>
 
       <section className="mt-12">
         <h2 className="text-2xl font-medium">Type scale</h2>
         <div className="mt-5 space-y-3">
           <p className="font-serif text-6xl">Instrument Serif display 6xl</p>
-          <p className="font-serif text-3xl italic text-ins">Instrument Serif italic — the in-voice line</p>
-          <p className="text-lg">Hanken Grotesk body — the quick brown fox jumps over the lazy dog.</p>
-          <p className="draft text-sm text-muted">Courier Prime — the raw draft + revision marks</p>
+          <p className="font-serif text-3xl italic text-ins">Instrument Serif italic: the in-voice line</p>
+          <p className="text-lg">Hanken Grotesk body: the quick brown fox jumps over the lazy dog.</p>
+          <p className="draft text-sm text-muted">Courier Prime: the raw draft + revision marks</p>
           <p className="text-base">
             <span className="rev-del">in today&rsquo;s landscape, leverage synergy at scale</span>{" "}
             <span className="text-faint">→</span> <span className="ins">say it plainly</span>
           </p>
-          <p className="mono text-sm text-term-muted">JetBrains Mono — terminal / code</p>
+          <p className="mono text-sm text-term-muted">JetBrains Mono: terminal / code</p>
         </div>
       </section>
 

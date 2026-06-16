@@ -44,11 +44,11 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${NAME} — content systems for agencies`,
-    template: `%s — ${NAME}`,
+    default: `${NAME} · content systems for agencies`,
+    template: `%s · ${NAME}`,
   },
   description: TAGLINE,
-  applicationName: `${NAME} — portfolio`,
+  applicationName: `${NAME} · portfolio`,
   authors: [{ name: NAME }],
   creator: NAME,
   alternates: { canonical: "/" },
@@ -63,14 +63,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: `${NAME} — content systems for agencies`,
+    title: `${NAME} · content systems for agencies`,
     description: TAGLINE,
     siteName: NAME,
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${NAME} — content systems for agencies` }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${NAME} · content systems for agencies` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${NAME} — content systems for agencies`,
+    title: `${NAME} · content systems for agencies`,
     description: TAGLINE,
     images: ["/og.png"],
   },

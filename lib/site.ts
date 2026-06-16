@@ -22,11 +22,11 @@ export const CONTACT_EMAIL =
 export const WHATSAPP_NUMBER =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923437877462";
 export const WHATSAPP_URL = WHATSAPP_NUMBER
-  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi Syed — saw your portfolio.")}`
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi Syed, saw your portfolio.")}`
   : "";
 
 export const TAGLINE =
-  "I build content systems for agencies — strategy, automation, and the engineering to make it scale.";
+  "I build content systems for agencies: strategy, automation, and the engineering to make it scale.";
 
 // Nav section index (the mono "01 — " numbering is visual; headings carry real hierarchy).
 export const SECTIONS = [

@@ -50,13 +50,16 @@ committed — it contains private strategy/client names).
 - **JS budget:** the PRD wanted <75 KB gz first-load; actual is ~120–150 KB gz. That's the
   irreducible React 19 + App Router runtime floor, not app code — accepted. The only way under
   it is leaving App Router (Pages Router / Astro), which is a re-platform decision for the user.
-- The demo's example texts (`lib/samples.ts`) intentionally contain em-dashes — that's what the
-  analyzer detects and reports. Don't "clean" them.
+- The demo's analyzer (`lib/voice.ts`) detects em-dashes in whatever a visitor pastes and reports
+  the count. The bundled samples (`lib/samples.ts`) are kept em-dash-free like the rest of the
+  copy (the user wants NO em-dashes anywhere in the site's voice). The detection regex on the
+  `emDashCount` line is functional, not copy — leave it. `voice.ts` builds the address summary by
+  splitting the address label on `": "`, so keep that label's `:` separator in sync.
 
 ## Conventions
 
 - **Copy bar:** every sentence is a writing sample — active voice, sentence case, specific over
-  clever. A copy pass already stripped AI tells (minimal em-dashes in the site's own voice; no
+  clever. A copy pass already stripped AI tells (NO em-dashes anywhere in the site copy; no
   "it's not X, it's Y" antithesis; no chiasmus; no rule-of-three pile-ups; no buzzword
   blacklist). Keep it that way.
 - Commit messages end with: `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`

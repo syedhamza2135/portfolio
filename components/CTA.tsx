@@ -50,7 +50,7 @@ export default function CTA() {
         </div>
 
         <p className="draft mt-5 text-[0.78rem] opacity-70">
-          Whatever&rsquo;s easiest — I reply the same day.
+          Whatever&rsquo;s easiest. I reply the same day.
         </p>
       </div>
     </section>

@@ -30,7 +30,7 @@ const jsonLd = {
       "@type": "ProfilePage",
       "@id": `${SITE_URL}/#profilepage`,
       url: SITE_URL,
-      name: `${NAME} — content systems for agencies`,
+      name: `${NAME} · content systems for agencies`,
       about: { "@id": `${SITE_URL}/#person` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },
