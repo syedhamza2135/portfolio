@@ -2,7 +2,7 @@ import Image from "next/image";
 import Section from "@/components/Section";
 
 const TIMELINE = [
-  { tag: "foundation", text: "CS degree. I think in systems and write the Python myself." },
+  { tag: "foundation", text: "CS degree from a university ranked 81st in Asia by US News. I think in systems and write the Python myself." },
   { tag: "markets", text: "Years in trading and finance, so I write fintech and VC content without faking the fluency." },
   { tag: "shipping", text: "Freelance dev work: real clients, real deadlines, code that goes live." },
   {

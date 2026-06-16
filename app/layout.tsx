@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     "AI content pipeline",
     "technical writing",
     "agency contractor",
-    "voice cloning",
+    "voice matching",
     "editorial automation",
   ],
   openGraph: {

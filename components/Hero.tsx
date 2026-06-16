@@ -20,7 +20,7 @@ export default function Hero() {
           </h1>
 
           <p className="mt-7 max-w-xl text-lg text-muted">
-            Content pipelines for US agencies: voice cloning, technical content, editorial
+            Content pipelines for US agencies: voice-matched drafting, technical content, editorial
             automation. Writing and code included.
           </p>
 
