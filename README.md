@@ -1,69 +1,77 @@
-# Syed Hamza — portfolio
+# Syed Hamza portfolio
 
-A single-page portfolio whose copy, design, and one interactive demo *are* the portfolio.
-Built from PRD v1.2. The site is the proof: every sentence is a writing sample, every
-build decision an engineering sample.
+The site is the portfolio. The copy is the writing sample and the build is the engineering
+sample, so the repo is held to the same standard as the page.
+
+Live at https://syedhamza.xyz.
 
 ## Stack
 
-- **Next.js 16.2** (App Router, `output: 'export'` — pure static, no server)
-- **React 19.2**
-- **Tailwind CSS v4** (CSS-first: tokens live in `app/globals.css`, no `tailwind.config.js`)
-- Self-hosted fonts via `next/font` — Newsreader / Instrument Sans / JetBrains Mono
-- One client island (the Voice Engine demo); theme toggle + scroll reveals are hand-rolled
-  vanilla JS (`lib/scripts.ts`). No animation library, no UI framework.
+- Next.js 16.2, App Router, `output: 'export'` (fully static, no server runtime).
+- React 19.2.
+- Tailwind CSS v4, CSS-first. Design tokens live in `app/globals.css` under `@theme`; there is no `tailwind.config.js`.
+- Fonts self-hosted at build time via `next/font`: Instrument Serif (display), Hanken Grotesk (body), Courier Prime (the typewriter "draft" face), and JetBrains Mono (terminal).
+- One React client island, the Voice Engine demo. The theme toggle and scroll reveals are hand-rolled vanilla JS injected from `lib/scripts.ts`. The hero has an ambient three.js backdrop that is code-split and loaded after hydration.
 
-## Develop
+## Run it
 
 ```bash
-npm run dev        # http://localhost:3000  (Turbopack, default in 16)
-npm run build      # static export -> ./out
-npx serve out      # preview the production build locally
-npm run og         # regenerate public/og.png from scripts/generate-og.mjs
+npm install
+npm run dev      # http://localhost:3000 (Turbopack)
+npm run build    # static export to ./out
+npx serve out    # serve the production build locally
+npm run og       # regenerate public/og.png
 ```
 
-## Architecture
+`next/font` downloads the fonts during the build, so building needs network access.
+
+## Layout
 
 ```
 app/
-  layout.tsx        fonts, metadata, no-FOUC theme script, nav/footer, analytics
-  page.tsx          section assembly + JSON-LD (Person + ProfilePage)
-  globals.css       Tailwind v4 @theme + light/dark tokens (PRD 4.5)
-  styleguide/       token preview (light + dark); not linked, noindex
+  layout.tsx     fonts, metadata, no-flash theme script, nav + footer, analytics
+  page.tsx       section assembly and JSON-LD (Person, ProfilePage)
+  globals.css    Tailwind v4 @theme plus the light and dark token sets
+  styleguide/    token preview; not linked, noindex
   sitemap.ts, robots.ts, icon.svg
-components/          Hero, Problem, System(+VoiceEngine), Services, Proof, About, CTA, Nav, Footer
+components/      Hero, HeroField and EditingField (three.js), Problem, System and
+                 VoiceEngine, Services, Proof, About, CTA, Nav, Footer, Section
 lib/
-  voice.ts          client-side heuristic analyzer (honest, falsifiable output)
-  samples.ts        three distinct-voice example texts
-  site.ts           shared constants (URLs, email) - see TODOs below
-  scripts.ts        inline theme + reveal + tracking JS
+  voice.ts       the demo's client-side text analyzer (measured, falsifiable output)
+  samples.ts     three sample texts in distinct voices
+  site.ts        shared constants: URLs, email, WhatsApp number
+  scripts.ts     inline theme, scroll-reveal, and click-tracking JS
+  track.ts       small analytics event helper
 ```
 
-### Theming
+## Design
 
-Tokens are CSS custom properties on `:root` / `[data-theme="dark"]`, mapped into Tailwind via
-`@theme inline`. Swapping `data-theme` re-themes the whole page. The dark theme is *designed*,
-not inverted: the warm-ink shell stays distinct from the cooler green-black terminal, and the
-CTA block flips (ink-on-ivory <-> ivory-on-ink). Default follows `prefers-color-scheme`; the
-nav toggle cycles light -> dark -> auto and persists in `localStorage`. A `<head>` script sets
-the theme before first paint (no flash).
+"Redline" treats the page as an edited manuscript. The palette is cool bond paper (`#e6e7e1`) and
+dark carbon (`#1a1c1a`) with two revision marks: editor's red (`#b3382b`) for deletions and
+change-bars, and ink-blue (`#2b4fa0`) for insertions and links. Form carries meaning alongside
+color, so deletions are struck through and insertions are underlined.
 
-## Before launch — content you must supply
+Light and dark are both designed rather than inverted. Swapping `data-theme` re-themes the page by
+changing the CSS custom properties that Tailwind reads through `@theme inline`. The CTA block flips
+its card (ink on bond in light, bond on ink in dark), while the terminal demo keeps one identity in
+both themes because the contrast against the shell is the idea. A `<head>` script sets the theme
+before first paint to avoid a flash, and a nav toggle cycles auto, light, and dark, persisted in
+`localStorage`.
 
-These are PRD open items the code stubs out. Search the codebase for `TODO`.
+The hero backdrop, "the editing floor," is a slow drift of word fragments: clichés struck in red,
+in-voice words underlined in blue, the rest faint. It reads the theme tokens, pauses when offscreen,
+and is skipped entirely under `prefers-reduced-motion`.
 
-| Where | What |
-|-------|------|
-| `lib/site.ts` | `SITE_URL` (custom domain), `CALENDLY_URL` (real booking link), `CONTACT_EMAIL` |
-| `components/System.tsx` | Verify the real Voice Engine draft count before stating a number |
-| `components/Proof.tsx` | Swap the specific-anonymous tags for the named client once permission lands; add the attributed `TESTIMONIAL` |
-| `components/About.tsx` | Replace the `SH` initials block with the real face photo — AVIF/WebP, ~264px |
+## Deploy
 
-`SITE_URL`, `CALENDLY_URL`, and `CONTACT_EMAIL` also read from `NEXT_PUBLIC_*` env vars, so you
-can set them in Vercel without editing code.
+Vercel, auto-deploying from `master`, framework preset Next.js (it honors `output: 'export'`).
+`SITE_URL`, `CALENDLY_URL`, `CONTACT_EMAIL`, and `WHATSAPP_NUMBER` can be set as `NEXT_PUBLIC_*`
+environment variables instead of editing `lib/site.ts`. Web Analytics and Speed Insights are wired
+in code; turn on Web Analytics in the Vercel dashboard.
 
-## Deploy (Vercel)
+## Content stubs
 
-1. Import the GitHub repo into Vercel. Framework preset: **Next.js** (it respects `output: 'export'`).
-2. Add the custom domain and the `NEXT_PUBLIC_*` env vars above.
-3. Enable **Web Analytics** in the Vercel dashboard (the `<Analytics/>` component is already wired).
+Two gaps are left blank on purpose rather than filled with something unverifiable (search `TODO`):
+
+- `components/Proof.tsx`: `TESTIMONIAL` stays `null` until there is a real attributed quote; the case studies are specific but unnamed.
+- `components/System.tsx`: the demo caption states no draft count until there is a figure worth defending.
