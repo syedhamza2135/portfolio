@@ -17,6 +17,14 @@ export const CALENDLY_URL =
 export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "syedhamza2135@gmail.com";
 
+// WhatsApp contact. Set the number in international format — digits only, no "+" or spaces
+// (e.g. 923001234567). Empty string = the WhatsApp option stays hidden until a number is set.
+export const WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923437877462";
+export const WHATSAPP_URL = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi Syed — saw your portfolio.")}`
+  : "";
+
 export const TAGLINE =
   "I build content systems for agencies — strategy, automation, and the engineering to make it scale.";
 
