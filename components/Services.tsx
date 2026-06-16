@@ -5,7 +5,7 @@ const OFFERS = [
   {
     marker: "a",
     title: "Content pipelines",
-    body: "Voice cloning, brief-to-draft automation, editing systems. 3× the output on the same headcount, and it still sounds like the client.",
+    body: "Voice cloning, brief-to-draft automation, editing systems. The same team ships more, and it still sounds like the client.",
   },
   {
     marker: "b",
