@@ -1,9 +1,8 @@
 import Section from "@/components/Section";
 
 /*
-  §04 Proof. Two specific-but-anonymous client cases (real client-scale markers, no name yet)
-  plus an original writing sample: a ghostwritten LinkedIn post that shows the craft directly
-  instead of claiming a metric we cannot defend. Keep every number honest (§8).
+  §04 Proof. Two specific-but-anonymous client cases (real client-scale markers, no name yet).
+  Keep every number honest (§8) — replace the outcome lines only with figures you can defend.
   TESTIMONIAL stays null until a real attributed quote exists.
 */
 const CASES = [
@@ -23,18 +22,6 @@ const CASES = [
     outcome: "Published under the firm's name with edits measured in lines, not paragraphs.",
   },
 ];
-
-// An original writing sample (not a published client post): a LinkedIn post ghostwritten in a
-// founder's voice, shown to demonstrate the ghostwriting directly. Caption frames it honestly.
-const SAMPLE = {
-  hook: "We spent four months building the feature our three biggest customers kept asking for.",
-  body: [
-    "Three weeks after launch, almost nobody touched it.",
-    "A feature request is a problem dressed as a solution. They asked for bulk export. What they wanted was to stop dreading the Monday report. We shipped the export. The dread stayed.",
-    "So we changed the question. We stopped asking customers what to build, and started asking what they did last Tuesday and where it hurt. The answers are messier and far more useful.",
-    "The feature is still in the product. We just stopped calling it a win.",
-  ],
-};
 
 // §04 testimonial slot (T2). Set to an object once you have one attributed quote; until
 // then it renders nothing and the layout stays intact.
@@ -71,20 +58,6 @@ export default function Proof() {
             </article>
           ))}
         </div>
-
-        {/* Original writing sample: show the ghostwriting, do not just assert it. */}
-        <figure className="reveal change-bar mt-6 border-y border-r border-hairline bg-card py-7 pl-6 pr-6">
-          <figcaption className="draft mb-4 flex items-center justify-between text-[0.72rem] text-muted">
-            <span>a LinkedIn post, ghostwritten in a founder&rsquo;s voice</span>
-            <span className="text-ins">sample</span>
-          </figcaption>
-          <p className="font-serif text-xl leading-snug text-ink sm:text-2xl">{SAMPLE.hook}</p>
-          <div className="mt-4 max-w-2xl space-y-3 text-[0.95rem] leading-relaxed">
-            {SAMPLE.body.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </figure>
 
         {TESTIMONIAL && (
           <figure className="reveal mt-8 max-w-2xl border-l-2 border-accent pl-5">
