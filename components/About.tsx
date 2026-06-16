@@ -70,10 +70,6 @@ export default function About() {
           ))}
         </ul>
 
-        {/* The proverb joke lands exactly once, as a wink (§2, §8). */}
-        <p className="reveal mt-12 max-w-2xl font-sans text-xl italic text-muted">
-          Jack of all trades, master of none, though oftentimes better than master of one.
-        </p>
     </Section>
   );
 }

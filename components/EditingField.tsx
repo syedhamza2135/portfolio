@@ -5,8 +5,11 @@ import * as THREE from "three";
 
 // "The editing floor": an ambient WebGL backdrop for the hero — a slow drift of word-fragments,
 // clichés struck out in redline, in-voice words underlined in ink-blue, the rest faint. Reinforces
-// the revision signature without competing (low opacity, behind the content). Theme-aware, paused
-// offscreen, skipped under reduced-motion (the wrapper doesn't mount it), fully disposed.
+// the revision signature without competing (low opacity, behind the content). Motion is
+// delta-timed (frame-rate independent), words fade in/out at the recycle bounds instead of
+// popping, and a theme toggle recolors the textures IN PLACE (positions and motion preserved, no
+// reshuffle). Paused offscreen, skipped under reduced-motion (the wrapper doesn't mount it),
+// fully disposed on unmount.
 const CUT = [
   "in today's landscape", "synergy", "leverage", "best-in-class", "circle back",
   "moving forward", "low-hanging fruit", "at scale", "thought leadership", "robust",
@@ -16,6 +19,9 @@ const KEEP = [
   "cadence", "your voice", "say it plainly", "specific", "the reader",
   "ship it", "in one pass", "sounds like you", "cut the filler", "plain verbs",
 ];
+
+type Kind = "cut" | "keep" | "plain";
+type Word = { sprite: THREE.Sprite; text: string; kind: Kind; base: number; vy: number };
 
 export default function EditingField() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -33,6 +39,7 @@ export default function EditingField() {
       };
     }
     let colors = readColors();
+    let theme = document.documentElement.getAttribute("data-theme") || "light";
 
     let w = mount.clientWidth || 1;
     let h = mount.clientHeight || 1;
@@ -49,9 +56,10 @@ export default function EditingField() {
 
     const group = new THREE.Group();
     scene.add(group);
-    const sprites: THREE.Sprite[] = [];
+    const words: Word[] = [];
 
-    function wordTexture(text: string, kind: "cut" | "keep" | "plain") {
+    // Draw one word to a canvas texture, in the current theme colors.
+    function drawWord(text: string, kind: Kind) {
       const fs = 60;
       const pad = 18;
       const probe = document.createElement("canvas").getContext("2d")!;
@@ -91,22 +99,35 @@ export default function EditingField() {
     function build() {
       for (let i = 0; i < 24; i++) {
         const roll = Math.random();
-        const kind = roll < 0.42 ? "cut" : roll < 0.72 ? "keep" : "plain";
+        const kind: Kind = roll < 0.42 ? "cut" : roll < 0.72 ? "keep" : "plain";
         const list = kind === "cut" ? CUT : KEEP;
         const text = list[(Math.random() * list.length) | 0];
-        const { tex, aspect } = wordTexture(text, kind as "cut" | "keep" | "plain");
+        const { tex, aspect } = drawWord(text, kind);
         const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false });
         const sp = new THREE.Sprite(mat);
         const s = 0.55 + Math.random() * 0.85;
         sp.scale.set(s * aspect, s, 1);
         sp.position.set((Math.random() - 0.5) * 19, (Math.random() - 0.5) * 12, (Math.random() - 0.5) * 9);
         const depth = (sp.position.z + 4.5) / 9;
-        sp.userData = { base: 0.08 + depth * 0.2, vy: 0.003 + Math.random() * 0.009, tex };
+        sp.userData = { tex };
+        // vy in units per SECOND (delta-timed) — matches the old per-frame drift at 60fps.
+        words.push({ sprite: sp, text, kind, base: 0.08 + depth * 0.2, vy: 0.18 + Math.random() * 0.55 });
         group.add(sp);
-        sprites.push(sp);
       }
     }
     build();
+
+    // Theme change: redraw each texture in the new colors, keep position/opacity/motion intact.
+    function recolor() {
+      for (const wd of words) {
+        const { tex } = drawWord(wd.text, wd.kind);
+        const mat = wd.sprite.material as THREE.SpriteMaterial;
+        (wd.sprite.userData.tex as THREE.Texture).dispose();
+        mat.map = tex;
+        mat.needsUpdate = true;
+        wd.sprite.userData.tex = tex;
+      }
+    }
 
     let tx = 0, ty = 0, px = 0, py = 0;
     const onMove = (e: PointerEvent) => {
@@ -116,21 +137,38 @@ export default function EditingField() {
     };
     window.addEventListener("pointermove", onMove);
 
+    // Smooth fade near the top/bottom edges so words ease in and out instead of popping.
+    const Y = 6.8;
+    const FADE = 1.7;
+    function edge(y: number) {
+      const d = Math.max(0, Math.min(Y - y, y + Y));
+      const t = Math.min(1, d / FADE);
+      return t * t * (3 - 2 * t);
+    }
+
     let raf = 0;
     let visible = true;
-    function frame() {
-      px += (tx - px) * 0.04;
-      py += (ty - py) * 0.04;
+    let intro = 0;
+    let last = performance.now();
+    function frame(now: number) {
+      const dt = Math.min(0.05, (now - last) / 1000); // clamp so a resume after pause doesn't jump
+      last = now;
+      intro = Math.min(1, intro + dt / 1.2); // ~1.2s global fade-in on load
+
+      const k = 1 - Math.exp(-2.5 * dt); // frame-rate-independent parallax easing
+      px += (tx - px) * k;
+      py += (ty - py) * k;
       group.rotation.y = px * 0.22;
       group.rotation.x = -py * 0.16;
-      for (const sp of sprites) {
-        sp.position.y += sp.userData.vy as number;
-        if (sp.position.y > 6.5) {
-          sp.position.y = -6.5;
+
+      for (const wd of words) {
+        const sp = wd.sprite;
+        sp.position.y += wd.vy * dt;
+        if (sp.position.y > Y) {
+          sp.position.y = -Y;
           sp.position.x = (Math.random() - 0.5) * 19;
         }
-        const m = sp.material as THREE.SpriteMaterial;
-        m.opacity = Math.min(sp.userData.base as number, m.opacity + 0.01);
+        (sp.material as THREE.SpriteMaterial).opacity = wd.base * edge(sp.position.y) * intro;
       }
       renderer.render(scene, camera);
       raf = visible ? requestAnimationFrame(frame) : 0;
@@ -139,7 +177,10 @@ export default function EditingField() {
     const io = new IntersectionObserver(
       (es) => es.forEach((e) => {
         visible = e.isIntersecting;
-        if (visible && !raf) frame();
+        if (visible && !raf) {
+          last = performance.now();
+          raf = requestAnimationFrame(frame);
+        }
       }),
       { threshold: 0 }
     );
@@ -155,24 +196,24 @@ export default function EditingField() {
     ro.observe(mount);
 
     function disposeSprites() {
-      for (const sp of sprites) {
-        (sp.userData.tex as THREE.Texture).dispose();
-        (sp.material as THREE.Material).dispose();
+      for (const wd of words) {
+        (wd.sprite.userData.tex as THREE.Texture).dispose();
+        (wd.sprite.material as THREE.Material).dispose();
       }
       group.clear();
-      sprites.length = 0;
+      words.length = 0;
     }
     const mo = new MutationObserver(() => {
-      const nc = readColors();
-      if (nc.red !== colors.red || nc.blue !== colors.blue) {
-        colors = nc;
-        disposeSprites();
-        build();
+      const nt = document.documentElement.getAttribute("data-theme") || "light";
+      if (nt !== theme) {
+        theme = nt;
+        colors = readColors();
+        recolor();
       }
     });
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
-    frame();
+    raf = requestAnimationFrame(frame);
 
     return () => {
       cancelAnimationFrame(raf);

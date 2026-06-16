@@ -1,26 +1,29 @@
 import Section from "@/components/Section";
 
 /*
-  §04 — Proof. Using the PRD T1 *specific-anonymous* fallback (no client named yet).
-  When permission lands (open item #1), swap `tag` for the real client + logo.
+  §04 Proof. Two specific-but-anonymous client cases (real client-scale markers, no name yet).
   Keep every number honest (§8) — replace the outcome lines only with figures you can defend.
+  TESTIMONIAL stays null until a real attributed quote exists.
 */
 const CASES = [
   {
     tag: "AI observability · $10M-funded startup",
-    required: "Technical content on LLM evaluation and observability, accurate enough for a developer audience and held to agency deadlines.",
-    shipped: "Long-form technical articles and docs explaining evaluation, tracing, and observability to engineers.",
-    outcome: "Delivered on schedule and cleared technical review without a rewrite cycle.",
+    required:
+      "Technical content on LLM evaluation and observability, accurate enough for a developer audience and held to agency deadlines.",
+    shipped:
+      "Long-form articles and docs on evaluation, tracing, and observability, written for engineers and shipped through their V2 launch.",
+    outcome: "Cleared technical review without a rewrite cycle, on every deadline.",
   },
   {
-    tag: "Venture capital · mid-size firm",
-    required: "Investor-grade thought leadership written by someone who can actually read the charts.",
+    tag: "Venture capital · 1,500-attendee, $1,500-ticket conference",
+    required:
+      "Investor-grade thought leadership written by someone who can actually read the charts.",
     shipped: "Market commentary and thesis pieces that hold up in front of LPs and founders.",
     outcome: "Published under the firm's name with edits measured in lines, not paragraphs.",
   },
 ];
 
-// §04 testimonial slot (T2). Set to an object once you have one attributed quote — until
+// §04 testimonial slot (T2). Set to an object once you have one attributed quote; until
 // then it renders nothing and the layout stays intact.
 const TESTIMONIAL: { quote: string; name: string; title: string } | null = null;
 
