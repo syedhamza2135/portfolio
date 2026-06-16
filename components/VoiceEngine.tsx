@@ -8,7 +8,7 @@ import { track } from "@/lib/track";
 type Status = "idle" | "running" | "done" | "error";
 
 type TermLine =
-  | { kind: "cmd" | "dim" | "brace" | "ok" | "rule" | "blank"; text?: string }
+  | { kind: "cmd" | "dim" | "brace" | "ok" | "rule" | "blank" | "src"; text?: string }
   | { kind: "kv"; k: string; v: string };
 
 const reduceMotion = () =>
@@ -18,10 +18,13 @@ const reduceMotion = () =>
 function buildLines(
   label: string,
   source: "example" | "custom",
+  text: string,
   r: Extract<ReturnType<typeof analyze>, { ok: true }>
 ): TermLine[] {
   const lines: TermLine[] = [
     { kind: "cmd", text: source === "example" ? `analyze --sample "${label}"` : "analyze --stdin" },
+    // Echo the source being read so the analysis is legible — you see the text, then its profile.
+    ...(source === "example" ? [{ kind: "src", text } as TermLine] : []),
     { kind: "dim", text: `parsing ${r.metrics.wordCount} words · ${r.metrics.sentenceCount} sentences` },
     { kind: "dim", text: "measuring rhythm · address · density" },
     { kind: "blank" },
@@ -67,7 +70,7 @@ export default function VoiceEngine() {
         setError(result.message);
         return;
       }
-      const built = buildLines(label, src, result);
+      const built = buildLines(label, src, text, result);
       pendingSummary.current = result.summary;
       setSource(src);
       setError("");
@@ -263,6 +266,14 @@ function TerminalRow({ line }: { line: TermLine }) {
       );
     case "dim":
       return <div className="text-term-muted">{line.text}</div>;
+    case "src":
+      return (
+        <div className="my-1 border-l-2 border-term-teal/50 pl-3 text-term-muted">
+          <span className="text-term-muted/70">“</span>
+          {line.text}
+          <span className="text-term-muted/70">”</span>
+        </div>
+      );
     case "brace":
       return <div className="text-term-text">{line.text}</div>;
     case "kv":
