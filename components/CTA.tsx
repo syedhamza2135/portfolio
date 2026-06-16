@@ -31,7 +31,7 @@ export default function CTA() {
           </a>
         </div>
 
-        <p className="draft mt-5 text-[0.82rem] opacity-80">
+        <p className="draft mt-5 text-[0.95rem] opacity-95">
           Prefer not to book?{" "}
           {WHATSAPP_URL && (
             <>
@@ -40,7 +40,7 @@ export default function CTA() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-track="cta_whatsapp"
-                className="underline decoration-cta-text/40 underline-offset-2 hover:decoration-cta-text"
+                className="font-medium underline decoration-cta-text/70 underline-offset-2 hover:decoration-cta-text"
               >
                 Message on WhatsApp
               </a>
@@ -50,7 +50,7 @@ export default function CTA() {
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             data-track="cta_email"
-            className="underline decoration-cta-text/40 underline-offset-2 hover:decoration-cta-text"
+            className="font-medium underline decoration-cta-text/70 underline-offset-2 hover:decoration-cta-text"
           >
             email me
           </a>

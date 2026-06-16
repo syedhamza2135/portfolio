@@ -13,9 +13,9 @@ export const SITE_URL =
 export const CALENDLY_URL =
   process.env.NEXT_PUBLIC_CALENDLY_URL ?? "https://calendly.com/syedhamza2135/30min";
 
-// Footer "fire exit" mailto (§5 Footer). Swap for a domain address once the domain is live.
+// Contact email shown in the footer + CTA (§5). Domain mailbox on syedhamza.xyz.
 export const CONTACT_EMAIL =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "syedhamza2135@gmail.com";
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hi@syedhamza.xyz";
 
 // WhatsApp contact. Set the number in international format — digits only, no "+" or spaces
 // (e.g. 923001234567). Empty string = the WhatsApp option stays hidden until a number is set.
