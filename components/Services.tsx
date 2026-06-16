@@ -21,7 +21,7 @@ const OFFERS = [
 
 export default function Services() {
   return (
-    <Section id="services" num="03" label="what i build for agencies" labelledBy="services-h">
+    <Section id="services" label="what i build for agencies" labelledBy="services-h">
         <h2 id="services-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
           Three ways to put me to work.
         </h2>
@@ -34,7 +34,7 @@ export default function Services() {
                 i > 0 ? "border-t border-hairline" : ""
               }`}
             >
-              <span className="mono pt-1 text-sm text-accent">{o.marker}.</span>
+              <span className="draft pt-1 text-sm text-accent">{o.marker}.</span>
               <h3 className="font-serif text-xl font-medium sm:text-2xl">{o.title}</h3>
               <p className="col-start-2 max-w-xl text-base text-muted">{o.body}</p>
             </li>

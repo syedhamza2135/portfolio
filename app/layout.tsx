@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Bricolage_Grotesque, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Instrument_Serif, Hanken_Grotesk, Courier_Prime, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -10,11 +10,13 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 // All fonts self-hosted at build time via next/font — zero third-party requests at runtime.
-// "Signal" pairing: a characterful grotesque display + a clean humanist body + mono for the
-// instrument labels and terminal. Deliberately avoids the AI-defaulted Fraunces/Playfair serif.
-const display = Bricolage_Grotesque({
+// "Redline" type system, each face tied to a role in the revision: a sharp editorial serif for
+// the in-voice/final, a clean grotesque for reading, a typewriter for the raw draft + revision
+// marks, and mono for the terminal/code.
+const display = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
+  style: ["normal", "italic"],
   variable: "--ff-display",
   display: "swap",
 });
@@ -23,6 +25,13 @@ const body = Hanken_Grotesk({
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--ff-body",
+  display: "swap",
+});
+const draft = Courier_Prime({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--ff-draft",
   display: "swap",
 });
 const mono = JetBrains_Mono({
@@ -70,8 +79,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f4f0" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0f12" },
+    { media: "(prefers-color-scheme: light)", color: "#e6e7e1" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1c1a" },
   ],
   colorScheme: "light dark",
 };
@@ -81,7 +90,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      className={`${display.variable} ${body.variable} ${draft.variable} ${mono.variable}`}
     >
       <head>
         {/* No-FOUC: set data-theme before first paint. Mandatory with static export (§4.5).

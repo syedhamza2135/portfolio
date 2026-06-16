@@ -14,15 +14,8 @@ export default function Nav() {
           className="flex items-center gap-2.5"
           aria-label={`${NAME} — back to top`}
         >
-          <span
-            aria-hidden="true"
-            className="mono grid h-7 w-7 place-items-center rounded-md bg-signal text-[0.7rem] font-bold text-[#15161a]"
-          >
-            SH
-          </span>
-          <span className="font-serif text-[1.05rem] font-semibold tracking-tight text-ink">
-            {NAME}
-          </span>
+          <span aria-hidden="true" className="h-5 w-[3px] bg-accent" />
+          <span className="font-serif text-[1.2rem] tracking-tight text-ink">{NAME}</span>
         </a>
 
         <div className="flex items-center gap-5">
@@ -32,10 +25,9 @@ export default function Nav() {
                 <a
                   href={`#${s.id}`}
                   data-spy={s.id}
-                  className="nav-link mono text-[0.78rem] text-muted transition-colors hover:text-ink"
+                  className="nav-link draft text-[0.78rem] text-muted transition-colors hover:text-ink"
                 >
-                  <span className="text-accent">{s.num}</span>{" "}
-                  <span>{s.label}</span>
+                  {s.label}
                 </a>
               </li>
             ))}
@@ -46,7 +38,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             data-track="nav_book"
-            className="mono text-[0.78rem] text-ink link-underline"
+            className="draft text-[0.78rem] text-ink link-underline"
           >
             book ↗
           </a>
@@ -56,7 +48,7 @@ export default function Nav() {
             type="button"
             data-choice="auto"
             aria-label="Theme: auto. Activate to change."
-            className="mono inline-flex h-9 items-center gap-1.5 rounded-full border border-hairline bg-card px-3 text-[0.72rem] text-muted transition-colors hover:text-ink"
+            className="draft inline-flex h-9 items-center gap-1.5 rounded-sm border border-hairline bg-card px-3 text-[0.72rem] text-muted transition-colors hover:text-ink"
           >
             <span aria-hidden="true">◐</span>
             <span data-choice-label>auto</span>

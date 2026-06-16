@@ -3,7 +3,7 @@ import Section from "@/components/Section";
 // §01. Written AT the agency owner. This is the highest copy bar on the page (§5.01).
 export default function Problem() {
   return (
-    <Section id="problem" num="01" label="the problem" labelledBy="problem-h">
+    <Section id="problem" label="the problem" labelledBy="problem-h">
         <h2
           id="problem-h"
           className="reveal max-w-3xl text-3xl font-medium sm:text-4xl"
