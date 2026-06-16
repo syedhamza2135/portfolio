@@ -11,18 +11,19 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  /* "Signal" — paper canvas, vermilion signal accent */
-  --shell-bg: #f5f4f0;
-  --ink: #15161a;
-  --muted: #5b5c61;       /* AA on paper for informational text */
-  --faint: #8a8b8f;       /* decorative marks only */
-  --hairline: #e4e3dc;
-  --card: #fbfbf8;
-  --accent: #c0341a;      /* text-safe vermilion (AA on paper) */
-  --accent-fill: #fbe6df;
-  --signal: #ff4d1c;      /* bright vermilion — graphic/fills only, never body text */
-  --cta-bg: #15161a;
-  --cta-text: #f5f4f0;
+  /* "Redline" — cool bond stock, editor's red + ink-blue revision marks */
+  --shell-bg: #e6e7e1;    /* cool bond paper (not the cream default) */
+  --ink: #191b19;
+  --muted: #585b56;       /* AA on bond for informational text */
+  --faint: #8b8d86;       /* decorative marks only */
+  --hairline: #d0d1c9;
+  --card: #eeefe9;        /* the "page" panel */
+  --accent: #b3382b;      /* redline red — deletions, change-bars, marks (AA on bond) */
+  --accent-fill: #f1dad6;
+  --ins: #2b4fa0;         /* editor's ink-blue — insertions, links (AA on bond) */
+  --ins-fill: #dbe1f1;
+  --cta-bg: #191b19;
+  --cta-text: #e6e7e1;
 
   /* Terminal module — identical in both themes */
   --term-bg: #131512;
@@ -37,18 +38,19 @@
 }
 
 [data-theme="dark"] {
-  /* Ink canvas — a different material than the terminal's green-black */
-  --shell-bg: #0e0f12;
-  --ink: #ecece6;
-  --muted: #a9aaa4;
-  --faint: #6b6c66;
-  --hairline: #232427;
-  --card: #16171b;
-  --accent: #ff6a3d;      /* bright vermilion — AA on ink */
-  --accent-fill: #2a1610;
-  --signal: #ff4d1c;
-  --cta-bg: #f5f4f0;
-  --cta-text: #15161a;
+  /* Carbon copy — dark stock, lifted red + blue marks */
+  --shell-bg: #1a1c1a;
+  --ink: #e6e7e1;
+  --muted: #a6a8a0;
+  --faint: #6b6d65;
+  --hairline: #2d2f2c;
+  --card: #232522;
+  --accent: #e0675a;      /* lifted redline — AA on carbon */
+  --accent-fill: #2e1714;
+  --ins: #88a6ff;         /* lifted ink-blue — AA on carbon */
+  --ins-fill: #161d31;
+  --cta-bg: #e6e7e1;
+  --cta-text: #191b19;
 
   color-scheme: dark;
 }
@@ -62,7 +64,8 @@
   --color-card: var(--card);
   --color-accent: var(--accent);
   --color-accent-fill: var(--accent-fill);
-  --color-signal: var(--signal);
+  --color-ins: var(--ins);
+  --color-ins-fill: var(--ins-fill);
   --color-cta-bg: var(--cta-bg);
   --color-cta-text: var(--cta-text);
 
@@ -106,10 +109,12 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--ff-display), "Bricolage Grotesque", system-ui, sans-serif;
-  letter-spacing: -0.022em;
-  line-height: 1.04;
+  font-family: var(--ff-display), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.005em;
+  line-height: 1.07;
   text-wrap: balance;
+  /* Instrument Serif ships only at 400 — don't let utilities faux-bold it. */
+  font-synthesis-weight: none;
 }
 
 ::selection {
@@ -173,11 +178,11 @@ a {
 }
 
 .section-label {
-  font-family: var(--ff-mono), monospace;
+  font-family: var(--ff-draft), "Courier New", monospace;
   font-size: 0.78rem;
   letter-spacing: 0.02em;
   color: var(--accent);
-  text-transform: none; /* sentence-case mono labels (§4.4) */
+  text-transform: none; /* sentence-case labels (§4.4) */
 }
 
 .hairline {
@@ -199,36 +204,64 @@ a {
 .pill {
   display: inline-flex;
   align-items: center;
-  font-family: var(--ff-mono), monospace;
+  font-family: var(--ff-draft), "Courier New", monospace;
   font-size: 0.72rem;
   letter-spacing: 0.01em;
   color: var(--muted);
   border: 1px solid var(--hairline);
-  border-radius: 999px;
+  border-radius: 0.15rem;
   padding: 0.3rem 0.7rem;
   background: var(--card);
 }
 
-/* ---------- "Signal" hero treatments ---------- */
+/* ---------- "Redline" treatments ---------- */
 
-/* Faint blueprint grid fading out from the top-left — the lazy 3D pipeline scene lands here. */
-.hero-grid {
-  background-image:
-    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(120% 90% at 16% -10%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(120% 90% at 16% -10%, #000 0%, transparent 70%);
-  opacity: 0.55;
+/* Typewriter face for raw drafts + revision marks. */
+.draft {
+  font-family: var(--ff-draft), "Courier New", ui-monospace, monospace;
 }
 
-/* Signal "marker" underline under the key phrase — the signature mark. */
-.hero-accent {
-  background-image: linear-gradient(var(--signal), var(--signal));
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 100% 0.12em;
-  padding-bottom: 0.04em;
+/* Revision marks — deletion struck in redline, insertion underlined in ink-blue. Form differs
+   (strike vs underline) so it reads without relying on colour alone. */
+.del {
+  color: var(--accent);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+}
+.ins {
+  color: var(--ins);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--ins) 50%, transparent);
+  text-underline-offset: 3px;
+}
+
+/* Change-bar — the margin rule that marks a revised passage. */
+.change-bar {
+  border-left: 2px solid var(--accent);
+}
+
+/* One-time reveal of a revision: the strike sweeps across, then the insertion settles. The final
+   marked-up state is meaningful on its own, so reduced-motion simply shows it. */
+@keyframes ins-in {
+  from { opacity: 0; transform: translateY(0.3em); }
+  to { opacity: 1; transform: none; }
+}
+.rev-del {
+  color: var(--accent);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 85%, transparent);
+}
+.rev-ins {
+  animation: ins-in 0.6s 0.9s both cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rev-del,
+  .rev-ins {
+    animation: none;
+  }
 }
 
 /* Face photo: full colour on touch (no hover); desaturated → colour on hover for pointers. */

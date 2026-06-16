@@ -22,7 +22,7 @@ const PILLS = [
 
 export default function About() {
   return (
-    <Section id="about" num="05" label="who you're hiring" labelledBy="about-h">
+    <Section id="about" label="who you're hiring" labelledBy="about-h">
         <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
           {/* Real face photo (§7) — hand-cropped + sized to 432px, served unoptimized under
               output:export. Full colour on touch; desaturated → colour on hover for pointers. */}
@@ -36,7 +36,7 @@ export default function About() {
             />
             <span
               aria-hidden="true"
-              className="absolute bottom-0 left-0 h-[3px] w-9 bg-signal"
+              className="absolute bottom-0 left-0 h-[3px] w-9 bg-accent"
             />
           </figure>
 
@@ -56,7 +56,7 @@ export default function About() {
         <ol className="mt-12 max-w-2xl space-y-4">
           {TIMELINE.map((t) => (
             <li key={t.tag} className="reveal grid grid-cols-[7rem_1fr] gap-4 sm:grid-cols-[8rem_1fr]">
-              <span className="mono pt-0.5 text-[0.78rem] text-accent">{t.tag}</span>
+              <span className="draft pt-0.5 text-[0.78rem] text-accent">{t.tag}</span>
               <span className="text-base">{t.text}</span>
             </li>
           ))}

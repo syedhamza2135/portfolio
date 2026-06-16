@@ -16,7 +16,8 @@ const SHELL_TOKENS = [
   "--card",
   "--accent",
   "--accent-fill",
-  "--signal",
+  "--ins",
+  "--ins-fill",
   "--cta-bg",
   "--cta-text",
 ];
@@ -55,10 +56,15 @@ export default function Styleguide() {
       <section className="mt-12">
         <h2 className="text-2xl font-medium">Type scale</h2>
         <div className="mt-5 space-y-3">
-          <p className="font-serif text-6xl">Bricolage Grotesque display 6xl</p>
+          <p className="font-serif text-6xl">Instrument Serif display 6xl</p>
+          <p className="font-serif text-3xl italic text-ins">Instrument Serif italic — the in-voice line</p>
           <p className="text-lg">Hanken Grotesk body — the quick brown fox jumps over the lazy dog.</p>
-          <p className="font-sans text-lg italic">Hanken Grotesk italic — editorial emphasis.</p>
-          <p className="mono text-sm text-accent">JetBrains Mono · section label · sentence case</p>
+          <p className="draft text-sm text-muted">Courier Prime — the raw draft + revision marks</p>
+          <p className="text-base">
+            <span className="rev-del">in today&rsquo;s landscape, leverage synergy at scale</span>{" "}
+            <span className="text-faint">→</span> <span className="ins">say it plainly</span>
+          </p>
+          <p className="mono text-sm text-term-muted">JetBrains Mono — terminal / code</p>
         </div>
       </section>
 
@@ -95,7 +101,7 @@ export default function Styleguide() {
           <a className="link-underline text-accent" href="#">
             accent link
           </a>
-          <button className="inline-flex min-h-[44px] items-center rounded-full bg-signal px-5 text-sm font-medium text-[#15161a]">
+          <button className="inline-flex min-h-[44px] items-center rounded-sm bg-cta-bg px-5 text-sm font-medium text-cta-text">
             primary button
           </button>
         </div>

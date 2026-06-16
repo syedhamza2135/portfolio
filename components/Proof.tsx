@@ -26,7 +26,7 @@ const TESTIMONIAL: { quote: string; name: string; title: string } | null = null;
 
 export default function Proof() {
   return (
-    <Section id="proof" num="04" label="proof" labelledBy="proof-h">
+    <Section id="proof" label="proof" labelledBy="proof-h">
         <h2 id="proof-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
           Work that went live, on real deadlines.
         </h2>
@@ -35,20 +35,20 @@ export default function Proof() {
           {CASES.map((c) => (
             <article
               key={c.tag}
-              className="reveal rounded-xl border border-hairline bg-card p-6"
+              className="reveal change-bar border-y border-r border-hairline bg-card py-6 pl-6 pr-6"
             >
-              <p className="mono text-[0.74rem] text-accent">{c.tag}</p>
+              <p className="draft text-[0.74rem] text-accent">{c.tag}</p>
               <dl className="mt-4 space-y-3 text-[0.95rem]">
                 <div>
-                  <dt className="mono text-[0.7rem] text-muted">what it required</dt>
+                  <dt className="draft text-[0.7rem] text-muted">what it required</dt>
                   <dd className="mt-1">{c.required}</dd>
                 </div>
                 <div>
-                  <dt className="mono text-[0.7rem] text-muted">what shipped</dt>
+                  <dt className="draft text-[0.7rem] text-muted">what shipped</dt>
                   <dd className="mt-1">{c.shipped}</dd>
                 </div>
                 <div>
-                  <dt className="mono text-[0.7rem] text-muted">outcome</dt>
+                  <dt className="draft text-[0.7rem] text-muted">outcome</dt>
                   <dd className="mt-1 text-muted">{c.outcome}</dd>
                 </div>
               </dl>
@@ -61,7 +61,7 @@ export default function Proof() {
             <blockquote className="font-sans text-xl italic">
               &ldquo;{TESTIMONIAL.quote}&rdquo;
             </blockquote>
-            <figcaption className="mono mt-3 text-[0.78rem] text-muted">
+            <figcaption className="draft mt-3 text-[0.78rem] text-muted">
               {TESTIMONIAL.name} · {TESTIMONIAL.title}
             </figcaption>
           </figure>

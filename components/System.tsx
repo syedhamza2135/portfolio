@@ -4,7 +4,7 @@ import VoiceEngine from "@/components/VoiceEngine";
 // §02 — The system. Server-rendered shell around the one client island (the demo).
 export default function System() {
   return (
-    <Section id="system" num="02" label="the system" labelledBy="system-h">
+    <Section id="system" label="the system" labelledBy="system-h">
         <h2 id="system-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
           The voice pipeline, running live.
         </h2>
