@@ -24,15 +24,15 @@ export default function About() {
   return (
     <Section id="about" label="who you're hiring" labelledBy="about-h">
         <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
-          {/* Real face photo (§7) — hand-cropped + sized to 432px, served unoptimized under
-              output:export. Full colour on touch; desaturated → colour on hover for pointers. */}
-          <figure className="photo-frame reveal relative m-0 h-[140px] w-[140px] shrink-0 overflow-hidden rounded-xl border border-hairline">
+          {/* Real face photo (§7) — sized to 432px, served unoptimized under output:export. Shown in
+              full colour; the hairline frame + redline accent tick carry the editorial treatment. */}
+          <figure className="reveal relative m-0 h-[140px] w-[140px] shrink-0 overflow-hidden rounded-xl border border-hairline">
             <Image
               src="/me.jpg"
               alt="Syed Hamza"
               width={140}
               height={140}
-              className="photo-treat h-full w-full object-cover"
+              className="h-full w-full object-cover"
             />
             <span
               aria-hidden="true"

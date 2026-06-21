@@ -264,19 +264,8 @@ a {
   }
 }
 
-/* Face photo: full colour on touch (no hover); desaturated → colour on hover for pointers. */
-.photo-treat {
-  filter: none;
-  transition: filter 0.5s ease;
-}
-@media (hover: hover) {
-  .photo-treat {
-    filter: grayscale(1);
-  }
-  .photo-frame:hover .photo-treat {
-    filter: grayscale(0);
-  }
-}
+/* Face photo: shown in full colour, framed editorially (hairline + rounded + the redline accent
+   tick). No filter — the real person carries the trust the "who you're hiring" section is for. */
 
 /* Active section link — toggled by the scroll-spy in the enhancement script. */
 .nav-link.is-active {
