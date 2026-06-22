@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-// three.js is loaded ONLY here, code-split via next/dynamic (ssr:false), after hydration — the
-// hero text is server-rendered HTML, so this is pure progressive enhancement and never blocks
-// first paint. Skipped entirely under reduced-motion.
+// The hero canvas field is loaded ONLY here, code-split via next/dynamic (ssr:false), after
+// hydration — the hero text is server-rendered HTML, so this is pure progressive enhancement and
+// never blocks first paint. Skipped entirely under reduced-motion.
 const EditingField = dynamic(() => import("./EditingField"), { ssr: false });
 
 export default function HeroField() {
