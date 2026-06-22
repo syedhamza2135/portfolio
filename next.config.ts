@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
 
   // Trailing slashes keep static hosting tidy (each route → its own index.html folder).
   trailingSlash: true,
+
+  // Pin the Turbopack filesystem root to this project dir. Otherwise a lockfile in a parent dir
+  // (e.g. when this checkout lives inside a git worktree under the main repo) makes Turbopack walk
+  // up and warn about "multiple lockfiles". cwd is the project dir for `next dev`/`next build`.
+  turbopack: { root: process.cwd() },
 };
 
 export default nextConfig;

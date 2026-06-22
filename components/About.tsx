@@ -23,9 +23,16 @@ const PILLS = [
 export default function About() {
   return (
     <Section id="about" label="who you're hiring" labelledBy="about-h">
-        <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
-          {/* Real face photo (§7) — sized to 432px, served unoptimized under output:export. Shown in
-              full colour; the hairline frame + redline accent tick carry the editorial treatment. */}
+        {/* Headline spans the full content width: nested in the photo column it was trapped at
+            ~320px and the global `text-wrap: balance` collapsed it into a 5-line, mid-phrase stack.
+            Full width, it settles into 2–3 clean lines at every breakpoint. Photo + bio sit below. */}
+        <h2 id="about-h" className="reveal max-w-3xl text-3xl font-medium sm:text-4xl">
+          I&rsquo;m the contractor agencies call when the work sits between two job titles.
+        </h2>
+
+        <div className="mt-8 grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
+          {/* Real face photo (§7) — 140px, served unoptimized under output:export. Shown in full
+              colour; the hairline frame + redline accent tick carry the editorial treatment. */}
           <figure className="reveal relative m-0 h-[140px] w-[140px] shrink-0 overflow-hidden rounded-xl border border-hairline">
             <Image
               src="/me.jpg"
@@ -40,17 +47,12 @@ export default function About() {
             />
           </figure>
 
-          <div>
-            <h2 id="about-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
-              I&rsquo;m the contractor agencies call when the work sits between two job titles.
-            </h2>
-            <p className="reveal mt-6 max-w-2xl text-lg text-muted">
-              Strong writers usually can&rsquo;t build the tool. Strong builders usually write
-              like engineers. I do both and bill it as one line item, which is what an agency
-              wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
-              &ldquo;developer.&rdquo;
-            </p>
-          </div>
+          <p className="reveal max-w-2xl text-lg text-muted">
+            Strong writers usually can&rsquo;t build the tool. Strong builders usually write
+            like engineers. I do both and bill it as one line item, which is what an agency
+            wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
+            &ldquo;developer.&rdquo;
+          </p>
         </div>
 
         <ol className="mt-12 max-w-2xl space-y-4">

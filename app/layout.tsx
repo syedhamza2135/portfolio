@@ -98,6 +98,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             React 19 logs a dev-only "script in component" notice on Fast-Refresh re-renders;
             in the static production HTML the script is server-rendered and runs once. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+        {/* JS-disabled fallback: scroll-reveal elements start at opacity:0 and are unhidden by the
+            enhancement script. With JS off (and not reduced-motion), force them visible so the
+            whole page below the hero is still readable. */}
+        <noscript>
+          <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
       </head>
       <body>
         <a href="#main" className="skip-link">
