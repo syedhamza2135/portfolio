@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# Least-privilege GITHUB_TOKEN. Repos created before Feb 2023 default the token to read-write,
+# which is more than this build needs. The job only reads the repo to check it builds, so grant
+# contents: read and nothing else. Add issues:/pull-requests: write here only if a job needs them.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # next/font fetches the fonts at build time, so this needs network (the runner has it).
+      - run: npm run build
