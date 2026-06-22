@@ -23,10 +23,16 @@ committed — it contains private strategy/client names).
 
 - Next.js 16.2 App Router, **`output: 'export'`** — pure static; Vercel serves prebuilt HTML.
 - React 19.2; Tailwind v4 **CSS-first** (no `tailwind.config.js`; tokens in `app/globals.css` via `@theme`).
-- Self-hosted fonts via `next/font`: Newsreader (serif) / Instrument Sans (body) / JetBrains Mono.
-- **One client island only:** the Voice Engine demo (`components/VoiceEngine.tsx`). The theme
-  toggle + scroll reveals are hand-rolled vanilla JS in `lib/scripts.ts`, injected as inline
-  `<script>`. Keep this structure unless deliberately changing it.
+- Self-hosted fonts via `next/font`: Instrument Serif (display) / Hanken Grotesk (body) / Courier
+  Prime (typewriter — raw drafts + revision marks) / JetBrains Mono (terminal).
+- **Two client islands only:** the Voice Engine demo (`components/VoiceEngine.tsx`) and the hero
+  editing-field backdrop (`components/EditingField.tsx`, mounted via `HeroField.tsx` behind a
+  reduced-motion gate + `next/dynamic` `ssr:false`). The theme toggle + scroll reveals are
+  hand-rolled vanilla JS in `lib/scripts.ts`, injected as inline `<script>`. Keep this structure
+  unless deliberately changing it.
+- **Hero backdrop is hand-built Canvas 2D, not WebGL.** It was three.js (~130 KB gz); that was
+  replaced with a ~3 KB hand-written canvas animation to keep the lean-JS value prop intact. Don't
+  reintroduce a 3D engine for ambient decoration.
 - Light/dark via `[data-theme]` CSS-var tokens; no-FOUC inline head script. Dark theme is
   *designed*, not inverted (warm-ink shell ≠ the green-black terminal). Terminal palette is
   theme-invariant — the contrast is the whole concept.
@@ -67,26 +73,27 @@ committed — it contains private strategy/client names).
 
 ## Open content TODOs (placeholders in code — search `TODO`)
 
-- Real face photo (currently an "SH" initials block in `components/About.tsx`).
-- Named client + attributed testimonial in `components/Proof.tsx` (currently specific-but-
-  anonymous; the testimonial slot renders nothing until filled).
-- Verified draft count in the demo caption (`components/System.tsx`).
+- Verified draft count in the demo caption (`components/System.tsx`) — the one real open item.
+- Proof testimonial slot (`components/Proof.tsx`) is intentionally empty (user decided: no
+  invented or anonymous testimonial). `TESTIMONIAL` stays `null` until a real attributed quote
+  exists; the layout holds without it.
+- (Done) Real face photo now at `public/me.jpg`, shown in `components/About.tsx`.
 
-## CURRENT FOCUS (next session)
+## CURRENT FOCUS
 
-**Goal: take the design up a notch.** The user feels (1) the design reads as "AI-default" and
-(2) the site feels static.
+**The "Redline" redesign shipped and is live.** It answered the two earlier worries — that the
+design read as "AI-default" and that the site felt static:
 
-- **"Looks AI":** the editorial-warm shell + serif display + mono labels + hairline borders is
-  tasteful but a now-recognizable LLM-generated-portfolio aesthetic, and the palette only broke
-  one axis of the default (oxblood instead of terracotta). Directions worth exploring: a bolder /
-  less-default palette, a more characterful display face (Newsreader is "safe"), more intentional
-  or asymmetric editorial composition, print/texture details, and a stronger custom visual
-  signature beyond the terminal (the terminal demo is the most distinctive asset — lean into
-  handmade character). **Propose 2–3 concrete directions before coding.**
-- **"Static":** add restrained life/motion. ⚠️ The original PRD explicitly banned award-site
-  theatrics (no particles/3D/parallax/cursor-fx/preloaders) and brags about the JS budget, so
-  adding motion *revisits* that stance. Clarify with the user whether "static" means visual
-  liveliness (tasteful motion, richer interactions, a more alive terminal) or backend dynamism
-  (demo v2 on a real Claude API → would drop `output: 'export'`). Decide tradeoffs explicitly;
-  don't just bolt on effects.
+- **Identity:** an editor's-proof / revision system — clichés struck in redline red, in-voice
+  lines set in the Instrument Serif display, ink-blue insertions, change-bars, a typewriter face
+  for raw drafts and marks, on a cool bond-paper shell (not the cream default). The terminal
+  voice-engine demo is the signature asset. This is no longer the generic editorial-LLM look.
+- **Life/motion:** restrained. Scroll reveals + the live voice-engine terminal + an ambient hero
+  "editing floor" (drifting word-fragments struck/underlined as they rise). The hero field is
+  **hand-built Canvas 2D** (see the stack note) — the earlier three.js version was dropped to
+  protect the JS budget. It's theme-aware-dimmed + radial-masked so it never competes with the
+  headline copy.
+
+If pushing further, keep changes *inside* the Redline system rather than restyling. The one real
+open content item is the verified draft count (see TODOs). A demo v2 on a real Claude API would
+drop `output: 'export'` — a re-platform decision, so confirm with the user before starting it.
