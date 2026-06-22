@@ -267,9 +267,14 @@ a {
 /* Face photo: shown in full colour, framed editorially (hairline + rounded + the redline accent
    tick). No filter — the real person carries the trust the "who you're hiring" section is for. */
 
-/* Active section link — toggled by the scroll-spy in the enhancement script. */
+/* Active section link — toggled by the scroll-spy in the enhancement script. A redline tick under
+   the current section reads clearly without shouting. */
 .nav-link.is-active {
   color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
 }
 
 /* ---------- scroll reveals (§7) — class toggled by the vanilla enhancement script ---------- */

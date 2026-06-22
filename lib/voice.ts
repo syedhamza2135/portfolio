@@ -21,7 +21,6 @@ export interface VoiceMetrics {
   semicolonCount: number;
   questionCount: number;
   questionPct: number;
-  avgParagraphLen: number;
 }
 
 export interface ProfileLine {
@@ -58,13 +57,6 @@ function sentences(text: string): string[] {
     .split(/(?<=[.!?])\s+(?=[A-Z"'(“])|(?<=[.!?])$/)
     .map((s) => s.trim())
     .filter((s) => /[a-z]/i.test(s));
-}
-
-function paragraphs(text: string): string[] {
-  return text
-    .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .filter(Boolean);
 }
 
 function looksLikeCodeOrList(text: string): boolean {
@@ -135,9 +127,6 @@ export function analyze(raw: string): AnalysisResult {
   const questionCount = sents.filter((s) => s.trim().endsWith("?")).length;
   const questionPct = round((questionCount / sentenceCount) * 100);
 
-  const paras = paragraphs(text);
-  const avgParagraphLen = round(wordCount / Math.max(paras.length, 1));
-
   const metrics: VoiceMetrics = {
     wordCount,
     sentenceCount,
@@ -155,7 +144,6 @@ export function analyze(raw: string): AnalysisResult {
     semicolonCount,
     questionCount,
     questionPct,
-    avgParagraphLen,
   };
 
   const addressText =

@@ -11,7 +11,7 @@ Live at https://syedhamza.xyz.
 - React 19.2.
 - Tailwind CSS v4, CSS-first. Design tokens live in `app/globals.css` under `@theme`; there is no `tailwind.config.js`.
 - Fonts self-hosted at build time via `next/font`: Instrument Serif (display), Hanken Grotesk (body), Courier Prime (the typewriter "draft" face), and JetBrains Mono (terminal).
-- One React client island, the Voice Engine demo. The theme toggle and scroll reveals are hand-rolled vanilla JS injected from `lib/scripts.ts`. The hero has an ambient three.js backdrop that is code-split and loaded after hydration.
+- Two React client islands: the Voice Engine demo and the hero's ambient backdrop (`EditingField`), each code-split and loaded after hydration. The theme toggle and scroll reveals are hand-rolled vanilla JS injected from `lib/scripts.ts`. The hero backdrop is a hand-built Canvas 2D animation, not a 3D engine, to keep the JS budget lean.
 
 ## Run it
 
@@ -34,7 +34,7 @@ app/
   globals.css    Tailwind v4 @theme plus the light and dark token sets
   styleguide/    token preview; not linked, noindex
   sitemap.ts, robots.ts, icon.svg
-components/      Hero, HeroField and EditingField (three.js), Problem, System and
+components/      Hero, HeroField and EditingField (Canvas 2D), Problem, System and
                  VoiceEngine, Services, Proof, About, CTA, Nav, Footer, Section
 lib/
   voice.ts       the demo's client-side text analyzer (measured, falsifiable output)
@@ -59,8 +59,9 @@ before first paint to avoid a flash, and a nav toggle cycles auto, light, and da
 `localStorage`.
 
 The hero backdrop, "the editing floor," is a slow drift of word fragments: clichés struck in red,
-in-voice words underlined in blue, the rest faint. It reads the theme tokens, pauses when offscreen,
-and is skipped entirely under `prefers-reduced-motion`.
+in-voice words underlined in blue, the rest faint. It is hand-drawn on a 2D canvas (no 3D engine),
+dimmed and radially masked in light mode so it never competes with the headline. It reads the theme
+tokens, pauses when offscreen, and is skipped entirely under `prefers-reduced-motion`.
 
 ## Deploy
 
