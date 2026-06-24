@@ -40,13 +40,21 @@ function buildLines(
   return lines;
 }
 
+// The first sample, pre-built so its full output can reserve the terminal's height
+// from the initial render (SSR included). `analyze`/`buildLines` are pure, so this is
+// deterministic and hydration-safe. Streaming reveals into space that already exists.
+function initialLines(): TermLine[] {
+  const r = analyze(SAMPLES[0].text);
+  return r.ok ? buildLines(SAMPLES[0].label, "example", SAMPLES[0].text, r) : [];
+}
+
 export default function VoiceEngine() {
   const [sampleIdx, setSampleIdx] = useState(0);
   const [source, setSource] = useState<"example" | "custom">("example");
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
-  const [lines, setLines] = useState<TermLine[]>([]);
+  const [lines, setLines] = useState<TermLine[]>(initialLines);
   const [shown, setShown] = useState(0);
   const [summary, setSummary] = useState("");
 
@@ -186,23 +194,38 @@ export default function VoiceEngine() {
           </span>
         </div>
 
-        {/* streamed output — aria-hidden; the SR summary is announced once below */}
+        {/* streamed output — aria-hidden; the SR summary is announced once below.
+            Two layers share one grid cell: an invisible sizer holds the FULL output so
+            the cell takes its final height up front, and the visible layer streams lines
+            into that already-reserved space. This is what keeps the page below from being
+            pushed down as lines appear (no cumulative layout shift). */}
         <div
           aria-hidden="true"
           onClick={skip}
-          className="mono min-h-[19rem] cursor-default space-y-1 px-4 py-4 text-[0.82rem] leading-relaxed sm:min-h-[20rem]"
+          className="mono grid min-h-[19rem] cursor-default px-4 py-4 text-[0.82rem] leading-relaxed sm:min-h-[20rem]"
         >
-          {visible.map((line, i) => (
-            <TerminalRow key={i} line={line} />
-          ))}
-          {status === "running" && (
-            <span className="inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-term-teal" />
-          )}
-          {status === "error" && (
-            <div className="text-[#e0a3a3]">
-              <span className="text-term-muted">!</span> {error}
-            </div>
-          )}
+          {/* height reservation — laid out but never painted; wraps identically to the
+              visible layer because both share the cell's width and type styles */}
+          <div className="invisible col-start-1 row-start-1 space-y-1">
+            {lines.map((line, i) => (
+              <TerminalRow key={i} line={line} />
+            ))}
+          </div>
+
+          {/* visible streaming layer */}
+          <div className="col-start-1 row-start-1 space-y-1">
+            {visible.map((line, i) => (
+              <TerminalRow key={i} line={line} />
+            ))}
+            {status === "running" && (
+              <span className="inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-term-teal" />
+            )}
+            {status === "error" && (
+              <div className="text-[#e0a3a3]">
+                <span className="text-term-muted">!</span> {error}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* interactive controls (§6.2 state 4) */}
