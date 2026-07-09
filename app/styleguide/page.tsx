@@ -69,6 +69,42 @@ export default function Styleguide() {
       </section>
 
       <section className="mt-12">
+        <h2 className="text-2xl font-medium">Fluid heading scale</h2>
+        <p className="mt-2 text-sm text-muted">
+          Unlayered helpers that beat Tailwind text-* on purpose. Apply one, never both.
+        </p>
+        <div className="mt-5 space-y-3">
+          <p className="t-hero">t-hero: the value prop</p>
+          <p className="t-h2">t-h2: a section heading</p>
+          <p className="t-h3 font-serif">t-h3: a card title</p>
+          <p className="t-lead text-muted">t-lead: the standfirst line that sits under a heading.</p>
+        </div>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-medium">Redline marks</h2>
+        <p className="mt-2 text-sm text-muted">
+          The three revision marks the copy tool renders. Form differs from colour so each reads
+          without relying on hue.
+        </p>
+        <p className="draft mt-5 text-base leading-loose">
+          The <del className="del">best-in-class</del> <ins className="ins">clear</ins> way to say
+          it is the <span className="flag">plainest</span> way to say it.
+        </p>
+        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          <li className="draft text-[0.72rem] text-muted">
+            <span className="del">del</span> cut it
+          </li>
+          <li className="draft text-[0.72rem] text-muted">
+            <span className="ins">ins</span> the replacement
+          </li>
+          <li className="draft text-[0.72rem] text-muted">
+            <span className="flag">flag</span> a second look
+          </li>
+        </ul>
+      </section>
+
+      <section className="mt-12">
         <h2 className="text-2xl font-medium">Shell tokens</h2>
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3">
           {SHELL_TOKENS.map((t) => (

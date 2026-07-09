@@ -1,14 +1,15 @@
 import Section from "@/components/Section";
 import VoiceEngine from "@/components/VoiceEngine";
+import { rd } from "@/lib/ui";
 
 // §02 — The system. Server-rendered shell around the one client island (the demo).
 export default function System() {
   return (
-    <Section id="system" label="the system" labelledBy="system-h">
-        <h2 id="system-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
+    <Section id="system" num="02" label="the system" labelledBy="system-h">
+        <h2 id="system-h" className="reveal t-h2 max-w-2xl font-medium">
           The voice pipeline, running live.
         </h2>
-        <p className="reveal mt-5 mb-8 max-w-2xl text-lg text-muted">
+        <p className="reveal t-lead mt-5 mb-8 max-w-2xl text-muted" style={rd(80)}>
           It reads a writing sample and compiles a reusable voice profile. That&rsquo;s the
           first step the production pipeline runs before it drafts anything.
         </p>

@@ -109,6 +109,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a href="#main" className="skip-link">
           Skip to content
         </a>
+        {/* Editor's margin: a redline change-bar pinned to the left edge that fills as the page is
+            read. Progress is set on --read by the enhancement script; hidden under reduced-motion. */}
+        <div className="edge-rule" aria-hidden="true" />
         <Nav />
         <main id="main">{children}</main>
         <Footer />

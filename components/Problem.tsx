@@ -1,16 +1,17 @@
 import Section from "@/components/Section";
+import { rd } from "@/lib/ui";
 
 // §01. Written AT the agency owner. This is the highest copy bar on the page (§5.01).
 export default function Problem() {
   return (
-    <Section id="problem" label="the problem" labelledBy="problem-h">
+    <Section id="problem" num="01" label="the problem" labelledBy="problem-h">
         <h2
           id="problem-h"
-          className="reveal max-w-3xl text-3xl font-medium sm:text-4xl"
+          className="reveal t-h2 max-w-3xl font-medium"
         >
           You sold the retainer. Now you&rsquo;re drowning in production.
         </h2>
-        <div className="reveal mt-7 max-w-2xl space-y-5 text-lg text-muted">
+        <div className="reveal t-lead mt-7 max-w-2xl space-y-5 text-muted" style={rd(80)}>
           <p>
             The pitch was the easy part. The work is volume: a dozen pieces a month, each
             one supposed to sound like the client, hit a real quality bar, and ship on a

@@ -1,4 +1,5 @@
 import Section from "@/components/Section";
+import { rd } from "@/lib/ui";
 
 /*
   §04 Proof. Two specific-but-anonymous client cases (real client-scale markers, no name yet).
@@ -29,15 +30,16 @@ const TESTIMONIAL: { quote: string; name: string; title: string } | null = null;
 
 export default function Proof() {
   return (
-    <Section id="proof" label="proof" labelledBy="proof-h">
-        <h2 id="proof-h" className="reveal max-w-2xl text-3xl font-medium sm:text-4xl">
+    <Section id="proof" num="05" label="proof" labelledBy="proof-h">
+        <h2 id="proof-h" className="reveal t-h2 max-w-2xl font-medium">
           Work that went live, on real deadlines.
         </h2>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {CASES.map((c) => (
+          {CASES.map((c, i) => (
             <article
               key={c.tag}
+              style={rd(i * 90)}
               className="reveal change-bar border-y border-r border-hairline bg-card py-6 pl-6 pr-6"
             >
               <p className="draft text-[0.74rem] text-accent">{c.tag}</p>

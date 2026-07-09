@@ -277,14 +277,152 @@ a {
   text-underline-offset: 5px;
 }
 
+/* ---------- bolder type scale (fluid) ----------
+   Unlayered helpers (like .pill / .section-label) so they intentionally beat Tailwind's text-*
+   utilities. Apply ONE of these to a heading instead of text-3xl/4xl; don't stack a text-size
+   utility on top or you reintroduce the specificity fight the base layer avoids. */
+.t-hero {
+  font-size: clamp(2.7rem, 1.6rem + 4.9vw, 4.9rem);
+  line-height: 1.03;
+  letter-spacing: -0.014em;
+}
+.t-h2 {
+  font-size: clamp(2rem, 1.35rem + 2.7vw, 3.15rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.t-h3 {
+  font-size: clamp(1.3rem, 1.05rem + 1vw, 1.75rem);
+  line-height: 1.12;
+}
+.t-lead {
+  font-size: clamp(1.1rem, 1rem + 0.4vw, 1.32rem);
+  line-height: 1.6;
+}
+
+/* ---------- editorial section index (the big margin numeral) ----------
+   The left rail becomes a real manuscript index: an oversized draft-face folio number struck by a
+   change-bar, with the sentence-case label beneath. Decorative (aria-hidden); the <h2> still carries
+   the heading. */
+.sec-index {
+  position: relative;
+}
+.sec-num {
+  font-family: var(--ff-draft), "Courier New", monospace;
+  font-size: clamp(2.4rem, 1.6rem + 3vw, 3.6rem);
+  line-height: 0.9;
+  color: var(--faint);
+  letter-spacing: -0.02em;
+}
+.sec-rule {
+  border-left: 2px solid var(--accent);
+  padding-left: 0.85rem;
+}
+
+/* ---------- editor's margin: a change-bar that fills as the page is read ----------
+   A thin redline rule pinned to the left viewport edge, scaled top-to-bottom by scroll progress
+   (--read, set by the enhancement script). Reads as the margin mark running down a revised
+   manuscript. GPU-cheap (transform only). Hidden under reduced-motion and forced-colors. */
+.edge-rule {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  z-index: 40;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.edge-rule::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleY(var(--read, 0));
+  transform-origin: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .edge-rule { display: none; }
+}
+@media (forced-colors: active) {
+  .edge-rule { display: none; }
+}
+
+/* ---------- redline tool: attention flag + hover note ----------
+   `.del`/`.ins` already carry deletion/insertion. `.flag` is the third mark: text kept, but worth a
+   second look (dotted ink-blue underline). The note rides in a title + a styled tooltip. */
+.flag {
+  text-decoration: underline dotted;
+  text-decoration-color: color-mix(in srgb, var(--ins) 70%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: help;
+}
+.rl-mark {
+  position: relative;
+}
+.rl-note {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 0.35rem);
+  z-index: 5;
+  width: max-content;
+  max-width: min(16rem, 60vw);
+  font-family: var(--ff-draft), "Courier New", monospace;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--cta-text);
+  background: var(--cta-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.14s ease, transform 0.14s ease;
+  pointer-events: none;
+}
+.rl-mark:hover .rl-note {
+  opacity: 1;
+  transform: none;
+}
+
+/* Marks settle in one after another when a fresh redline runs, so the edit reads as a hand moving
+   down the page. Keyed remount replays it each run. Reduced-motion zeroes it via the global kill. */
+@keyframes rl-in {
+  from { opacity: 0; transform: translateY(0.25em); }
+  to { opacity: 1; transform: none; }
+}
+.rl-animate .rl-mark {
+  animation: rl-in 0.45s both cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* The paper surface: a bond page under the editor's hand. Distinct from the green terminal so the
+   two demos read as two different tools (the machine reads voice; the editor marks copy). */
+.rl-paper {
+  font-family: var(--ff-draft), "Courier New", ui-monospace, monospace;
+  font-size: 0.98rem;
+  line-height: 2.05;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 /* ---------- scroll reveals (§7) — class toggled by the vanilla enhancement script ---------- */
 
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(16px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--rd, 0s);
   will-change: opacity, transform;
+}
+/* Directional variants: content can rise, or slide in from the margin (used for the section index
+   and cards) so the page assembles like marks landing on a page rather than one flat fade. */
+.reveal-x {
+  transform: translateX(-18px);
+}
+.reveal-r {
+  transform: translateX(18px);
 }
 .reveal.is-visible {
   opacity: 1;

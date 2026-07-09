@@ -9,11 +9,11 @@ export default function CTA() {
       aria-labelledby="cta-h"
       className="border-t border-hairline px-5 py-20 sm:px-8 sm:py-28"
     >
-      <div className="reveal mx-auto max-w-3xl rounded-sm bg-cta-bg px-7 py-12 text-cta-text sm:px-12 sm:py-16">
-        <h2 id="cta-h" className="font-serif text-3xl sm:text-4xl">
+      <div className="reveal mx-auto max-w-3xl rounded-sm bg-cta-bg px-7 py-14 text-cta-text sm:px-12 sm:py-20">
+        <h2 id="cta-h" className="t-h2 font-serif">
           Have a content bottleneck?
         </h2>
-        <p className="mt-5 max-w-xl text-lg opacity-90">
+        <p className="t-lead mt-6 max-w-xl opacity-90">
           30 minutes, your timezone. I&rsquo;m based in Pakistan and work US hours: async-first,
           with weekly Loom updates, and you won&rsquo;t wait a day for a reply. If I&rsquo;m not
           the right fit, I&rsquo;ll tell you who is.

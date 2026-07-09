@@ -25,11 +25,13 @@ committed — it contains private strategy/client names).
 - React 19.2; Tailwind v4 **CSS-first** (no `tailwind.config.js`; tokens in `app/globals.css` via `@theme`).
 - Self-hosted fonts via `next/font`: Instrument Serif (display) / Hanken Grotesk (body) / Courier
   Prime (typewriter — raw drafts + revision marks) / JetBrains Mono (terminal).
-- **Two client islands only:** the Voice Engine demo (`components/VoiceEngine.tsx`) and the hero
+- **Three client islands:** the Voice Engine demo (`components/VoiceEngine.tsx`), the Redline copy
+  tool (`components/RedlineTool.tsx`, powered by the pure `lib/redline.ts`), and the hero
   editing-field backdrop (`components/EditingField.tsx`, mounted via `HeroField.tsx` behind a
-  reduced-motion gate + `next/dynamic` `ssr:false`). The theme toggle + scroll reveals are
-  hand-rolled vanilla JS in `lib/scripts.ts`, injected as inline `<script>`. Keep this structure
-  unless deliberately changing it.
+  reduced-motion gate + `next/dynamic` `ssr:false`). The theme toggle, scroll reveals, and left-edge
+  read-progress bar are hand-rolled vanilla JS in `lib/scripts.ts`, injected as inline `<script>`.
+  Keep this structure unless deliberately changing it. The Redline tool marks up its first sample
+  during render, so its output is in the static HTML (works with JS off, indexable).
 - **Hero backdrop is hand-built Canvas 2D, not WebGL.** It was three.js (~130 KB gz); that was
   replaced with a ~3 KB hand-written canvas animation to keep the lean-JS value prop intact. Don't
   reintroduce a 3D engine for ambient decoration.
@@ -41,6 +43,9 @@ committed — it contains private strategy/client names).
 ## Commands
 
 - `npm run dev` (Turbopack) · `npm run build` → `./out` · `npm run og` (regenerates `public/og.png`).
+- `npm run check` (typecheck + unit tests) · `npm run test` (node's built-in runner, needs Node 22+
+  for TS type stripping, zero test deps). CI runs `check` before `build`. `lib/voice.ts` and
+  `lib/redline.ts` are pure and unit-tested; keep them that way.
 - Verify a change: `npm run build`, then serve `out/` and use the preview tools.
   `.claude/launch.json` has a **portfolio-static** config (`:3100`) for screenshotting the real
   production build, and **portfolio** (`:3000`) for dev.
@@ -97,3 +102,23 @@ design read as "AI-default" and that the site felt static:
 If pushing further, keep changes *inside* the Redline system rather than restyling. The one real
 open content item is the verified draft count (see TODOs). A demo v2 on a real Claude API would
 drop `output: 'export'` — a re-platform decision, so confirm with the user before starting it.
+
+### Update (bolder evolution, branch `overhaul/redline-v2`)
+
+A second pass dialed the Redline system up without leaving it, and added the flagship interactive
+asset:
+
+- **Redline copy tool (§03, new section).** The static hero "draft → in voice" figure made
+  interactive: paste copy, the editor marks it up live (`components/RedlineTool.tsx` +
+  `lib/redline.ts`, unit-tested, ~90-term dictionary + structural heuristics for em-dash, antithesis,
+  weak openers, adverbs, passive voice). Every mark is measured from the input, never invented. It
+  renders as a bond page, deliberately unlike the green Voice Engine terminal, so the two demos read
+  as two tools telling one pipeline story. The section index shifted: redline is 03, services 04,
+  proof 05, about 06.
+- **Bolder layout.** Oversized draft-face folio numbers in each section margin (`Section.tsx` +
+  `.sec-num`), a left-edge redline read-progress bar (`.edge-rule`, driven by `--read` in
+  `scripts.ts`), a fluid heading scale (`.t-hero` / `.t-h2` / `.t-h3` / `.t-lead`, unlayered so they
+  beat `text-*`), and staggered/directional reveals (`--rd`, `.reveal-x`). All motion stays gated on
+  `prefers-reduced-motion` and the JS budget did not move (the tool is a small pure function).
+- **Engineering rigor.** `npm run check` (typecheck + `node --test`) added and wired into CI on Node
+  22. The honest placeholders (draft count, testimonial) were left empty on purpose, as before.

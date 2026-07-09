@@ -32,7 +32,8 @@ export const TAGLINE =
 export const SECTIONS = [
   { id: "problem", num: "01", label: "problem" },
   { id: "system", num: "02", label: "system" },
-  { id: "services", num: "03", label: "services" },
-  { id: "proof", num: "04", label: "proof" },
-  { id: "about", num: "05", label: "about" },
+  { id: "redline", num: "03", label: "redline" },
+  { id: "services", num: "04", label: "services" },
+  { id: "proof", num: "05", label: "proof" },
+  { id: "about", num: "06", label: "about" },
 ] as const;

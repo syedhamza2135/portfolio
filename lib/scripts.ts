@@ -24,4 +24,5 @@ try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',
 document.querySelectorAll('[data-track]').forEach(function(el){el.addEventListener('click',function(){var n=el.getAttribute('data-track');if(window.va)window.va('event',{name:n});});});
 var navLinks=document.querySelectorAll('.nav-link');
 if(navLinks.length&&'IntersectionObserver' in window){var spy=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var id=en.target.id;navLinks.forEach(function(l){l.classList.toggle('is-active',l.getAttribute('data-spy')===id);});}});},{rootMargin:'-45% 0px -50% 0px',threshold:0});document.querySelectorAll('main section[id]').forEach(function(s){spy.observe(s);});}
+if(!reduce){var de=document.documentElement;var ticking=false;function upd(){ticking=false;var h=de.scrollHeight-window.innerHeight;var p=h>0?window.scrollY/h:0;de.style.setProperty('--read',p<0?0:p>1?1:p);}function req(){if(!ticking){ticking=true;requestAnimationFrame(upd);}}window.addEventListener('scroll',req,{passive:true});window.addEventListener('resize',req,{passive:true});upd();}
 })();`;

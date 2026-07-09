@@ -8,23 +8,23 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-hairline">
       <HeroField />
-      <div className="relative z-10 mx-auto grid max-w-6xl gap-12 px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
+      <div className="relative z-10 mx-auto grid max-w-6xl gap-12 px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28 lg:min-h-[82vh] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
         <div>
           <p className="draft text-[0.8rem] tracking-wide text-muted">
             content systems · technical writing · code
           </p>
 
-          <h1 className="mt-6 max-w-2xl text-[2.7rem] leading-[1.04] sm:text-5xl md:text-[3.7rem]">
+          <h1 className="t-hero mt-6 max-w-3xl">
             Publish like a ten-person content team. With{" "}
             <em className="italic text-ins">one contractor.</em>
           </h1>
 
-          <p className="mt-7 max-w-xl text-lg text-muted">
+          <p className="t-lead mt-8 max-w-xl text-muted">
             Content pipelines for US agencies: voice-matched drafting, technical content, editorial
             automation. Writing and code included.
           </p>
 
-          <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
             <a
               href={CALENDLY_URL}
               target="_blank"
