@@ -12,12 +12,12 @@ const OFFERS = [
   {
     marker: "b",
     title: "Technical content",
-    body: "AI, fintech, and developer-facing writing for the clients generalist writers tap out on. I read the docs and the charts.",
+    body: "AI, fintech and developer-facing writing for the clients generalist writers tap out on. I read the docs and the charts.",
   },
   {
     marker: "c",
     title: "Copy + code, one invoice",
-    body: "Landing pages, programmatic SEO, and the small internal tools that make a content team faster. Written and built by the same person.",
+    body: "Landing pages, programmatic SEO and the small internal tools that make a content team faster. Written and built by the same person.",
   },
 ];
 

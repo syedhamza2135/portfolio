@@ -13,7 +13,7 @@ const CASES = [
     required:
       "Technical content on LLM evaluation and observability, accurate enough for a developer audience and held to agency deadlines.",
     shipped:
-      "Long-form articles and docs on evaluation, tracing, and observability, written for engineers and shipped through their V2 launch.",
+      "Long-form articles and docs on evaluation, tracing and observability, written for engineers and shipped through their V2 launch.",
     outcome: "Cleared technical review without a rewrite cycle, on every deadline.",
   },
   {

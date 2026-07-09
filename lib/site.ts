@@ -26,7 +26,7 @@ export const WHATSAPP_URL = WHATSAPP_NUMBER
   : "";
 
 export const TAGLINE =
-  "I build content systems for scale: strategy, automation, and the engineering to run them.";
+  "I build content systems for scale: strategy, automation and the engineering to run them.";
 
 // Nav section index (the mono "01 — " numbering is visual; headings carry real hierarchy).
 export const SECTIONS = [

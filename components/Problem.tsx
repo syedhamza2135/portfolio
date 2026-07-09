@@ -15,7 +15,7 @@ export default function Problem() {
         <div className="reveal t-lead mt-7 max-w-2xl space-y-5 text-muted" style={rd(80)}>
           <p>
             The pitch was the easy part. The work is volume: a dozen pieces a month, each
-            one supposed to sound like the client, hit a real quality bar, and ship on a
+            one supposed to sound like the client, hit a real quality bar and ship on a
             date you already promised. Hire fast and the voice drifts. Edit everything
             yourself and you become the bottleneck you hired around.
           </p>
