@@ -36,19 +36,22 @@ the build.
 ```
 app/
   layout.tsx     fonts, metadata, no-flash theme script, nav + footer, analytics
-  page.tsx       section assembly and JSON-LD (Person, ProfilePage)
+  page.tsx       section assembly and JSON-LD (Person, ProfilePage); the Person
+                 sameAs derives from SOCIAL_LINKS so it never drifts from the visible links
   globals.css    Tailwind v4 @theme plus the light and dark token sets
   styleguide/    token preview; not linked, noindex
   sitemap.ts, robots.ts, icon.svg
 components/      Hero, HeroField and EditingField (Canvas 2D), Problem, System and
                  VoiceEngine, Redline and RedlineTool, Services, Proof, About, CTA, Nav,
-                 Footer, Section (the numbered manuscript index)
+                 Footer, Section (the numbered manuscript index), SocialIcon (monochrome
+                 brand glyph for the profile links, currentColor, server component)
 lib/
   voice.ts       the voice demo's client-side text analyzer (measured, falsifiable output)
   redline.ts     the copy tool's analyzer: marks cliches, hedges, AI tells, passive voice
   redline.test.ts, voice tests   node:test unit tests for the two analyzers
   samples.ts     voice sample texts + the deliberately bad copy the redline tool marks up
-  site.ts        shared constants: URLs, email, WhatsApp number, the section index
+  site.ts        shared constants: URLs, email, WhatsApp number, the section index,
+                 and SOCIAL_LINKS (LinkedIn, GitHub, TradingView; label + href + brand glyph)
   scripts.ts     inline theme, scroll-reveal, read-progress, and click-tracking JS
   track.ts       small analytics event helper
   ui.ts          tiny CSS-custom-property helpers for TSX
@@ -81,6 +84,13 @@ unit-tested). Around them the layout leans into the manuscript idea: each sectio
 oversized draft-face folio number in the margin, and a redline change-bar pinned to the left edge
 fills as the page is read. The heading scale is fluid (`t-hero` / `t-h2` / `t-h3`), and reveals
 stagger in from the margin. All of it is gated on `prefers-reduced-motion`.
+
+The public profiles (LinkedIn, GitHub, TradingView) render as visible links in two places: the
+footer, and an `elsewhere:` row in the About section (§06) where they back the copy directly. Both
+read from `SOCIAL_LINKS` in `lib/site.ts`, which is also the source the JSON-LD `Person.sameAs`
+maps over, so the links a visitor clicks and the metadata a crawler reads can never fall out of
+sync. Each link carries a monochrome brand glyph (`components/SocialIcon.tsx`) drawn in
+`currentColor` so it inherits the link color and stays theme-aware.
 
 ## Deploy
 
