@@ -11,7 +11,7 @@ Live at https://syedhamza.xyz.
 - React 19.2.
 - Tailwind CSS v4, CSS-first. Design tokens live in `app/globals.css` under `@theme`; there is no `tailwind.config.js`.
 - Fonts self-hosted at build time via `next/font`: Instrument Serif (display), Hanken Grotesk (body), Courier Prime (the typewriter "draft" face), and JetBrains Mono (terminal).
-- Two React client islands: the Voice Engine demo and the hero's ambient backdrop (`EditingField`), each code-split and loaded after hydration. The theme toggle and scroll reveals are hand-rolled vanilla JS injected from `lib/scripts.ts`. The hero backdrop is a hand-built Canvas 2D animation, not a 3D engine, to keep the JS budget lean.
+- Three React client islands: the Voice Engine demo, the Redline copy tool (`RedlineTool`, powered by the pure `lib/redline.ts`), and the hero's ambient backdrop (`EditingField`, mounted via `HeroField` with `next/dynamic` and `ssr:false`). The theme toggle, scroll reveals, and left-edge read-progress bar are hand-rolled vanilla JS injected from `lib/scripts.ts`. The hero backdrop is a hand-built Canvas 2D animation, not a 3D engine, to keep the JS budget lean.
 
 ## Run it
 
