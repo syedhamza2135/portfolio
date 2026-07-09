@@ -74,11 +74,11 @@ export default function About() {
           ))}
         </ul>
 
-        {/* Public profiles: the receipts behind the copy above (code, markets, work history).
+        {/* Public profiles behind the copy above (code, markets, work history).
             Same SOCIAL_LINKS source as the footer + JSON-LD sameAs. */}
         <nav className="reveal mt-8" aria-label="Profiles" style={rd(80)}>
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <li className="draft text-[0.78rem] text-faint">the receipts:</li>
+            <li className="draft text-[0.78rem] text-faint">elsewhere:</li>
             {SOCIAL_LINKS.map((s) => (
               <li key={s.label}>
                 <a
