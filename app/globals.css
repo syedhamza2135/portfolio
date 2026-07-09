@@ -379,6 +379,79 @@ a {
   line-height: 1;
 }
 
+/* ---------- mobile section index: a native disclosure styled as a manuscript index ----------
+   Below md there is no inline nav, so the folio index becomes the table of contents. Native
+   <details> means no JS island, keyboard-operable, and it works with JS off. Hidden at md+ where
+   the inline section links appear. The dropdown anchors to the right edge of the sticky header. */
+.toc {
+  position: relative;
+}
+.toc-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0 0.35rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--ff-draft), "Courier New", monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+.toc-summary:hover {
+  color: var(--ink);
+}
+.toc-summary::-webkit-details-marker {
+  display: none;
+}
+.toc-summary::after {
+  content: "\25BE"; /* ▾ */
+  font-size: 0.7rem;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+.toc[open] .toc-summary::after {
+  transform: rotate(180deg);
+}
+.toc-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 12rem;
+  padding: 0.35rem;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 0.3rem;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.16);
+  z-index: 60;
+}
+.toc-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 40px;
+  padding: 0 0.6rem;
+  border-radius: 0.2rem;
+  font-family: var(--ff-draft), "Courier New", monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.toc-link:hover {
+  color: var(--ink);
+  background: var(--shell);
+}
+.toc-num {
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .toc-summary::after,
+  .toc-link {
+    transition: none;
+  }
+}
+
 /* ---------- redline tool: attention flag + hover note ----------
    `.del`/`.ins` already carry deletion/insertion. `.flag` is the third mark: text kept, but worth a
    second look (dotted ink-blue underline). The note rides in a title + a styled tooltip. */
