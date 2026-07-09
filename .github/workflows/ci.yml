@@ -20,10 +20,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22+ for the built-in test runner's TypeScript type stripping (npm run test).
+          node-version: 22
           cache: npm
 
       - run: npm ci
+
+      # Typecheck + the analyzer unit tests. Cheap, dependency-free, and gates the build.
+      - run: npm run check
 
       # next/font fetches the fonts at build time, so this needs network (the runner has it).
       - run: npm run build

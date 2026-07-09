@@ -8,6 +8,25 @@ export interface Sample {
   text: string;
 }
 
+// Deliberately bad marketing copy for the Redline tool (§ new). Each one is stuffed with the
+// exact tells the editor strikes: clichés, hedges, an AI antithesis, a weak opener, an em-dash.
+// These are INPUT being critiqued, not site voice, so the em-dash here is intentional (it shows
+// the em-dash flag firing). The tool marks them up live so a visitor sees the craft, not a claim.
+export const REDLINE_SAMPLES: Sample[] = [
+  {
+    label: "SaaS landing page",
+    text: `In today's fast-paced digital landscape, our best-in-class platform empowers teams to leverage cutting-edge automation and unlock game-changing results at scale. It's not just a tool, it's a paradigm shift. Our robust, seamless solution helps you move the needle and take your workflow to the next level.`,
+  },
+  {
+    label: "agency about page",
+    text: `We are a world-class team of thought leaders who are deeply passionate about delivering actionable insights. There is nothing we love more than to circle back, unpack the low-hanging fruit, and drill down into the data — it is important to note that we always go the extra mile. Our holistic approach really moves the needle.`,
+  },
+  {
+    label: "product announcement",
+    text: `We're thrilled to announce our revolutionary new feature that will supercharge your productivity. This next-level, mission-critical update was carefully engineered by our team to seamlessly streamline your entire workflow. Needless to say, it's a total game-changer that empowers you to do more with less.`,
+  },
+];
+
 export const SAMPLES: Sample[] = [
   {
     label: "agency pitch",

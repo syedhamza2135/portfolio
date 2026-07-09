@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Section from "@/components/Section";
+import { rd } from "@/lib/ui";
 
 const TIMELINE = [
   { tag: "foundation", text: "CS degree from a university ranked 81st in Asia by US News. I think in systems and write the Python myself." },
@@ -22,11 +23,11 @@ const PILLS = [
 
 export default function About() {
   return (
-    <Section id="about" label="who you're hiring" labelledBy="about-h">
+    <Section id="about" num="06" label="who you're hiring" labelledBy="about-h">
         {/* Headline spans the full content width: nested in the photo column it was trapped at
             ~320px and the global `text-wrap: balance` collapsed it into a 5-line, mid-phrase stack.
-            Full width, it settles into 2–3 clean lines at every breakpoint. Photo + bio sit below. */}
-        <h2 id="about-h" className="reveal max-w-3xl text-3xl font-medium sm:text-4xl">
+            Full width, it settles into 2-3 clean lines at every breakpoint. Photo + bio sit below. */}
+        <h2 id="about-h" className="reveal t-h2 max-w-3xl font-medium">
           I&rsquo;m the contractor agencies call when the work sits between two job titles.
         </h2>
 
@@ -47,7 +48,7 @@ export default function About() {
             />
           </figure>
 
-          <p className="reveal max-w-2xl text-lg text-muted">
+          <p className="reveal t-lead max-w-2xl text-muted" style={rd(80)}>
             Strong writers usually can&rsquo;t build the tool. Strong builders usually write
             like engineers. I do both and bill it as one line item, which is what an agency
             wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
@@ -56,8 +57,8 @@ export default function About() {
         </div>
 
         <ol className="mt-12 max-w-2xl space-y-4">
-          {TIMELINE.map((t) => (
-            <li key={t.tag} className="reveal grid grid-cols-[7rem_1fr] gap-4 sm:grid-cols-[8rem_1fr]">
+          {TIMELINE.map((t, i) => (
+            <li key={t.tag} style={rd(i * 70)} className="reveal grid grid-cols-[7rem_1fr] gap-4 sm:grid-cols-[8rem_1fr]">
               <span className="draft pt-0.5 text-[0.78rem] text-accent">{t.tag}</span>
               <span className="text-base">{t.text}</span>
             </li>

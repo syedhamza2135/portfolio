@@ -19,7 +19,7 @@ export default function Nav() {
         </a>
 
         <div className="flex items-center gap-5">
-          <ul className="hidden items-center gap-5 md:flex">
+          <ul className="hidden items-center gap-5 lg:flex">
             {SECTIONS.map((s) => (
               <li key={s.id}>
                 <a

@@ -19,9 +19,15 @@ Live at https://syedhamza.xyz.
 npm install
 npm run dev      # http://localhost:3000 (Turbopack)
 npm run build    # static export to ./out
+npm run check    # typecheck + unit tests (tsc --noEmit && node --test)
 npx serve out    # serve the production build locally
 npm run og       # regenerate public/og.png
 ```
+
+Tests are the analyzer logic in `lib/` (`voice.ts` and `redline.ts` are pure, so they get real unit
+coverage). They run on Node's built-in test runner with TypeScript type stripping, so there is no
+test-framework dependency. Node 22+ is required for `npm run test`. CI runs `npm run check` before
+the build.
 
 `next/font` downloads the fonts during the build, so building needs network access.
 
@@ -35,13 +41,17 @@ app/
   styleguide/    token preview; not linked, noindex
   sitemap.ts, robots.ts, icon.svg
 components/      Hero, HeroField and EditingField (Canvas 2D), Problem, System and
-                 VoiceEngine, Services, Proof, About, CTA, Nav, Footer, Section
+                 VoiceEngine, Redline and RedlineTool, Services, Proof, About, CTA, Nav,
+                 Footer, Section (the numbered manuscript index)
 lib/
-  voice.ts       the demo's client-side text analyzer (measured, falsifiable output)
-  samples.ts     three sample texts in distinct voices
-  site.ts        shared constants: URLs, email, WhatsApp number
-  scripts.ts     inline theme, scroll-reveal, and click-tracking JS
+  voice.ts       the voice demo's client-side text analyzer (measured, falsifiable output)
+  redline.ts     the copy tool's analyzer: marks cliches, hedges, AI tells, passive voice
+  redline.test.ts, voice tests   node:test unit tests for the two analyzers
+  samples.ts     voice sample texts + the deliberately bad copy the redline tool marks up
+  site.ts        shared constants: URLs, email, WhatsApp number, the section index
+  scripts.ts     inline theme, scroll-reveal, read-progress, and click-tracking JS
   track.ts       small analytics event helper
+  ui.ts          tiny CSS-custom-property helpers for TSX
 ```
 
 ## Design
@@ -62,6 +72,15 @@ The hero backdrop, "the editing floor," is a slow drift of word fragments: clich
 in-voice words underlined in blue, the rest faint. It is hand-drawn on a 2D canvas (no 3D engine),
 dimmed and radially masked in light mode so it never competes with the headline. It reads the theme
 tokens, pauses when offscreen, and is skipped entirely under `prefers-reduced-motion`.
+
+The page carries two live demos that share a story but not a look. The Voice Engine (§02) is a green
+terminal: the machine reading how a client writes. The Redline tool (§03) is a bond page under the
+editor's hand: paste any copy and the same editing pass marks it up, clichés struck, hedges cut, AI
+tells and passive voice flagged, each mark measured from the text rather than guessed (`lib/redline.ts`,
+unit-tested). Around them the layout leans into the manuscript idea: each section opens with an
+oversized draft-face folio number in the margin, and a redline change-bar pinned to the left edge
+fills as the page is read. The heading scale is fluid (`t-hero` / `t-h2` / `t-h3`), and reveals
+stagger in from the margin. All of it is gated on `prefers-reduced-motion`.
 
 ## Deploy
 

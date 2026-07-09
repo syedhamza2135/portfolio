@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import System from "@/components/System";
+import Redline from "@/components/Redline";
 import Services from "@/components/Services";
 import Proof from "@/components/Proof";
 import About from "@/components/About";
@@ -47,6 +48,7 @@ export default function Home() {
       <Hero />
       <Problem />
       <System />
+      <Redline />
       <Services />
       <Proof />
       <About />
