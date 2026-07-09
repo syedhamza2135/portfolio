@@ -28,6 +28,15 @@ export const WHATSAPP_URL = WHATSAPP_NUMBER
 export const TAGLINE =
   "I build content systems for scale: strategy, automation and the engineering to run them.";
 
+// Public profiles. Single source of truth for BOTH the visible footer links and the
+// JSON-LD Person `sameAs` (app/page.tsx maps this to href), so the two can never drift.
+// Order here is the render order in the footer.
+export const SOCIAL_LINKS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/syedhamza2135" },
+  { label: "GitHub", href: "https://github.com/syedhamza2135" },
+  { label: "TradingView", href: "https://www.tradingview.com/u/syedhamza2135/" },
+] as const;
+
 // Nav section index (the mono "01 — " numbering is visual; headings carry real hierarchy).
 export const SECTIONS = [
   { id: "problem", num: "01", label: "problem" },
