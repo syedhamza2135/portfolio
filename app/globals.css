@@ -502,6 +502,12 @@ a {
   left: auto;
   right: 0;
 }
+/* Top-flip: a mark on the paper's first line would push its above-anchored note past the top edge,
+   so drop the note below the mark instead. Set by measurement (see useLayoutEffect), same as note-right. */
+.rl-mark.note-below .rl-note {
+  bottom: auto;
+  top: calc(100% + 0.35rem);
+}
 
 /* Marks settle in one after another when a fresh redline runs, so the edit reads as a hand moving
    down the page. Keyed remount replays it each run. Reduced-motion zeroes it via the global kill. */
