@@ -1,11 +1,12 @@
 import Section from "@/components/Section";
 import VoiceEngine from "@/components/VoiceEngine";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 // §02 — The system. Server-rendered shell around the one client island (the demo).
 export default function System() {
   return (
-    <Section id="system" num="02" label="the system" labelledBy="system-h">
+    <Section id="system" num={folioFor("system")} label="the system" labelledBy="system-h">
         <h2 id="system-h" className="reveal t-h2 max-w-2xl font-medium">
           The voice pipeline, running live.
         </h2>
@@ -17,12 +18,12 @@ export default function System() {
         <VoiceEngine />
 
         {/*
-          §02 caption. PRD open item #6: insert the VERIFIED draft count before launch.
-          Do not assert a number you can't back up — keep it honest.
+          §02 caption. Settled decision (2026-07-09): state no draft count. No defensible
+          figure exists yet, and the site's rule is to never assert a number it can't back up.
+          The caption stands on its own without one. Revisit only if a verifiable figure lands.
         */}
         <p className="reveal mt-4 text-sm text-muted">
           A stripped-down slice of the real pipeline: drafts in, a voice + editing skill out.
-          {/* e.g. "40+ drafts in" — confirm the real figure, then state it here. */}
         </p>
 
         <p className="reveal mt-6 max-w-2xl text-base text-muted">

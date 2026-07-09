@@ -56,6 +56,21 @@ export default function RedlineTool() {
         <div
           key={runId}
           aria-hidden="true"
+          onClick={(e) => {
+            // Delegated tap-to-reveal (the paper is aria-hidden, so no ARIA/tabindex here).
+            const paper = e.currentTarget;
+            const mark = (e.target as HTMLElement).closest<HTMLElement>(".rl-mark");
+            const wasOpen = mark?.classList.contains("is-open") ?? false;
+            // Only one note open at a time: clear every open mark first.
+            paper.querySelectorAll(".rl-mark.is-open").forEach((el) => el.classList.remove("is-open"));
+            // Outside-click, or a second tap on the open mark, leaves all notes closed.
+            if (!mark || wasOpen) return;
+            // Flip the note to the right edge when the mark sits past the paper's midline.
+            const mr = mark.getBoundingClientRect();
+            const pr = paper.getBoundingClientRect();
+            mark.classList.toggle("note-right", mr.left + mr.width / 2 > pr.left + pr.width / 2);
+            mark.classList.add("is-open");
+          }}
           className="rl-paper rl-animate min-h-[13rem] px-5 py-6 text-ink sm:px-7"
         >
           {!result.ok && <span className="draft text-muted">{result.message}</span>}
@@ -89,9 +104,16 @@ export default function RedlineTool() {
             id="redline-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                onMark();
+              }
+            }}
             rows={3}
             spellCheck={false}
             placeholder="a headline, a landing page, an about section…"
+            aria-keyshortcuts="Control+Enter"
             aria-describedby={!result.ok ? errId : undefined}
             aria-invalid={!result.ok}
             className="draft mt-2 w-full resize-y rounded-sm border border-hairline bg-shell px-3 py-2 text-[0.9rem] text-ink placeholder:text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"

@@ -20,8 +20,8 @@ export default function Hero() {
           </h1>
 
           <p className="t-lead mt-8 max-w-xl text-muted">
-            Content pipelines for US agencies: voice-matched drafting, technical content, editorial
-            automation. Writing and code included.
+            Content pipelines for US agencies and AI companies: voice-matched drafting, technical
+            content, editorial automation. Writing and code included.
           </p>
 
           <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">

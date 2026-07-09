@@ -6,7 +6,7 @@ import Services from "@/components/Services";
 import Proof from "@/components/Proof";
 import About from "@/components/About";
 import CTA from "@/components/CTA";
-import { NAME, SITE_URL, TAGLINE } from "@/lib/site";
+import { NAME, SITE_URL, TAGLINE, CONTACT_EMAIL } from "@/lib/site";
 
 // JSON-LD: Person + ProfilePage structured data (§7 SEO).
 const jsonLd = {
@@ -19,19 +19,28 @@ const jsonLd = {
       url: SITE_URL,
       jobTitle: "Content systems contractor",
       description: TAGLINE,
+      email: "mailto:" + CONTACT_EMAIL,
+      sameAs: [
+        "https://github.com/syedhamza2135",
+        "https://www.tradingview.com/u/syedhamza2135/",
+      ],
       knowsAbout: [
         "Content strategy",
         "AI content automation",
         "Technical writing",
         "Python",
         "Web development",
+        "Developer documentation",
+        "LLM evaluation",
+        "Editorial automation",
+        "Claude API",
       ],
     },
     {
       "@type": "ProfilePage",
       "@id": `${SITE_URL}/#profilepage`,
       url: SITE_URL,
-      name: `${NAME} · content systems for agencies`,
+      name: `${NAME} · content systems for agencies and AI companies`,
       about: { "@id": `${SITE_URL}/#person` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },

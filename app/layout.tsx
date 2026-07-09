@@ -22,15 +22,15 @@ const display = Instrument_Serif({
 });
 const body = Hanken_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["400", "500"],
+  style: ["normal"],
   variable: "--ff-body",
   display: "swap",
 });
 const draft = Courier_Prime({
   subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
+  weight: ["400"],
+  style: ["normal"],
   variable: "--ff-draft",
   display: "swap",
 });
@@ -59,6 +59,8 @@ export const metadata: Metadata = {
     "agency contractor",
     "voice matching",
     "editorial automation",
+    "developer marketing",
+    "AI documentation",
   ],
   openGraph: {
     type: "website",

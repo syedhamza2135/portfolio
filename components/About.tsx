@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Section from "@/components/Section";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 const TIMELINE = [
@@ -23,7 +24,7 @@ const PILLS = [
 
 export default function About() {
   return (
-    <Section id="about" num="06" label="who you're hiring" labelledBy="about-h">
+    <Section id="about" num={folioFor("about")} label="who you're hiring" labelledBy="about-h">
         {/* Headline spans the full content width: nested in the photo column it was trapped at
             ~320px and the global `text-wrap: balance` collapsed it into a 5-line, mid-phrase stack.
             Full width, it settles into 2-3 clean lines at every breakpoint. Photo + bio sit below. */}

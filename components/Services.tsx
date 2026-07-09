@@ -1,7 +1,8 @@
 import Section from "@/components/Section";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
-// §03 — What I build for agencies. Moved up before proof/about (§5 revision).
+// §04 — What I build for agencies. Moved up before proof/about (§5 revision).
 const OFFERS = [
   {
     marker: "a",
@@ -22,7 +23,7 @@ const OFFERS = [
 
 export default function Services() {
   return (
-    <Section id="services" num="03" label="what i build for agencies" labelledBy="services-h">
+    <Section id="services" num={folioFor("services")} label="what i build for agencies" labelledBy="services-h">
         <h2 id="services-h" className="reveal t-h2 max-w-2xl font-medium">
           Three ways to put me to work.
         </h2>

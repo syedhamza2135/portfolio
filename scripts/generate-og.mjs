@@ -41,7 +41,7 @@ const base = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"
   <!-- value prop -->
   <text x="80" y="196" font-family="${serif}" font-size="34" fill="${INK}">Publish like a ten-person content team.</text>
   <text x="80" y="244" font-family="${serif}" font-size="34" font-style="italic" fill="${INK_BLUE}">With one contractor.</text>
-  <text x="80" y="294" font-family="${draft}" font-size="19" fill="${MUTED}">Content pipelines for US agencies. Writing and code included.</text>
+  <text x="80" y="294" font-family="${draft}" font-size="19" fill="${MUTED}">Content pipelines for US agencies and AI companies.</text>
 
   <!-- revision signature: the struck generic draft, then the in-voice line -->
   <rect x="80" y="350" width="680" height="170" fill="${CARD}"/>

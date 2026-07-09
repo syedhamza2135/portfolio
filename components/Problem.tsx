@@ -1,10 +1,11 @@
 import Section from "@/components/Section";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 // §01. Written AT the agency owner. This is the highest copy bar on the page (§5.01).
 export default function Problem() {
   return (
-    <Section id="problem" num="01" label="the problem" labelledBy="problem-h">
+    <Section id="problem" num={folioFor("problem")} label="the problem" labelledBy="problem-h">
         <h2
           id="problem-h"
           className="reveal t-h2 max-w-3xl font-medium"

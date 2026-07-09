@@ -386,6 +386,19 @@ a {
   opacity: 1;
   transform: none;
 }
+/* Tap-to-reveal on touch: the click handler toggles .is-open on one mark at a time so mobile
+   visitors (who never hover) still see the editorial reason. Matches the hover visible state; the
+   transition is killed under reduced-motion by the global * override below, same as hover. */
+.rl-mark.is-open .rl-note {
+  opacity: 1;
+  transform: none;
+}
+/* Edge-flip: marks past the paper's midline anchor their note to the right edge instead of the left,
+   so it never overflows off-screen. Applied on click; also fixes right-edge overflow on desktop. */
+.rl-mark.note-right .rl-note {
+  left: auto;
+  right: 0;
+}
 
 /* Marks settle in one after another when a fresh redline runs, so the edit reads as a hand moving
    down the page. Keyed remount replays it each run. Reduced-motion zeroes it via the global kill. */

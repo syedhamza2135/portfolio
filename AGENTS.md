@@ -78,7 +78,9 @@ committed — it contains private strategy/client names).
 
 ## Open content TODOs (placeholders in code — search `TODO`)
 
-- Verified draft count in the demo caption (`components/System.tsx`) — the one real open item.
+- (Settled 2026-07-09) Verified draft count in the demo caption (`components/System.tsx`): decision
+  is to state NO number until a defensible figure exists. The caption stands without one. Not an open
+  item anymore; revisit only if a verifiable count lands.
 - Proof testimonial slot (`components/Proof.tsx`) is intentionally empty (user decided: no
   invented or anonymous testimonial). `TESTIMONIAL` stays `null` until a real attributed quote
   exists; the layout holds without it.
