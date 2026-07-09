@@ -1,8 +1,9 @@
 import Section from "@/components/Section";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 /*
-  §04 Proof. Two specific-but-anonymous client cases (real client-scale markers, no name yet).
+  §05 Proof. Two specific-but-anonymous client cases (real client-scale markers, no name yet).
   Keep every number honest (§8) — replace the outcome lines only with figures you can defend.
   TESTIMONIAL stays null until a real attributed quote exists.
 */
@@ -12,7 +13,7 @@ const CASES = [
     required:
       "Technical content on LLM evaluation and observability, accurate enough for a developer audience and held to agency deadlines.",
     shipped:
-      "Long-form articles and docs on evaluation, tracing, and observability, written for engineers and shipped through their V2 launch.",
+      "Long-form articles and docs on evaluation, tracing and observability, written for engineers and shipped through their V2 launch.",
     outcome: "Cleared technical review without a rewrite cycle, on every deadline.",
   },
   {
@@ -24,13 +25,17 @@ const CASES = [
   },
 ];
 
-// §04 testimonial slot (T2). Set to an object once you have one attributed quote; until
+// §05 testimonial slot (T2). Set to an object once you have one attributed quote; until
 // then it renders nothing and the layout stays intact.
+// Note: the blockquote below renders with `font-sans italic`. The Hanken Grotesk italic
+// face is being trimmed from app/layout.tsx in a parallel change, so when a real testimonial
+// ships, re-add that italic face OR restyle the quote (e.g. font-serif). Do not rely on
+// browser-synthesized italics for the body font.
 const TESTIMONIAL: { quote: string; name: string; title: string } | null = null;
 
 export default function Proof() {
   return (
-    <Section id="proof" num="05" label="proof" labelledBy="proof-h">
+    <Section id="proof" num={folioFor("proof")} label="proof" labelledBy="proof-h">
         <h2 id="proof-h" className="reveal t-h2 max-w-2xl font-medium">
           Work that went live, on real deadlines.
         </h2>

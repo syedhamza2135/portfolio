@@ -3,7 +3,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { redline, type RedlineResult, type RedlineCategory } from "./redline.ts";
+import { redline, editLetter, type RedlineResult, type RedlineCategory } from "./redline.ts";
 
 // -- helpers ---------------------------------------------------------------------------------------
 
@@ -183,4 +183,64 @@ test("summary reports the total mark count and word count", () => {
   const r = ok("We leverage synergy and circle back to just really move the needle for you every time.");
   assert.match(r.summary, new RegExp(`Marked ${r.markCount} spot`));
   assert.match(r.summary, new RegExp(`${r.wordCount} words`));
+});
+
+// -- edit letter -----------------------------------------------------------------------------------
+
+test("editLetter: deterministic output for a known input", () => {
+  const r = ok("In today's fast-paced digital landscape we leverage synergy to just really elevate the brand.");
+  const letter = editLetter(r);
+  assert.equal(
+    letter,
+    [
+      "redline / syedhamza.xyz",
+      r.summary,
+      "",
+      'strike "In today\'s fast-paced" - cliche, cut it',
+      'strike "digital landscape" - cliche, cut it',
+      'strike "leverage" - jargon, say it plainly',
+      'strike "synergy" - jargon, say it plainly',
+      'strike "just" - hedge, cut it',
+      'strike "really" - hedge, cut it',
+      'strike "elevate" - jargon, say it plainly',
+      "",
+      r.verdict,
+    ].join("\n"),
+  );
+  // calling twice gives the same string
+  assert.equal(editLetter(r), letter);
+});
+
+test("editLetter: one line per mark, in document order", () => {
+  const r = ok("In today's fast-paced digital landscape we leverage synergy to just really elevate the brand.");
+  const letter = editLetter(r);
+  const markLines = letter.split("\n").filter((l) => /^(strike|flag) /.test(l));
+  assert.equal(markLines.length, r.markCount);
+});
+
+test("editLetter: zero-mark case is a short, graceful letter", () => {
+  const r = ok(CLEAN);
+  assert.equal(r.markCount, 0);
+  const letter = editLetter(r);
+  assert.equal(letter, ["redline / syedhamza.xyz", r.summary, r.verdict].join("\n"));
+  // no mark lines, and it does not throw
+  assert.ok(!/^(strike|flag) /m.test(letter));
+});
+
+test("editLetter: no em-dash appears anywhere in the output", () => {
+  const inputs = [
+    CLEAN,
+    "In today's fast-paced digital landscape we leverage synergy to unlock game-changing results at scale.",
+    "We edit hard " + EM_DASH + " then we ship, and the draft was reviewed quickly by two editors today.",
+  ];
+  for (const input of inputs) {
+    assert.ok(!editLetter(ok(input)).includes(EM_DASH), `edit letter has em-dash for: ${input}`);
+  }
+});
+
+test("editLetter: has no trailing whitespace on any line", () => {
+  const r = ok("We edit hard " + EM_DASH + " then we ship, and the draft was reviewed quickly by two editors today.");
+  const letter = editLetter(r);
+  assert.equal(letter, letter.replace(/[ \t]+$/gm, ""));
+  assert.equal(letter, letter.trimEnd());
 });

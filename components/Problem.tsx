@@ -1,10 +1,11 @@
 import Section from "@/components/Section";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 // §01. Written AT the agency owner. This is the highest copy bar on the page (§5.01).
 export default function Problem() {
   return (
-    <Section id="problem" num="01" label="the problem" labelledBy="problem-h">
+    <Section id="problem" num={folioFor("problem")} label="the problem" labelledBy="problem-h">
         <h2
           id="problem-h"
           className="reveal t-h2 max-w-3xl font-medium"
@@ -14,7 +15,7 @@ export default function Problem() {
         <div className="reveal t-lead mt-7 max-w-2xl space-y-5 text-muted" style={rd(80)}>
           <p>
             The pitch was the easy part. The work is volume: a dozen pieces a month, each
-            one supposed to sound like the client, hit a real quality bar, and ship on a
+            one supposed to sound like the client, hit a real quality bar and ship on a
             date you already promised. Hire fast and the voice drifts. Edit everything
             yourself and you become the bottleneck you hired around.
           </p>

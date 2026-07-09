@@ -26,7 +26,7 @@ export const WHATSAPP_URL = WHATSAPP_NUMBER
   : "";
 
 export const TAGLINE =
-  "I build content systems for agencies: strategy, automation, and the engineering to make it scale.";
+  "I build content systems for scale: strategy, automation and the engineering to run them.";
 
 // Nav section index (the mono "01 — " numbering is visual; headings carry real hierarchy).
 export const SECTIONS = [
@@ -37,3 +37,13 @@ export const SECTIONS = [
   { id: "proof", num: "05", label: "proof" },
   { id: "about", num: "06", label: "about" },
 ] as const;
+
+// Section id union, derived from SECTIONS so a wrong id is a compile error.
+export type SectionId = (typeof SECTIONS)[number]["id"];
+
+// The margin folio ("01".."06") for a section, derived from its position in SECTIONS.
+// Single source of truth: reorder SECTIONS and every section's folio follows, no manual edits.
+export function folioFor(id: SectionId): string {
+  const index = SECTIONS.findIndex((s) => s.id === id);
+  return String(index + 1).padStart(2, "0");
+}

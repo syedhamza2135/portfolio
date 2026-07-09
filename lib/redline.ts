@@ -38,6 +38,9 @@ export type RedlineResult =
       verdict: string;       // one short honest line, terminal-style closing result
     };
 
+// The successful shape the UI renders (and editLetter summarizes).
+export type RedlineOk = Extract<RedlineResult, { ok: true }>;
+
 const MIN_WORDS = 12;
 const CAP = 4000; // detection is capped so a giant paste can't hang the UI; text past it stays plain
 
@@ -345,4 +348,30 @@ export function redline(raw: string): RedlineResult {
     summary,
     verdict: buildVerdict(markCount, wordCount),
   };
+}
+
+// -- edit letter -----------------------------------------------------------------------------------
+// A plain-text note a visitor can copy: the summary, one line per mark in document order, and the
+// verdict. It is itself a small writing sample, so it follows the copy bar: sentence case, no
+// em-dash. Pure (no DOM, no clipboard) so it stays unit-tested; the component owns the clipboard.
+
+export function editLetter(result: RedlineOk): string {
+  const header = "redline / syedhamza.xyz";
+  const marks = result.segments.flatMap((s) => (s.kind === "mark" ? [s.mark] : []));
+
+  if (marks.length === 0) {
+    // Zero-mark case: a short, honest "no marks" letter. Never throws.
+    return [header, result.summary, result.verdict].join("\n");
+  }
+
+  // "strike" for a cut, "flag" for a second look. Plain hyphen separator, never an em-dash. The
+  // marked phrase can itself contain an em-dash (that is what the em-dash flag catches), so name it
+  // rather than reprint the glyph. This keeps the letter em-dash-free like the rest of the voice.
+  const lines = marks.map((m) => {
+    const verb = m.type === "del" ? "strike" : "flag";
+    const phrase = m.text.trim().replace(/—/g, "em-dash");
+    return `${verb} "${phrase}" - ${m.note}`;
+  });
+
+  return [header, result.summary, "", ...lines, "", result.verdict].join("\n");
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useId, useState } from "react";
-import { redline, type RedlineResult, type Segment } from "@/lib/redline";
+import { useEffect, useId, useRef, useState } from "react";
+import { redline, editLetter, type RedlineResult, type Segment } from "@/lib/redline";
 import { REDLINE_SAMPLES } from "@/lib/samples";
 import { track } from "@/lib/track";
 
@@ -19,8 +19,16 @@ export default function RedlineTool() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<RedlineResult>(() => redline(REDLINE_SAMPLES[0].text));
   const [runId, setRunId] = useState(0);
+  // The source slug shown in the header: a sample's label, or the visitor's own copy.
+  const [source, setSource] = useState(REDLINE_SAMPLES[0].label);
+  const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const errId = useId();
+
+  useEffect(() => () => {
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+  }, []);
 
   const run = (text: string) => {
     setResult(redline(text));
@@ -29,17 +37,28 @@ export default function RedlineTool() {
 
   const onMark = () => {
     track("redline_mark");
+    setSource("your copy, marked up");
     run(input);
   };
   const onExample = () => {
     const next = (sampleIdx + 1) % REDLINE_SAMPLES.length;
     setSampleIdx(next);
     setInput("");
+    setSource(REDLINE_SAMPLES[next].label);
     track("redline_example");
     run(REDLINE_SAMPLES[next].text);
   };
 
   const ok = result.ok ? result : null;
+
+  const onCopyLetter = () => {
+    if (!ok || ok.markCount === 0) return;
+    navigator.clipboard?.writeText(editLetter(ok)).catch(() => {});
+    track("redline_copy_letter");
+    setCopied(true);
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+    copyTimer.current = setTimeout(() => setCopied(false), 1500);
+  };
 
   return (
     <div className="reveal">
@@ -47,7 +66,7 @@ export default function RedlineTool() {
         {/* header: a manuscript slug line, not terminal chrome */}
         <div className="flex items-center justify-between gap-3 border-b border-hairline px-5 py-3">
           <span className="draft text-[0.74rem] text-muted">
-            <span className="text-accent">redline</span> / your copy, marked up
+            <span className="text-accent">redline</span> / {source.toLowerCase()}
           </span>
           <span className="draft text-[0.72rem] text-faint">client-side · nothing leaves the page</span>
         </div>
@@ -56,6 +75,21 @@ export default function RedlineTool() {
         <div
           key={runId}
           aria-hidden="true"
+          onClick={(e) => {
+            // Delegated tap-to-reveal (the paper is aria-hidden, so no ARIA/tabindex here).
+            const paper = e.currentTarget;
+            const mark = (e.target as HTMLElement).closest<HTMLElement>(".rl-mark");
+            const wasOpen = mark?.classList.contains("is-open") ?? false;
+            // Only one note open at a time: clear every open mark first.
+            paper.querySelectorAll(".rl-mark.is-open").forEach((el) => el.classList.remove("is-open"));
+            // Outside-click, or a second tap on the open mark, leaves all notes closed.
+            if (!mark || wasOpen) return;
+            // Flip the note to the right edge when the mark sits past the paper's midline.
+            const mr = mark.getBoundingClientRect();
+            const pr = paper.getBoundingClientRect();
+            mark.classList.toggle("note-right", mr.left + mr.width / 2 > pr.left + pr.width / 2);
+            mark.classList.add("is-open");
+          }}
           className="rl-paper rl-animate min-h-[13rem] px-5 py-6 text-ink sm:px-7"
         >
           {!result.ok && <span className="draft text-muted">{result.message}</span>}
@@ -89,9 +123,16 @@ export default function RedlineTool() {
             id="redline-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                onMark();
+              }
+            }}
             rows={3}
             spellCheck={false}
             placeholder="a headline, a landing page, an about section…"
+            aria-keyshortcuts="Control+Enter"
             aria-describedby={!result.ok ? errId : undefined}
             aria-invalid={!result.ok}
             className="draft mt-2 w-full resize-y rounded-sm border border-hairline bg-shell px-3 py-2 text-[0.9rem] text-ink placeholder:text-faint focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
@@ -115,6 +156,14 @@ export default function RedlineTool() {
               className="draft inline-flex min-h-[44px] items-center rounded-sm border border-hairline px-5 text-[0.82rem] text-muted transition-colors hover:text-ink"
             >
               try bad copy
+            </button>
+            <button
+              type="button"
+              onClick={onCopyLetter}
+              disabled={!ok || ok.markCount === 0}
+              className="draft inline-flex min-h-[44px] items-center rounded-sm border border-hairline px-5 text-[0.82rem] text-muted transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:text-muted"
+            >
+              {copied ? "copied" : "copy the edit letter"}
             </button>
           </div>
         </div>

@@ -1,7 +1,8 @@
 import Section from "@/components/Section";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
-// §03 — What I build for agencies. Moved up before proof/about (§5 revision).
+// §04 — What I build for agencies. Moved up before proof/about (§5 revision).
 const OFFERS = [
   {
     marker: "a",
@@ -11,18 +12,18 @@ const OFFERS = [
   {
     marker: "b",
     title: "Technical content",
-    body: "AI, fintech, and developer-facing writing for the clients generalist writers tap out on. I read the docs and the charts.",
+    body: "AI, fintech and developer-facing writing for the clients generalist writers tap out on. I read the docs and the charts.",
   },
   {
     marker: "c",
     title: "Copy + code, one invoice",
-    body: "Landing pages, programmatic SEO, and the small internal tools that make a content team faster. Written and built by the same person.",
+    body: "Landing pages, programmatic SEO and the small internal tools that make a content team faster. Written and built by the same person.",
   },
 ];
 
 export default function Services() {
   return (
-    <Section id="services" num="03" label="what i build for agencies" labelledBy="services-h">
+    <Section id="services" num={folioFor("services")} label="what i build for agencies" labelledBy="services-h">
         <h2 id="services-h" className="reveal t-h2 max-w-2xl font-medium">
           Three ways to put me to work.
         </h2>

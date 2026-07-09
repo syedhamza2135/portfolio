@@ -1,5 +1,6 @@
 import Section from "@/components/Section";
 import RedlineTool from "@/components/RedlineTool";
+import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 // §03 — Redline. The second half of the pipeline story: the voice engine (§02) reads how a client
@@ -7,7 +8,7 @@ import { rd } from "@/lib/ui";
 // client island (the tool). The two demos share a story but not a look: terminal vs. bond page.
 export default function Redline() {
   return (
-    <Section id="redline" num="03" label="redline" labelledBy="redline-h">
+    <Section id="redline" num={folioFor("redline")} label="redline" labelledBy="redline-h">
       <h2 id="redline-h" className="reveal t-h2 max-w-2xl font-medium">
         The editor half of the pipeline. Run it on your copy.
       </h2>

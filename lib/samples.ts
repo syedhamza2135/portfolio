@@ -34,10 +34,10 @@ export const SAMPLES: Sample[] = [
   },
   {
     label: "systems essay",
-    text: `The shift to automated editorial systems is frequently misread as a reduction in human oversight; in practice, it represents a redistribution of that oversight toward the decisions that genuinely require judgment. A well-constructed pipeline does not replace the editor. It relocates the editor's attention from mechanical correction to the questions a machine cannot settle: whether the argument holds, whether the evidence is sufficient, and whether the piece earns the reader's continued attention.`,
+    text: `The shift to automated editorial systems is frequently misread as a reduction in human oversight; in practice, it represents a redistribution of that oversight toward the decisions that genuinely require judgment. A well-constructed pipeline does not replace the editor. It relocates the editor's attention from mechanical correction to the questions a machine cannot settle: whether the argument holds, whether the evidence is sufficient and whether the piece earns the reader's continued attention.`,
   },
   {
     label: "founder note",
-    text: `I learned to write the way I learned to trade: by losing, repeatedly, in public. My first clients were patient in the way that only people paying very little can afford to be. Did I know what I was doing? Not entirely. But I shipped, I listened, and I rewrote until the work stopped embarrassing me. Somewhere in there, the writing started to sound like a person instead of a template.`,
+    text: `I learned to write the way I learned to trade: by losing, repeatedly, in public. My first clients were patient in the way that only people paying very little can afford to be. Did I know what I was doing? Not entirely. But I shipped, I listened and I rewrote until the work stopped embarrassing me. Somewhere in there, the writing started to sound like a person instead of a template.`,
   },
 ];

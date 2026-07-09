@@ -237,9 +237,16 @@ export default function VoiceEngine() {
             id="voice-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                onAnalyze();
+              }
+            }}
             rows={3}
             spellCheck={false}
             placeholder="a paragraph or two, at least 50 words…"
+            aria-keyshortcuts="Control+Enter"
             aria-describedby={status === "error" ? errId : undefined}
             aria-invalid={status === "error"}
             className="mono mt-2 w-full resize-y rounded-md border border-term-border bg-term-bg px-3 py-2 text-[0.8rem] text-term-bright placeholder:text-term-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-term-teal"

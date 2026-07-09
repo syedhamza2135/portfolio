@@ -11,7 +11,8 @@ Quick orientation + current focus + gotchas. For full architecture, see `README.
 ## What this is
 
 A single-page portfolio for an independent contractor selling **content systems for
-agencies** (writing + automation + code). The site *is* the portfolio: the copy is a
+scale** (writing + automation + code) to agencies and AI companies. The site *is* the
+portfolio: the copy is a
 writing sample, the build is an engineering sample. Built from a detailed PRD (v1.2; not
 committed — it contains private strategy/client names).
 
@@ -78,7 +79,9 @@ committed — it contains private strategy/client names).
 
 ## Open content TODOs (placeholders in code — search `TODO`)
 
-- Verified draft count in the demo caption (`components/System.tsx`) — the one real open item.
+- (Settled 2026-07-09) Verified draft count in the demo caption (`components/System.tsx`): decision
+  is to state NO number until a defensible figure exists. The caption stands without one. Not an open
+  item anymore; revisit only if a verifiable count lands.
 - Proof testimonial slot (`components/Proof.tsx`) is intentionally empty (user decided: no
   invented or anonymous testimonial). `TESTIMONIAL` stays `null` until a real attributed quote
   exists; the layout holds without it.
