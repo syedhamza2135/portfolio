@@ -19,7 +19,7 @@ export default function Nav() {
         </a>
 
         <div className="flex items-center gap-5">
-          <ul className="hidden items-center gap-5 lg:flex">
+          <ul className="hidden items-center gap-5 md:flex">
             {SECTIONS.map((s) => (
               <li key={s.id}>
                 <a
@@ -38,7 +38,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             data-track="nav_book"
-            className="draft text-[0.78rem] text-ink link-underline"
+            className="draft inline-flex min-h-[44px] items-center text-[0.78rem] text-ink link-underline"
           >
             book ↗
           </a>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { redline, editLetter, type RedlineResult, type Segment } from "@/lib/redline";
 import { REDLINE_SAMPLES } from "@/lib/samples";
 import { track } from "@/lib/track";
@@ -23,6 +23,8 @@ export default function RedlineTool() {
   const [source, setSource] = useState(REDLINE_SAMPLES[0].label);
   const [copied, setCopied] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The bond page container; measured after render to anchor each mark's note left or right.
+  const paperRef = useRef<HTMLDivElement | null>(null);
 
   const errId = useId();
 
@@ -30,20 +32,53 @@ export default function RedlineTool() {
     if (copyTimer.current) clearTimeout(copyTimer.current);
   }, []);
 
-  const run = (text: string) => {
-    setResult(redline(text));
+  // Static edge-flip: a note overflows off the right of the paper when its mark sits past the
+  // paper's midline, so anchor those notes to the right edge instead. Computed by measurement (not
+  // in the click handler) so it is correct for hover on desktop as well as tap on touch. Re-runs on
+  // every fresh run (runId keys the paper's remount) and on a debounced window resize.
+  useLayoutEffect(() => {
+    const paper = paperRef.current;
+    if (!paper) return;
+    const measure = () => {
+      const pr = paper.getBoundingClientRect();
+      const mid = pr.left + pr.width / 2;
+      paper.querySelectorAll<HTMLElement>(".rl-mark").forEach((mark) => {
+        const mr = mark.getBoundingClientRect();
+        mark.classList.toggle("note-right", mr.left + mr.width / 2 > mid);
+      });
+    };
+    measure();
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
+    };
+  }, [runId]);
+
+  const run = (text: string): RedlineResult => {
+    const next = redline(text);
+    setResult(next);
     setRunId((n) => n + 1);
+    return next;
   };
 
   const onMark = () => {
     track("redline_mark");
-    setSource("your copy, marked up");
-    run(input);
+    setCopied(false);
+    // Only relabel the source once the markup succeeds, so the slug never sits over an error.
+    const next = run(input);
+    if (next.ok) setSource("your copy, marked up");
   };
   const onExample = () => {
     const next = (sampleIdx + 1) % REDLINE_SAMPLES.length;
     setSampleIdx(next);
     setInput("");
+    setCopied(false);
     setSource(REDLINE_SAMPLES[next].label);
     track("redline_example");
     run(REDLINE_SAMPLES[next].text);
@@ -68,15 +103,17 @@ export default function RedlineTool() {
           <span className="draft text-[0.74rem] text-muted">
             <span className="text-accent">redline</span> / {source.toLowerCase()}
           </span>
-          <span className="draft text-[0.72rem] text-faint">client-side · nothing leaves the page</span>
+          <span className="draft text-[0.72rem] text-muted">client-side · nothing leaves the page</span>
         </div>
 
         {/* the marked page — decorative for SR; the summary + verdict below carry the meaning */}
         <div
           key={runId}
+          ref={paperRef}
           aria-hidden="true"
           onClick={(e) => {
             // Delegated tap-to-reveal (the paper is aria-hidden, so no ARIA/tabindex here).
+            // note-right is set by measurement (see useLayoutEffect), not here, so hover gets it too.
             const paper = e.currentTarget;
             const mark = (e.target as HTMLElement).closest<HTMLElement>(".rl-mark");
             const wasOpen = mark?.classList.contains("is-open") ?? false;
@@ -84,10 +121,6 @@ export default function RedlineTool() {
             paper.querySelectorAll(".rl-mark.is-open").forEach((el) => el.classList.remove("is-open"));
             // Outside-click, or a second tap on the open mark, leaves all notes closed.
             if (!mark || wasOpen) return;
-            // Flip the note to the right edge when the mark sits past the paper's midline.
-            const mr = mark.getBoundingClientRect();
-            const pr = paper.getBoundingClientRect();
-            mark.classList.toggle("note-right", mr.left + mr.width / 2 > pr.left + pr.width / 2);
             mark.classList.add("is-open");
           }}
           className="rl-paper rl-animate min-h-[13rem] px-5 py-6 text-ink sm:px-7"
@@ -99,6 +132,7 @@ export default function RedlineTool() {
         {/* legend + verdict */}
         {ok && (
           <div className="border-t border-hairline bg-shell/60 px-5 py-4 sm:px-7">
+            <p className="draft mb-3 text-[0.72rem] text-muted" aria-hidden="true">tap a mark for the reason</p>
             {ok.stats.length > 0 && (
               <ul className="mb-3 flex flex-wrap gap-x-4 gap-y-1" aria-hidden="true">
                 {ok.stats.map((s) => (

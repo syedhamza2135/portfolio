@@ -28,10 +28,10 @@ export default function System() {
 
         <p className="reveal mt-6 max-w-2xl text-base text-muted">
           The production version runs on Python and Claude. It reads a client&rsquo;s back
-          catalogue and builds a deeper profile than these client-side heuristics can. Every
-          draft gets a voice and editing skill to work from. The first pass already sounds
-          like the client, not like a model. This page runs the lightweight version so you
-          can see how it works without a server.
+          catalog and builds a deeper profile than these client-side heuristics can. Every
+          draft gets a voice and editing skill to work from. The first pass already reads
+          like the client wrote it. This page runs the lightweight version so you can see
+          how it works without a server.
         </p>
     </Section>
   );

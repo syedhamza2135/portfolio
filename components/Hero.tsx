@@ -47,7 +47,7 @@ export default function Hero() {
             <span className="text-accent">redline</span>
           </figcaption>
           <p className="draft text-[0.95rem] leading-relaxed">
-            <span className="rev-del">
+            <span className="rev-del opacity-70">
               In today&rsquo;s fast-paced digital landscape, leveraging content is the key to
               driving meaningful engagement at scale.
             </span>
@@ -55,7 +55,7 @@ export default function Hero() {
           <p className="rev-ins mt-5 font-serif text-2xl leading-snug text-ink">
             Your readers know when a post was written by a committee. This one wasn&rsquo;t.
           </p>
-          <p className="draft mt-6 text-[0.74rem] text-faint">
+          <p className="draft mt-6 text-[0.74rem] text-muted">
             ✎ matched to the client&rsquo;s voice. First pass, no rewrite.
           </p>
         </figure>

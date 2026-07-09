@@ -32,7 +32,7 @@
   --term-text: #b4b2a9;
   --term-bright: #f1efe8;
   --term-teal: #5dcaa5;
-  --term-muted: #7c7a72;
+  --term-muted: #89877e;  /* lifted to clear WCAG AA on both --term-bg and --term-panel */
 
   color-scheme: light;
 }

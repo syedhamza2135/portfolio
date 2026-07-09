@@ -15,8 +15,8 @@ export default function Redline() {
       <p className="reveal t-lead mt-5 mb-8 max-w-2xl text-muted" style={rd(80)}>
         Matching a voice is step one. The system also strips the filler that makes copy read like a
         machine wrote it. Paste a headline or a landing page below and watch the same editing pass
-        mark it up: clichés struck, hedges cut, the AI tells flagged. Every mark is measured from your
-        text, not guessed.
+        mark it up: clichés struck, hedges cut, AI tells flagged. Every mark is measured from your
+        text.
       </p>
 
       <RedlineTool />

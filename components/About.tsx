@@ -4,7 +4,7 @@ import { folioFor } from "@/lib/site";
 import { rd } from "@/lib/ui";
 
 const TIMELINE = [
-  { tag: "foundation", text: "CS degree from a university ranked 81st in Asia by US News. I think in systems and write the Python myself." },
+  { tag: "foundation", text: "CS degree. I think in systems and write the Python myself." },
   { tag: "markets", text: "Years in trading and finance, so I write fintech and VC content without faking the fluency." },
   { tag: "shipping", text: "Freelance dev work: real clients, real deadlines, code that goes live." },
   {
@@ -29,7 +29,7 @@ export default function About() {
             ~320px and the global `text-wrap: balance` collapsed it into a 5-line, mid-phrase stack.
             Full width, it settles into 2-3 clean lines at every breakpoint. Photo + bio sit below. */}
         <h2 id="about-h" className="reveal t-h2 max-w-3xl font-medium">
-          I&rsquo;m the contractor agencies call when the work sits between two job titles.
+          I&rsquo;m the contractor teams call when the work sits between two job titles.
         </h2>
 
         <div className="mt-8 grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
@@ -51,7 +51,7 @@ export default function About() {
 
           <p className="reveal t-lead max-w-2xl text-muted" style={rd(80)}>
             Strong writers usually can&rsquo;t build the tool. Strong builders usually write
-            like engineers. I do both and bill it as one line item, which is what an agency
+            like engineers. I do both and bill it as one line item, which is what a team
             wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
             &ldquo;developer.&rdquo;
           </p>
