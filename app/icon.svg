@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Redline monogram: the "▌Syed Hamza" wordmark distilled to one mark that survives at 16px —
-       the signature redline change-bar + the serif initials "kept" in bond, on the ink shell.
-       Bar height tracks the cap height so it reads as the wordmark tick, not a divider. -->
+  <!-- Redline caret: the proofreader's "insert here" mark in editor's red over a bond baseline,
+       on the ink shell. Pure shapes (no <text>, so no system-font dependency — renders identical
+       everywhere) and it reads at 16px. The one editing symbol a stranger knows on sight. -->
   <rect width="32" height="32" rx="7" fill="#191b19" />
-  <rect x="4.6" y="9.8" width="2.4" height="12.4" rx="0.6" fill="#cf4436" />
-  <text x="19.7" y="16.7" font-family="Georgia, 'Times New Roman', serif" font-size="16"
-        letter-spacing="-0.3" fill="#e6e7e1" text-anchor="middle" dominant-baseline="central">SH</text>
+  <path d="M7.5 20.5 16 9.5 24.5 20.5" fill="none" stroke="#cf4436" stroke-width="2.9"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <rect x="8" y="22.3" width="16" height="2.3" rx="1.15" fill="#e6e7e1" />
 </svg>
