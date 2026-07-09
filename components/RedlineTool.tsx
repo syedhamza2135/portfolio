@@ -42,9 +42,21 @@ export default function RedlineTool() {
     const measure = () => {
       const pr = paper.getBoundingClientRect();
       const mid = pr.left + pr.width / 2;
+      const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const gap = 0.35 * rootPx; // matches the note's 0.35rem offset in CSS
+      const contentTop = pr.top + parseFloat(getComputedStyle(paper).paddingTop || "0");
       paper.querySelectorAll<HTMLElement>(".rl-mark").forEach((mark) => {
         const mr = mark.getBoundingClientRect();
         mark.classList.toggle("note-right", mr.left + mr.width / 2 > mid);
+        // First-line marks: an above-anchored note rises into the paper's top padding and crowds
+        // (shadow bleeds over) the top edge, so drop it below the mark. Flip when the above-note's top
+        // would sit above where the body text begins. Computed from the mark's top and the note's
+        // height (both stable whether the note is above or below), so re-measures never oscillate.
+        const note = mark.querySelector<HTMLElement>(".rl-note");
+        if (note) {
+          const noteH = note.getBoundingClientRect().height;
+          mark.classList.toggle("note-below", mr.top - gap - noteH < contentTop);
+        }
       });
     };
     measure();
