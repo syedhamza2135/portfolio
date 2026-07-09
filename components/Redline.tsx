@@ -12,7 +12,7 @@ export default function Redline() {
       <h2 id="redline-h" className="reveal t-h2 max-w-2xl font-medium">
         The editor half of the pipeline. Run it on your copy.
       </h2>
-      <p className="reveal t-lead mt-5 mb-8 max-w-2xl text-muted" style={rd(80)}>
+      <p className="reveal t-lead mt-6 mb-8 max-w-2xl text-muted" style={rd(80)}>
         Matching a voice is step one. The system also strips the filler that makes copy read like a
         machine wrote it. Paste a headline or a landing page below and watch the same editing pass
         mark it up: clichés struck, hedges cut, AI tells flagged. Every mark is measured from your
