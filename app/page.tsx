@@ -21,6 +21,7 @@ const jsonLd = {
       description: TAGLINE,
       email: "mailto:" + CONTACT_EMAIL,
       sameAs: [
+        "https://www.linkedin.com/in/syedhamza2135",
         "https://github.com/syedhamza2135",
         "https://www.tradingview.com/u/syedhamza2135/",
       ],
@@ -40,7 +41,7 @@ const jsonLd = {
       "@type": "ProfilePage",
       "@id": `${SITE_URL}/#profilepage`,
       url: SITE_URL,
-      name: `${NAME} · content systems for agencies and AI companies`,
+      name: `${NAME} · content systems for scale`,
       about: { "@id": `${SITE_URL}/#person` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },

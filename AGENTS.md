@@ -11,7 +11,8 @@ Quick orientation + current focus + gotchas. For full architecture, see `README.
 ## What this is
 
 A single-page portfolio for an independent contractor selling **content systems for
-agencies** (writing + automation + code). The site *is* the portfolio: the copy is a
+scale** (writing + automation + code) to agencies and AI companies. The site *is* the
+portfolio: the copy is a
 writing sample, the build is an engineering sample. Built from a detailed PRD (v1.2; not
 committed — it contains private strategy/client names).
 
