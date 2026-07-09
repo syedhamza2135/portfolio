@@ -1,4 +1,4 @@
-import { NAME, SECTIONS, CALENDLY_URL } from "@/lib/site";
+import { NAME, SECTIONS, CALENDLY_URL, folioFor } from "@/lib/site";
 
 // Server component. The theme toggle is a plain button wired by the vanilla enhancement
 // script (lib/scripts.ts) — no React client island here (§4.5, §7).
@@ -19,7 +19,24 @@ export default function Nav() {
         </a>
 
         <div className="flex items-center gap-5">
-          <ul className="hidden items-center gap-5 lg:flex">
+          {/* Mobile in-page index: below md the inline section links are hidden, so the folio
+              index becomes the table of contents. Native <details> = no JS island, keyboard
+              operable, works with JS off. The <h2>s still carry the heading hierarchy. */}
+          <details className="toc md:hidden">
+            <summary className="toc-summary" aria-label="Section index">index</summary>
+            <ul className="toc-menu">
+              {SECTIONS.map((s) => (
+                <li key={s.id}>
+                  <a href={`#${s.id}`} className="toc-link">
+                    <span className="toc-num" aria-hidden="true">{folioFor(s.id)}</span>
+                    <span>{s.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+
+          <ul className="hidden items-center gap-5 md:flex">
             {SECTIONS.map((s) => (
               <li key={s.id}>
                 <a
@@ -38,7 +55,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             data-track="nav_book"
-            className="draft text-[0.78rem] text-ink link-underline"
+            className="draft inline-flex min-h-[44px] items-center text-[0.78rem] text-ink link-underline"
           >
             book ↗
           </a>

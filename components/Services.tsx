@@ -23,7 +23,7 @@ const OFFERS = [
 
 export default function Services() {
   return (
-    <Section id="services" num={folioFor("services")} label="what i build for agencies" labelledBy="services-h">
+    <Section id="services" num={folioFor("services")} label="what i build" labelledBy="services-h">
         <h2 id="services-h" className="reveal t-h2 max-w-2xl font-medium">
           Three ways to put me to work.
         </h2>

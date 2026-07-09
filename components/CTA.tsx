@@ -15,8 +15,7 @@ export default function CTA() {
         </h2>
         <p className="t-lead mt-6 max-w-xl opacity-90">
           30 minutes, your timezone. I&rsquo;m based in Pakistan and work US hours: async-first,
-          with weekly Loom updates and you won&rsquo;t wait a day for a reply. If I&rsquo;m not
-          the right fit, I&rsquo;ll tell you who is.
+          with weekly Loom updates. If I&rsquo;m not the right fit, I&rsquo;ll tell you who is.
         </p>
 
         <div className="mt-8">

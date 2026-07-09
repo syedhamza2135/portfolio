@@ -180,7 +180,7 @@ export default function VoiceEngine() {
               <button
                 type="button"
                 onClick={skip}
-                className="mono text-[0.7rem] text-term-muted hover:text-term-bright"
+                className="mono text-[0.7rem] text-term-muted hover:text-term-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-term-teal"
               >
                 skip ▸
               </button>
@@ -260,14 +260,14 @@ export default function VoiceEngine() {
             <button
               type="button"
               onClick={onAnalyze}
-              className="mono inline-flex min-h-[44px] items-center rounded-md bg-term-teal px-4 text-[0.78rem] font-medium text-term-bg transition-opacity hover:opacity-90"
+              className="mono inline-flex min-h-[44px] items-center rounded-md bg-term-teal px-4 text-[0.78rem] font-medium text-term-bg transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-term-teal"
             >
               analyze my writing
             </button>
             <button
               type="button"
               onClick={onTryExample}
-              className="mono inline-flex min-h-[44px] items-center rounded-md border border-term-border px-4 text-[0.78rem] text-term-text transition-colors hover:text-term-bright"
+              className="mono inline-flex min-h-[44px] items-center rounded-md border border-term-border px-4 text-[0.78rem] text-term-text transition-colors hover:text-term-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-term-teal"
             >
               try another example
             </button>
@@ -275,9 +275,10 @@ export default function VoiceEngine() {
         </div>
       </div>
 
-      {/* announced once on completion, never line-by-line (§7.5) */}
-      <div className="sr-only" aria-live="polite">
-        {summary}
+      {/* announced once on completion, never line-by-line (§7.5). Errors are announced too,
+          since the terminal error copy lives in the aria-hidden region and focus is on the button. */}
+      <div className="sr-only" role="status" aria-live="polite">
+        {status === "error" ? error : summary}
       </div>
     </div>
   );
