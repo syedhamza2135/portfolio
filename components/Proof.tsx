@@ -21,7 +21,7 @@ const CASES = [
     required:
       "Investor-grade thought leadership written by someone who can actually read the charts.",
     shipped: "Market commentary and thesis pieces that hold up in front of LPs and founders.",
-    outcome: "Published under the firm's name with edits measured in lines, not paragraphs.",
+    outcome: "Published under the firm's name. Edit rounds came back a few lines at a time.",
   },
 ];
 
@@ -36,7 +36,7 @@ const TESTIMONIAL: { quote: string; name: string; title: string } | null = null;
 export default function Proof() {
   return (
     <Section id="proof" num={folioFor("proof")} label="proof" labelledBy="proof-h">
-        <h2 id="proof-h" className="reveal t-h2 max-w-2xl font-medium">
+        <h2 id="proof-h" className="reveal t-h2 max-w-2xl">
           Work that went live, on real deadlines.
         </h2>
 

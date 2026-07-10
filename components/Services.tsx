@@ -24,11 +24,11 @@ const OFFERS = [
 export default function Services() {
   return (
     <Section id="services" num={folioFor("services")} label="what i build" labelledBy="services-h">
-        <h2 id="services-h" className="reveal t-h2 max-w-2xl font-medium">
+        <h2 id="services-h" className="reveal t-h2 max-w-2xl">
           Three ways to put me to work.
         </h2>
 
-        <ul className="mt-12">
+        <ol className="mt-12">
           {OFFERS.map((o, i) => (
             <li
               key={o.marker}
@@ -38,11 +38,11 @@ export default function Services() {
               }`}
             >
               <span className="draft pt-1 text-2xl text-accent sm:text-3xl">{o.marker}.</span>
-              <h3 className="t-h3 self-center font-serif font-medium">{o.title}</h3>
-              <p className="col-start-2 max-w-xl text-base text-muted">{o.body}</p>
+              <h3 className="t-h3 self-center font-serif">{o.title}</h3>
+              <p className="col-start-2 max-w-xl text-base text-ink">{o.body}</p>
             </li>
           ))}
-        </ul>
+        </ol>
     </Section>
   );
 }

@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="relative z-10 mx-auto grid max-w-6xl gap-12 px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28 lg:min-h-[82vh] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
         <div>
           <p className="draft text-[0.8rem] tracking-wide text-muted">
-            content systems · technical writing · code
+            content systems for agencies · technical writing · code
           </p>
 
           <h1 className="t-hero mt-6 max-w-3xl">
@@ -47,7 +47,7 @@ export default function Hero() {
             <span className="text-accent">redline</span>
           </figcaption>
           <p className="draft text-[0.95rem] leading-relaxed">
-            <span className="rev-del opacity-70">
+            <span className="rev-del">
               In today&rsquo;s fast-paced digital landscape, leveraging content is the key to
               driving meaningful engagement at scale.
             </span>

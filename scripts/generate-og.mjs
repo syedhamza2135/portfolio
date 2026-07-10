@@ -83,7 +83,10 @@ const png = await sharp(Buffer.from(base))
     { input: portrait, left: PANEL_X, top: 0 },
     { input: Buffer.from(overlay), left: 0, top: 0 },
   ])
-  .png()
+  // Palette-quantize + max compression. The art is flat bond/ink fields plus one duotone
+  // portrait, so a 256-colour palette PNG (dithered to avoid banding on the portrait) cuts the
+  // file several-fold with no visible loss, and keeps the /og.png filename so no metadata moves.
+  .png({ compressionLevel: 9, effort: 10, palette: true, quality: 90, dither: 1 })
   .toBuffer();
 writeFileSync(join(out, "og.png"), png);
 console.log("wrote public/og.png", png.length, "bytes");

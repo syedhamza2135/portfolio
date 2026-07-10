@@ -100,7 +100,11 @@ export default function RedlineTool() {
 
   const onCopyLetter = () => {
     if (!ok || ok.markCount === 0) return;
-    navigator.clipboard?.writeText(editLetter(ok)).catch(() => {});
+    // Guard the whole clipboard call: `navigator.clipboard` is undefined in non-secure contexts
+    // and some in-app browsers (LinkedIn/Twitter webviews), where `?.writeText(...).catch()` would
+    // throw on the chained .catch and abort the rest of this handler. Bail before claiming "copied".
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(editLetter(ok)).catch(() => {});
     track("redline_copy_letter");
     setCopied(true);
     if (copyTimer.current) clearTimeout(copyTimer.current);
@@ -118,13 +122,14 @@ export default function RedlineTool() {
           <span className="draft text-[0.72rem] text-muted">client-side · nothing leaves the page</span>
         </div>
 
-        {/* the marked page — decorative for SR; the summary + verdict below carry the meaning */}
+        {/* The marked page. Exposed to AT: the copy is real <del>/<ins> semantics and each mark is
+            focusable with its reason wired via aria-describedby, so keyboard and screen-reader users
+            reach the per-mark editorial notes (not just the once-per-run summary below). */}
         <div
           key={runId}
           ref={paperRef}
-          aria-hidden="true"
           onClick={(e) => {
-            // Delegated tap-to-reveal (the paper is aria-hidden, so no ARIA/tabindex here).
+            // Delegated tap-to-reveal for touch (marks also reveal on hover and on keyboard focus).
             // note-right is set by measurement (see useLayoutEffect), not here, so hover gets it too.
             const paper = e.currentTarget;
             const mark = (e.target as HTMLElement).closest<HTMLElement>(".rl-mark");
@@ -144,9 +149,9 @@ export default function RedlineTool() {
         {/* legend + verdict */}
         {ok && (
           <div className="border-t border-hairline bg-shell/60 px-5 py-4 sm:px-7">
-            <p className="draft mb-3 text-[0.72rem] text-muted" aria-hidden="true">tap a mark for the reason</p>
+            <p className="draft mb-3 text-[0.72rem] text-muted">tap or focus a mark for the reason</p>
             {ok.stats.length > 0 && (
-              <ul className="mb-3 flex flex-wrap gap-x-4 gap-y-1" aria-hidden="true">
+              <ul className="mb-3 flex flex-wrap gap-x-4 gap-y-1">
                 {ok.stats.map((s) => (
                   <li key={s.category} className="draft text-[0.72rem] text-muted">
                     <span className="text-accent">{s.count}</span> {s.label}
@@ -163,7 +168,7 @@ export default function RedlineTool() {
         {/* controls */}
         <div className="border-t border-hairline bg-card px-5 py-4 sm:px-7">
           <label htmlFor="redline-input" className="draft block text-[0.74rem] text-muted">
-            paste your own copy
+            paste a draft to mark up
           </label>
           <textarea
             id="redline-input"
@@ -201,7 +206,7 @@ export default function RedlineTool() {
               onClick={onExample}
               className="draft inline-flex min-h-[44px] items-center rounded-sm border border-hairline px-5 text-[0.82rem] text-muted transition-colors hover:text-ink"
             >
-              try bad copy
+              mark up a sample
             </button>
             <button
               type="button"
@@ -231,19 +236,35 @@ function MarkedCopy({ segments }: { segments: Segment[] }) {
         if (seg.kind === "text") return <span key={i}>{seg.text}</span>;
         const m = seg.mark;
         const delay = `${markN++ * 55}ms`;
+        // Each mark is a focus stop whose reason is announced via aria-describedby (the note is
+        // present in the DOM even while visually collapsed, so AT reads it on focus). Focus-visible
+        // also reveals the note for sighted keyboard users (see .rl-mark:focus-visible in globals.css).
+        const noteId = `rl-note-${i}`;
         if (m.type === "del") {
           return (
-            <span key={i} className="rl-mark" style={{ animationDelay: delay }}>
+            <span
+              key={i}
+              className="rl-mark"
+              tabIndex={0}
+              aria-describedby={noteId}
+              style={{ animationDelay: delay }}
+            >
               <del className="del">{m.text}</del>
               {m.suggestion && <ins className="ins"> {m.suggestion}</ins>}
-              <span className="rl-note">{m.note}</span>
+              <span className="rl-note" id={noteId}>{m.note}</span>
             </span>
           );
         }
         return (
-          <span key={i} className="rl-mark" style={{ animationDelay: delay }}>
+          <span
+            key={i}
+            className="rl-mark"
+            tabIndex={0}
+            aria-describedby={noteId}
+            style={{ animationDelay: delay }}
+          >
             <span className="flag">{m.text}</span>
-            <span className="rl-note">{m.note}</span>
+            <span className="rl-note" id={noteId}>{m.note}</span>
           </span>
         );
       })}
