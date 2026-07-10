@@ -12,7 +12,7 @@ export default function Credibility() {
           <p className="draft text-[0.72rem] tracking-wide text-accent">already shipped for</p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <li className="draft text-[0.9rem] text-ink">a $10M-funded AI startup</li>
-            <li aria-hidden="true" className="text-faint">·</li>
+            <li aria-hidden="true" className="hidden text-faint sm:block">·</li>
             <li className="draft text-[0.9rem] text-ink">a 1,500-attendee VC conference</li>
           </ul>
           <a href="#proof" className="draft text-[0.82rem] text-muted link-underline sm:ml-auto">

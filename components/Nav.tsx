@@ -7,18 +7,20 @@ export default function Nav() {
     <header className="sticky top-0 z-50 border-b border-hairline bg-shell/85 backdrop-blur-md">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8"
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-5 sm:gap-4 sm:px-8"
       >
         <a
           href="#main"
-          className="flex items-center gap-2.5"
+          className="flex shrink-0 items-center gap-2.5"
           aria-label={`${NAME}, back to top`}
         >
           <span aria-hidden="true" className="h-5 w-[3px] bg-accent" />
-          <span className="font-serif text-[1.2rem] tracking-tight text-ink">{NAME}</span>
+          <span className="whitespace-nowrap font-serif text-[1.05rem] tracking-tight text-ink sm:text-[1.2rem]">
+            {NAME}
+          </span>
         </a>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 sm:gap-5">
           {/* Mobile in-page index: below md the inline section links are hidden, so the folio
               index becomes the table of contents. Native <details> = no JS island, keyboard
               operable, works with JS off. The <h2>s still carry the heading hierarchy. */}
@@ -55,7 +57,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             data-track="nav_book"
-            className="draft inline-flex min-h-[44px] items-center text-[0.78rem] text-ink link-underline"
+            className="draft inline-flex min-h-[44px] items-center whitespace-nowrap text-[0.78rem] text-ink link-underline"
           >
             book ↗
           </a>
