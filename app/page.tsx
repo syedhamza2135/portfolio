@@ -44,6 +44,9 @@ const jsonLd = {
       name: TITLE,
       about: { "@id": `${SITE_URL}/#person` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
+      // Build date, baked in at static-export time (no runtime, no manual upkeep). Satisfies
+      // Google's ProfilePage dateModified recommendation for profile rich results.
+      dateModified: new Date().toISOString().slice(0, 10),
     },
   ],
 };

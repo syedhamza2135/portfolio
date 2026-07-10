@@ -454,7 +454,8 @@ a {
 
 /* ---------- redline tool: attention flag + hover note ----------
    `.del`/`.ins` already carry deletion/insertion. `.flag` is the third mark: text kept, but worth a
-   second look (dotted ink-blue underline). The note rides in a title + a styled tooltip. */
+   second look (dotted ink-blue underline). The note is a styled tooltip revealed on hover, keyboard
+   focus, or tap, and exposed to assistive tech via aria-describedby on the mark. */
 .flag {
   text-decoration: underline dotted;
   text-decoration-color: color-mix(in srgb, var(--ins) 70%, transparent);

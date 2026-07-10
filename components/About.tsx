@@ -51,9 +51,9 @@ export default function About() {
           </figure>
 
           <p className="reveal t-lead max-w-2xl text-ink" style={rd(80)}>
-            Strong writers usually can&rsquo;t build the tool. Strong builders usually write
-            like engineers. I do both and bill it as one line item, which is what a team
-            wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
+            Most writers can&rsquo;t build the tool. The ones who can usually write like
+            engineers. I do both and bill it as one line item, which is what a team wants
+            when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
             &ldquo;developer.&rdquo;
           </p>
         </div>
