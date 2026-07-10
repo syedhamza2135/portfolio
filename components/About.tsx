@@ -2,6 +2,7 @@ import Image from "next/image";
 import Section from "@/components/Section";
 import { folioFor, SOCIAL_LINKS } from "@/lib/site";
 import { rd } from "@/lib/ui";
+import SocialIcon from "@/components/SocialIcon";
 
 const TIMELINE = [
   { tag: "foundation", text: "CS degree. I think in systems and write the Python myself." },
@@ -86,8 +87,9 @@ export default function About() {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-track={`about_${s.label.toLowerCase()}`}
-                  className="draft text-[0.82rem] text-ink link-underline"
+                  className="draft inline-flex items-center gap-1.5 text-[0.82rem] text-ink link-underline"
                 >
+                  <SocialIcon d={s.icon} className="text-accent" />
                   {s.label} ↗
                 </a>
               </li>

@@ -74,6 +74,13 @@ committed — it contains private strategy/client names).
   clever. A copy pass already stripped AI tells (NO em-dashes anywhere in the site copy; no
   "it's not X, it's Y" antithesis; no chiasmus; no rule-of-three pile-ups; no buzzword
   blacklist). Keep it that way.
+- **Profile links have one source:** `SOCIAL_LINKS` in `lib/site.ts` (LinkedIn, GitHub,
+  TradingView — each `label` + `href` + brand-glyph `icon` path). The footer, the About §06
+  `elsewhere:` row, AND the JSON-LD `Person.sameAs` in `app/page.tsx` all derive from it. Add or
+  change a profile in that array only. (History: the links once lived *only* in `sameAs`, so they
+  were crawler metadata with no visible link on the page — don't reintroduce that split.) Icons
+  render via `components/SocialIcon.tsx`, a **server** component (monochrome, `currentColor`,
+  `aria-hidden`) — it is not a fourth client island.
 - Commit messages end with: `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`
 - Commit/push only when the user asks. Branch is `master`.
 

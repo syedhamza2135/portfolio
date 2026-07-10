@@ -1,4 +1,5 @@
 import { NAME, CONTACT_EMAIL, SOCIAL_LINKS, REPO_URL } from "@/lib/site";
+import SocialIcon from "@/components/SocialIcon";
 
 // One quiet mono line, the public profiles, and a mailto "fire exit" — not a competing
 // CTA (§5 Footer). The profile links are the visible counterpart to the JSON-LD sameAs.
@@ -29,8 +30,9 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   data-track={`footer_${s.label.toLowerCase()}`}
-                  className="draft text-[0.75rem] text-muted link-underline"
+                  className="draft inline-flex items-center gap-1.5 text-[0.75rem] text-muted link-underline"
                 >
+                  <SocialIcon d={s.icon} className="opacity-80" />
                   {s.label}
                 </a>
               </li>
