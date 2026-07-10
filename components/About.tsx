@@ -5,7 +5,7 @@ import { rd } from "@/lib/ui";
 import SocialIcon from "@/components/SocialIcon";
 
 const TIMELINE = [
-  { tag: "foundation", text: "CS degree. I think in systems and write the Python myself." },
+  { tag: "foundation", text: "CS degree from a top national university on full scholarship. I think in systems and write the Python myself." },
   { tag: "markets", text: "Years in trading and finance, so I write fintech and VC content without faking the fluency." },
   { tag: "shipping", text: "Freelance dev work: real clients, real deadlines, code that goes live." },
   {
@@ -54,7 +54,7 @@ export default function About() {
             Most writers can&rsquo;t build the tool. The ones who can usually write like
             engineers. I do both and bill it as one line item, which is what a team wants
             when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
-            &ldquo;developer.&rdquo;
+            &ldquo;developer&rdquo;.
           </p>
         </div>
 
