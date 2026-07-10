@@ -4,7 +4,7 @@ import { Instrument_Serif, Hanken_Grotesk, Courier_Prime, JetBrains_Mono } from 
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { NAME, SITE_URL, TAGLINE } from "@/lib/site";
+import { NAME, SITE_URL, TAGLINE, TITLE } from "@/lib/site";
 import { THEME_INIT, ENHANCE } from "@/lib/scripts";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -39,12 +39,15 @@ const mono = JetBrains_Mono({
   weight: ["400", "500"],
   variable: "--ff-mono",
   display: "swap",
+  // Mono only renders in the below-the-fold voice-engine terminal, so it should not compete
+  // with the display + body faces for priority during the hero's critical render.
+  preload: false,
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${NAME} · content systems for scale`,
+    default: TITLE,
     template: `%s · ${NAME}`,
   },
   description: TAGLINE,
@@ -65,16 +68,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: `${SITE_URL}/`,
-    title: `${NAME} · content systems for scale`,
+    title: TITLE,
     description: TAGLINE,
     siteName: NAME,
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${NAME} · content systems for scale` }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: TITLE }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${NAME} · content systems for scale`,
+    title: TITLE,
     description: TAGLINE,
-    images: [{ url: "/og.png", alt: `${NAME} · content systems for scale` }],
+    images: [{ url: "/og.png", alt: TITLE }],
   },
   robots: { index: true, follow: true },
 };
@@ -115,7 +118,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             read. Progress is set on --read by the enhancement script; hidden under reduced-motion. */}
         <div className="edge-rule" aria-hidden="true" />
         <Nav />
-        <main id="main">{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <Footer />
         <Analytics />
         <SpeedInsights />

@@ -280,6 +280,22 @@ export default function VoiceEngine() {
       <div className="sr-only" role="status" aria-live="polite">
         {status === "error" ? error : summary}
       </div>
+
+      {/* Full compiled profile for AT/keyboard users, rendered once the run settles. Not a live
+          region (the summary above is the announcement) — this is the detail pulled on demand, the
+          equivalent of the terminal that is aria-hidden while it streams. */}
+      {status === "done" && (
+        <div className="sr-only">
+          <p>Compiled voice profile.</p>
+          <ul>
+            {lines.map((l, i) => {
+              if (l.kind === "kv") return <li key={i}>{l.k}: {l.v}</li>;
+              if (l.kind === "rule") return <li key={i}>Rule: {l.text}</li>;
+              return null;
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

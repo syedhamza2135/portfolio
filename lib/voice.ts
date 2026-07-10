@@ -41,6 +41,10 @@ export type AnalysisResult =
     };
 
 const MIN_WORDS = 50;
+// Cap the analysis window so a giant paste can't hang the main thread on the tokenize/split pass.
+// The profile is sample-based, so reading the first 4000 chars is honest (cf. lib/redline.ts CAP).
+// This is the demo that auto-runs on viewport entry, so the cap matters more here than in redline.
+const MAX_CHARS = 4000;
 
 const FIRST_PERSON = ["i", "i'm", "i've", "i'll", "i'd", "we", "we're", "we've", "we'll", "our", "ours", "us", "my", "mine", "me"];
 const SECOND_PERSON = ["you", "you're", "you've", "you'll", "you'd", "your", "yours", "yourself"];
@@ -78,7 +82,7 @@ function round(n: number, d = 0): number {
 }
 
 export function analyze(raw: string): AnalysisResult {
-  const text = raw.trim();
+  const text = raw.trim().slice(0, MAX_CHARS);
   const w = words(text);
   const wordCount = w.length;
 

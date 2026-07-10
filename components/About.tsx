@@ -28,7 +28,7 @@ export default function About() {
         {/* Headline spans the full content width: nested in the photo column it was trapped at
             ~320px and the global `text-wrap: balance` collapsed it into a 5-line, mid-phrase stack.
             Full width, it settles into 2-3 clean lines at every breakpoint. Photo + bio sit below. */}
-        <h2 id="about-h" className="reveal t-h2 max-w-3xl font-medium">
+        <h2 id="about-h" className="reveal t-h2 max-w-3xl">
           I&rsquo;m the contractor teams call when the work sits between two job titles.
         </h2>
 
@@ -49,7 +49,7 @@ export default function About() {
             />
           </figure>
 
-          <p className="reveal t-lead max-w-2xl text-muted" style={rd(80)}>
+          <p className="reveal t-lead max-w-2xl text-ink" style={rd(80)}>
             Strong writers usually can&rsquo;t build the tool. Strong builders usually write
             like engineers. I do both and bill it as one line item, which is what a team
             wants when a project won&rsquo;t sit cleanly under &ldquo;writer&rdquo; or
@@ -78,7 +78,7 @@ export default function About() {
             Same SOCIAL_LINKS source as the footer + JSON-LD sameAs. */}
         <nav className="reveal mt-8" aria-label="Profiles" style={rd(80)}>
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <li className="draft text-[0.78rem] text-faint">elsewhere:</li>
+            <li className="draft text-[0.78rem] text-muted">elsewhere:</li>
             {SOCIAL_LINKS.map((s) => (
               <li key={s.label}>
                 <a

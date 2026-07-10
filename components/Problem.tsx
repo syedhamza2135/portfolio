@@ -8,11 +8,11 @@ export default function Problem() {
     <Section id="problem" num={folioFor("problem")} label="the problem" labelledBy="problem-h">
         <h2
           id="problem-h"
-          className="reveal t-h2 max-w-3xl font-medium"
+          className="reveal t-h2 max-w-3xl"
         >
           You sold the retainer. Now you&rsquo;re drowning in production.
         </h2>
-        <div className="reveal t-lead mt-6 max-w-2xl space-y-5 text-muted" style={rd(80)}>
+        <div className="reveal t-lead mt-6 max-w-2xl space-y-5 text-ink" style={rd(80)}>
           <p>
             The pitch was the easy part. The work is volume: a dozen pieces a month, each
             one supposed to sound like the client, hit a real quality bar and ship on a

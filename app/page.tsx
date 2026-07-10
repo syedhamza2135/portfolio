@@ -6,7 +6,7 @@ import Services from "@/components/Services";
 import Proof from "@/components/Proof";
 import About from "@/components/About";
 import CTA from "@/components/CTA";
-import { NAME, SITE_URL, TAGLINE, CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/site";
+import { NAME, SITE_URL, TAGLINE, TITLE, CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/site";
 
 // JSON-LD: Person + ProfilePage structured data (§7 SEO).
 const jsonLd = {
@@ -40,7 +40,7 @@ const jsonLd = {
       "@type": "ProfilePage",
       "@id": `${SITE_URL}/#profilepage`,
       url: `${SITE_URL}/`,
-      name: `${NAME} · content systems for scale`,
+      name: TITLE,
       about: { "@id": `${SITE_URL}/#person` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },

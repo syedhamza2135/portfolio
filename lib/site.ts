@@ -4,6 +4,16 @@
 
 export const NAME = "Syed Hamza";
 
+// Public repo for this site. The build is a first-class engineering sample, so the source is a
+// proof link (System §02 "read the build", Footer), not just a profile glyph.
+export const REPO_URL = "https://github.com/syedhamza2135/portfolio";
+
+// The one title string. Leads with the concrete hook (a buyer scans this in Google and in a
+// shared link before they ever reach the hero) instead of the abstract "content systems for
+// scale". Single source: drives the <title>, OG/Twitter titles + image alts, and the JSON-LD
+// ProfilePage name, so they can never drift.
+export const TITLE = `${NAME} · voice-matched content pipelines for agencies`;
+
 // Custom domain (PRD T5). Drives metadataBase, canonical, OG absolute URL, sitemap, JSON-LD.
 // NEXT_PUBLIC_SITE_URL can still override (e.g. for a preview environment).
 export const SITE_URL =
@@ -26,7 +36,7 @@ export const WHATSAPP_URL = WHATSAPP_NUMBER
   : "";
 
 export const TAGLINE =
-  "I build content systems for scale: strategy, automation and the engineering to run them.";
+  "I build content pipelines that keep a client's voice steady as volume climbs. Writing and code from one contractor.";
 
 // Public profiles. Single source of truth for BOTH the visible footer links and the
 // JSON-LD Person `sameAs` (app/page.tsx maps this to href), so the two can never drift.
