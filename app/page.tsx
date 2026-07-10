@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
+import Credibility from "@/components/Credibility";
 import System from "@/components/System";
 import Redline from "@/components/Redline";
 import Services from "@/components/Services";
@@ -56,6 +57,7 @@ export default function Home() {
       />
       <Hero />
       <Problem />
+      <Credibility />
       <System />
       <Redline />
       <Services />

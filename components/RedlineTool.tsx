@@ -168,7 +168,7 @@ export default function RedlineTool() {
         {/* controls */}
         <div className="border-t border-hairline bg-card px-5 py-4 sm:px-7">
           <label htmlFor="redline-input" className="draft block text-[0.74rem] text-muted">
-            paste your own copy
+            paste a draft to mark up
           </label>
           <textarea
             id="redline-input"

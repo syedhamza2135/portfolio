@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test \"lib/**/*.test.ts\"",
     "check": "npm run typecheck && npm run test",
-    "og": "node scripts/generate-og.mjs"
+    "og": "node scripts/generate-og.mjs",
+    "apple-icon": "node scripts/generate-apple-icon.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

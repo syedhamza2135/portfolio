@@ -231,7 +231,7 @@ export default function VoiceEngine() {
         {/* interactive controls (§6.2 state 4) */}
         <div className="border-t border-term-border bg-term-panel px-4 py-4">
           <label htmlFor="voice-input" className="mono block text-[0.72rem] text-term-muted">
-            paste your own writing
+            paste a writing sample to profile
           </label>
           <textarea
             id="voice-input"
