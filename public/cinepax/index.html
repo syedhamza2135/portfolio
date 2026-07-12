@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cinepax Website Diagnostic &amp; Rebuild Proposal</title>
+
+  <!-- keep this out of search engines: it is a private pitch, not public content -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <meta name="description" content="An independent, measured diagnostic of the Cinepax website, and a proposal to rebuild the booking experience.">
+  <meta name="theme-color" content="#0c0a0f">
+
+  <!-- link preview card (shows when you paste the URL into email, WhatsApp, LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cinepax Website Diagnostic &amp; Rebuild Proposal">
+  <meta property="og:description" content="Your box office is packed. Your website turns people away. A live teardown of cinepax.com, and how to fix the screens that sell your tickets.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+
+  <style>
+    :root{color-scheme:dark}
+    html,body{margin:0;padding:0}
+    *{box-sizing:border-box}
+    img{max-width:100%}
+  </style>
+</head>
+<body>
+<style>
+  :root{
+    /* committed cinematic dark world */
+    --ground:#0c0a0f;
+    --ground-2:#100d15;
+    --panel:#171320;
+    --panel-2:#1f1a2b;
+    --panel-3:#261f34;
+    --line:rgba(255,255,255,.085);
+    --line-strong:rgba(255,255,255,.16);
+    --ink:#f5f1f7;
+    --ink-dim:#b6acc2;
+    --ink-faint:#7f7690;
+    --amber:#f0b94e;
+    --amber-deep:#c8912f;
+    --amber-glow:rgba(240,185,78,.16);
+    --red:#f0625b;
+    --red-deep:#8f302c;
+    --red-bg:rgba(240,98,91,.10);
+    --good:#37c8a0;
+    --good-deep:#1c7a60;
+    --good-bg:rgba(55,200,160,.10);
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Code","Segoe UI Mono",Menlo,Consolas,monospace;
+    --maxw:1120px;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0}
+  .page{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{position:relative}
+
+  /* ---------- type ---------- */
+  h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.02em;font-weight:800;line-height:1.05}
+  h2{font-size:clamp(1.8rem,4vw,2.9rem)}
+  h3{font-size:clamp(1.15rem,2vw,1.5rem);letter-spacing:-.01em}
+  p{margin:0}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:0;
+  }
+  .lead{color:var(--ink-dim);font-size:clamp(1.02rem,1.5vw,1.2rem);max-width:60ch}
+  .mono{font-family:var(--mono)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* ---------- marquee bar ---------- */
+  .marquee{
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(240,185,78,.06),transparent);
+  }
+  .marquee .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding-top:16px;padding-bottom:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.01em}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 14px 2px var(--amber-glow)}
+  .marquee .meta{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);
+    letter-spacing:.06em}
+
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(56px,9vw,120px) 0 clamp(40px,6vw,72px);overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 78% -10%, var(--amber-glow), transparent 55%),
+      radial-gradient(90% 60% at 10% 110%, rgba(120,90,200,.10), transparent 60%);
+  }
+  .hero .wrap{position:relative;z-index:1}
+  .hero h1{
+    font-size:clamp(2.5rem,6.4vw,4.9rem);
+    letter-spacing:-.035em;line-height:.98;margin:22px 0 0;
+    max-width:16ch;
+  }
+  .hero h1 .glow{color:var(--amber)}
+  .hero .lead{margin-top:24px;font-size:clamp(1.1rem,1.8vw,1.32rem)}
+  .hero .sub{margin-top:14px;color:var(--ink-faint);max-width:58ch;font-size:1rem}
+
+  .beam{
+    display:inline-flex;align-items:center;gap:10px;margin-top:34px;
+    font-family:var(--mono);font-size:.8rem;color:var(--ink-dim);
+    border:1px solid var(--line-strong);border-radius:999px;padding:9px 16px;
+    background:var(--panel);
+  }
+  .beam b{color:var(--red);font-weight:700}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--red);
+    box-shadow:0 0 0 0 rgba(240,98,91,.5);animation:pulse 2.4s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(240,98,91,.45)}
+    70%{box-shadow:0 0 0 10px rgba(240,98,91,0)}100%{box-shadow:0 0 0 0 rgba(240,98,91,0)}}
+
+  /* ---------- diagnostic readout ---------- */
+  .readout{padding:clamp(40px,6vw,72px) 0;border-top:1px solid var(--line);
+    background:var(--ground-2)}
+  .readout-head{display:flex;justify-content:space-between;align-items:flex-end;
+    gap:20px;flex-wrap:wrap;margin-bottom:34px}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .metric{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 20px;position:relative;overflow:hidden;
+  }
+  .metric::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--red)}
+  .metric .n{font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums;
+    font-size:clamp(1.7rem,3vw,2.3rem);color:var(--ink);letter-spacing:-.02em;line-height:1}
+  .metric .n small{font-size:.55em;color:var(--ink-faint);font-weight:600;margin-left:2px}
+  .metric .k{margin-top:10px;font-size:.86rem;color:var(--ink-dim);line-height:1.45}
+  .metric .tag{margin-top:12px;font-family:var(--mono);font-size:.66rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+
+  /* ---------- reels (before/after) ---------- */
+  .reels{padding:clamp(48px,7vw,90px) 0;border-top:1px solid var(--line)}
+  .reel{margin-top:clamp(38px,5vw,64px)}
+  .reel-head{max-width:64ch;margin-bottom:26px}
+  .reel-head .num{font-family:var(--mono);color:var(--amber);font-size:.8rem;
+    letter-spacing:.18em}
+  .reel-head h3{margin-top:10px}
+  .reel-head p{margin-top:12px;color:var(--ink-dim);max-width:60ch}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .frame{
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    display:flex;flex-direction:column;background:var(--panel);min-height:340px;
+  }
+  .frame-label{display:flex;align-items:center;gap:9px;padding:12px 16px;
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    border-bottom:1px solid var(--line)}
+  .frame-label .sw{width:9px;height:9px;border-radius:50%}
+  .frame.before .frame-label{color:var(--red)}
+  .frame.before .frame-label .sw{background:var(--red)}
+  .frame.after .frame-label{color:var(--good)}
+  .frame.after .frame-label .sw{background:var(--good)}
+  .frame.after{border-color:rgba(55,200,160,.28)}
+  .frame-body{flex:1;padding:18px;position:relative}
+  .browser{background:#0a0810;border-radius:10px;height:100%;overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
+  .browser .bar{display:flex;align-items:center;gap:6px;padding:8px 11px;
+    background:#141019;border-bottom:1px solid rgba(255,255,255,.06)}
+  .browser .bar i{width:9px;height:9px;border-radius:50%;background:#3a3346;display:block}
+  .browser .url{margin-left:8px;font-family:var(--mono);font-size:.62rem;color:var(--ink-faint);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .browser .view{flex:1;padding:14px;position:relative}
+
+  .flaw{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+  .flaw li{list-style:none;font-size:.82rem;color:var(--ink-dim);display:flex;gap:9px;
+    align-items:flex-start}
+  .flaw li::before{content:"✕";color:var(--red);font-family:var(--mono);font-size:.8rem;
+    margin-top:1px}
+  .fix{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+  .fix li{list-style:none;font-size:.82rem;color:var(--ink-dim);display:flex;gap:9px;
+    align-items:flex-start}
+  .fix li::before{content:"✓";color:var(--good);font-family:var(--mono);font-size:.8rem;
+    margin-top:1px}
+
+  /* --- mock: homepage modal (before) --- */
+  .mock-dim{position:absolute;inset:14px;background:rgba(4,3,7,.72);border-radius:8px;
+    display:flex;align-items:center;justify-content:center}
+  .mock-modal{background:#1c1622;border:1px solid rgba(255,255,255,.1);border-radius:8px;
+    width:82%;padding:16px 14px;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+  .mock-modal .bang{font-family:var(--mono);color:var(--red);font-size:1rem}
+  .mock-modal ul{margin:8px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .mock-modal li{list-style:none;font-size:.62rem;color:var(--ink-dim);
+    padding:5px 7px;background:rgba(255,255,255,.03);border-radius:4px}
+  .mock-modal .ok{margin-top:12px;text-align:center;font-size:.72rem;font-weight:700;
+    color:#5b5468;background:#2a2436;border:1px solid rgba(255,255,255,.06);
+    border-radius:5px;padding:8px;font-family:var(--mono)}
+
+  /* --- mock: homepage (after) --- */
+  .mock-nav{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+  .mock-nav .logo{font-weight:800;font-size:.8rem;color:var(--amber)}
+  .mock-nav .search{flex:1;background:rgba(255,255,255,.05);border-radius:6px;
+    padding:6px 9px;font-size:.62rem;color:var(--ink-faint);font-family:var(--mono)}
+  .mock-nav .pill{font-size:.6rem;background:var(--amber);color:#1a1206;font-weight:700;
+    padding:6px 10px;border-radius:6px}
+  .posters{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .posters .p{aspect-ratio:2/3;border-radius:6px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#2a2138,#171020)}
+  .posters .p::after{content:"";position:absolute;left:6px;right:6px;bottom:6px;height:6px;
+    border-radius:3px;background:var(--amber);opacity:.85}
+  .posters .p:nth-child(2)::after{background:#6c7be0}
+  .posters .p:nth-child(3)::after{background:var(--good)}
+  .posters .p:nth-child(4)::after{background:#e06c9a}
+  .mock-cta{margin-top:11px;font-size:.64rem;color:var(--good);font-family:var(--mono)}
+
+  /* --- mock: seat map --- */
+  .screen-arc{text-align:center;font-family:var(--mono);font-size:.58rem;
+    letter-spacing:.3em;color:var(--ink-faint);margin-bottom:4px}
+  .screen-bar{height:4px;border-radius:99px;background:linear-gradient(90deg,transparent,var(--amber),transparent);
+    margin:0 auto 14px;width:80%;opacity:.7}
+  .seatgrid{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;max-width:230px;margin:0 auto}
+  .seat{aspect-ratio:1;border-radius:3px 3px 4px 4px;font-size:.42rem;display:flex;
+    align-items:center;justify-content:center;color:transparent;font-family:var(--mono)}
+  /* before seats: mostly unavailable, orange mystery, no numbers */
+  .before .seat{background:#332b1a}
+  .before .seat.u{background:#241f2b}
+  .before .seat.o{background:#b5701f}
+  /* after seats: clear states + numbers */
+  .after .seat{background:#2b2438;color:var(--ink-faint);cursor:pointer;transition:transform .12s,background .12s}
+  .after .seat:hover{background:#3a3350;transform:translateY(-1px)}
+  .after .seat.sold{background:#241f2b;color:#4a4356}
+  .after .seat.sel{background:var(--good);color:#062b20;font-weight:700}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;justify-content:center}
+  .legend span{font-size:.6rem;color:var(--ink-dim);display:flex;align-items:center;gap:5px;
+    font-family:var(--mono)}
+  .legend i{width:9px;height:9px;border-radius:2px;display:block}
+  .seat-total{margin-top:12px;text-align:center;font-family:var(--mono);font-size:.72rem}
+  .seat-total b{color:var(--good)}
+
+  /* --- mock: tickets --- */
+  .trow{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;
+    border-radius:7px;margin-bottom:6px;font-size:.72rem}
+  .before .trow{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+  .before .trow .code{font-family:var(--mono);color:var(--ink-dim)}
+  .before .trow .pr{font-family:var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+  .before .fee{margin-top:10px;font-size:.62rem;color:var(--red);font-family:var(--mono)}
+  .after .trow{background:var(--panel-2);border:1px solid var(--line)}
+  .after .trow.sel{border-color:var(--good);background:rgba(55,200,160,.08)}
+  .after .trow .name{font-weight:700;color:var(--ink)}
+  .after .trow .desc{font-size:.6rem;color:var(--ink-faint);font-weight:400;margin-top:1px}
+  .after .trow .pr{font-family:var(--mono);color:var(--ink);font-variant-numeric:tabular-nums;
+    text-align:right}
+  .after .totalbar{margin-top:11px;display:flex;justify-content:space-between;
+    padding:10px 11px;border-radius:7px;background:rgba(55,200,160,.1);
+    font-family:var(--mono);font-size:.72rem}
+  .after .totalbar b{color:var(--good)}
+  .after .totalbar .fee{font-size:.58rem;color:var(--ink-faint)}
+
+  /* ---------- strategy / bookme ---------- */
+  .strategy{padding:clamp(48px,7vw,90px) 0;border-top:1px solid var(--line);
+    background:var(--ground-2)}
+  .strat-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center;margin-top:28px}
+  .funnel{display:flex;flex-direction:column;gap:10px}
+  .fstep{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;
+    border:1px solid var(--line);background:var(--panel)}
+  .fstep .amt{font-family:var(--mono);font-weight:700;font-size:1.05rem;
+    font-variant-numeric:tabular-nums;min-width:56px}
+  .fstep.leak{border-color:rgba(240,98,91,.3)}
+  .fstep.leak .amt{color:var(--red)}
+  .fstep.keep{border-color:rgba(55,200,160,.3)}
+  .fstep.keep .amt{color:var(--good)}
+  .fstep .lbl{font-size:.88rem;color:var(--ink-dim)}
+  .fstep .lbl b{color:var(--ink);font-weight:700;display:block}
+
+  /* ---------- build / outcomes ---------- */
+  .build{padding:clamp(48px,7vw,90px) 0;border-top:1px solid var(--line)}
+  .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+  .bcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:22px 20px;display:flex;flex-direction:column;gap:10px}
+  .bcard .ic{width:38px;height:38px;border-radius:10px;background:var(--amber-glow);
+    display:flex;align-items:center;justify-content:center;font-size:1.15rem}
+  .bcard h3{font-size:1.05rem}
+  .bcard p{font-size:.86rem;color:var(--ink-dim)}
+  .bcard .out{margin-top:2px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+    color:var(--good);text-transform:uppercase}
+
+  /* ---------- cta ---------- */
+  .cta{padding:clamp(56px,8vw,110px) 0;border-top:1px solid var(--line);text-align:center;
+    position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(80% 120% at 50% 0%,var(--amber-glow),transparent 60%)}
+  .cta .wrap{position:relative;z-index:1}
+  .cta h2{max-width:18ch;margin:14px auto 0}
+  .cta p{margin:18px auto 0;color:var(--ink-dim);max-width:52ch}
+  .btn{display:inline-flex;align-items:center;gap:10px;margin-top:30px;
+    background:var(--amber);color:#1a1206;font-weight:800;font-size:1rem;
+    padding:15px 30px;border-radius:11px;text-decoration:none;letter-spacing:-.01em;
+    transition:transform .14s,box-shadow .14s;box-shadow:0 10px 30px -8px var(--amber-glow)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px var(--amber-glow)}
+  .contact{margin-top:26px;font-family:var(--mono);font-size:.82rem;color:var(--ink-dim);
+    display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+  .contact a{color:var(--amber);text-decoration:none}
+
+  footer{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);
+    font-size:.7rem;color:var(--ink-faint)}
+  footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+  a:focus-visible,.seat:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+
+  @media (max-width:820px){
+    .metrics{grid-template-columns:repeat(2,1fr)}
+    .compare{grid-template-columns:1fr}
+    .strat-grid{grid-template-columns:1fr;gap:28px}
+    .bgrid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rv{transition:none;opacity:1;transform:none}
+    .pulse{animation:none}
+    .btn,.after .seat{transition:none}
+  }
+</style>
+
+<div class="page">
+
+  <!-- marquee -->
+  <section class="marquee">
+    <div class="wrap">
+      <div class="brand"><span class="dot"></span> Cinepax&nbsp;·&nbsp;Digital Diagnostic</div>
+      <div class="meta">INDEPENDENT AUDIT · 12 JUL 2026 · cinepax.com</div>
+    </div>
+  </section>
+
+  <!-- hero -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Website rebuild proposal</p>
+      <h1>Your box office is packed. Your <span class="glow">website turns people away.</span></h1>
+      <p class="lead">Cinepax is the biggest cinema brand in Pakistan. The website does not match it. It is slow, it is confusing to book on, and a lot of the traffic it loses ends up buying through third-party resellers instead.</p>
+      <p class="sub">What follows is a look at cinepax.com exactly as it runs today, measured on the live site, plus how I would rebuild the parts that cost you the most.</p>
+      <div class="beam"><span class="pulse"></span> Measured live on 12 July: one ad image on the homepage weighed <b>6.6 MB</b>, and the first thing visitors see looks broken</div>
+    </div>
+  </section>
+
+  <!-- diagnostic readout -->
+  <section class="readout">
+    <div class="wrap">
+      <div class="readout-head rv">
+        <div>
+          <p class="eyebrow">The diagnosis</p>
+          <h2>Eight numbers from the live site</h2>
+        </div>
+        <p class="lead" style="font-size:.95rem">I measured all of this on cinepax.com on 12 July 2026. The page weight even shifts with whichever ad loads, and it was 14 MB the moment I looked. The one projection here is the mobile load time, and on a normal phone it only gets worse.</p>
+      </div>
+      <div class="metrics">
+        <div class="metric rv"><div class="n tnum">6.6<small>MB</small></div><div class="k">A single un-optimised ad image on the homepage, bigger than most entire websites</div><div class="tag">one image</div></div>
+        <div class="metric rv"><div class="n tnum">14<small>MB</small></div><div class="k">Total page weight the moment I measured, across 108 requests. It shifts with whichever ad loads</div><div class="tag">over 10× a lean site</div></div>
+        <div class="metric rv"><div class="n tnum">15<small>s+</small></div><div class="k">What a page this heavy costs a normal phone on mobile data, where most of your traffic is</div><div class="tag">most people leave</div></div>
+        <div class="metric rv"><div class="n tnum">1</div><div class="k">JavaScript error on <em>every</em> page load, a jQuery and Bootstrap version clash</div><div class="tag">unmaintained code</div></div>
+        <div class="metric rv"><div class="n tnum">0</div><div class="k">Clickable seats on the seat map. It picks one for you instead</div><div class="tag">highest-intent screen</div></div>
+        <div class="metric rv"><div class="n tnum">0</div><div class="k">Structured data tags, so Google cannot read your showtimes</div><div class="tag">SEO invisible</div></div>
+        <div class="metric rv"><div class="n mono" style="font-size:1.5rem">"Cinepax"</div><div class="k">The entire page title, 7 characters. No description, no sitemap, no robots.txt</div><div class="tag">invisible to search</div></div>
+        <div class="metric rv"><div class="n mono" style="font-size:1.4rem">IIS 8.5</div><div class="k">Server software, out of support since Oct 2023, and it is taking card payments</div><div class="tag">security risk</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- reels -->
+  <section class="reels">
+    <div class="wrap">
+      <p class="eyebrow rv">Where the money leaks</p>
+      <h2 class="rv" style="margin-top:12px;max-width:22ch">Three screens where people give up, and how they could work instead.</h2>
+      <p class="lead rv" style="margin-top:16px">I booked a ticket on the real site, start to finish. These are the three screens that lost me. On the left is what happens today. On the right is one way it could work. The exact look is still open, that part is a conversation, but the direction is what matters.</p>
+
+      <!-- reel 1: homepage modal -->
+      <div class="reel rv">
+        <div class="reel-head">
+          <span class="num">01 / HOMEPAGE</span>
+          <h3>The first thing every visitor sees looks broken.</h3>
+          <p>Right now the homepage opens with a full-screen pop-up that makes you choose a cinema before you can see a single movie. It has no title, it carries a warning "!" icon as if something went wrong, there is no way to close it, and the OK button sits greyed out until you commit. It reads like an error, not a welcome.</p>
+        </div>
+        <div class="compare">
+          <div class="frame before">
+            <div class="frame-label"><span class="sw"></span> Before · live today</div>
+            <div class="frame-body">
+              <div class="browser">
+                <div class="bar"><i></i><i></i><i></i><span class="url">cinepax.com/browsing</span></div>
+                <div class="view">
+                  <div class="posters" style="opacity:.35">
+                    <div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div>
+                  </div>
+                  <div class="mock-dim">
+                    <div class="mock-modal">
+                      <div class="bang">!</div>
+                      <ul>
+                        <li>Packages Mall</li><li>Ocean Mall</li>
+                        <li>Jinnah Park</li><li>Amanah Mall</li>
+                        <li>Kings Mall</li><li>Lake City</li>
+                      </ul>
+                      <div class="ok">OK</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="flaw">
+                <li>Every homepage visitor hits it first, with no context or instructions</li>
+                <li>A warning "!" icon on a routine cinema list makes it read like an error</li>
+                <li>No way to dismiss it, you must pick a cinema before you can browse</li>
+              </ul>
+            </div>
+          </div>
+          <div class="frame after">
+            <div class="frame-label"><span class="sw"></span> After · one way it could work</div>
+            <div class="frame-body">
+              <div class="browser">
+                <div class="bar"><i></i><i></i><i></i><span class="url">cinepax.com</span></div>
+                <div class="view">
+                  <div class="mock-nav">
+                    <span class="logo">CINEPAX</span>
+                    <span class="search">Search movies, cinemas…</span>
+                    <span class="pill">Lahore ▾</span>
+                  </div>
+                  <div class="posters">
+                    <div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div>
+                  </div>
+                  <div class="mock-cta">▸ Now showing near you, book in three taps</div>
+                </div>
+              </div>
+              <ul class="fix">
+                <li>Show the movies first, let people pick a cinema when they are ready</li>
+                <li>City is one optional tap, and the site remembers it</li>
+                <li>Search and "what's on tonight" are right there</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- reel 2: seat map -->
+      <div class="reel rv">
+        <div class="reel-head">
+          <span class="num">02 / SEAT SELECTION</span>
+          <h3>The seat map has no seats you can pick.</h3>
+          <p>This is the moment someone has decided to buy. They go to pick a seat. Except none of the seats can be clicked, they have no numbers, the legend does not match the colours on the screen, and nothing shows where the screen even is. The site quietly assigns a seat for them. Most people assume the show is sold out and leave.</p>
+        </div>
+        <div class="compare">
+          <div class="frame before">
+            <div class="frame-label"><span class="sw"></span> Before · live today</div>
+            <div class="frame-body">
+              <div class="browser">
+                <div class="bar"><i></i><i></i><i></i><span class="url">…/visSelectSeats.aspx</span></div>
+                <div class="view">
+                  <div class="seatgrid before" id="grid-before"></div>
+                  <div class="legend">
+                    <span><i style="background:#332b1a"></i>Available?</span>
+                    <span><i style="background:#b5701f"></i>?? (not in legend)</span>
+                    <span><i style="background:#241f2b"></i>Sold</span>
+                  </div>
+                </div>
+              </div>
+              <ul class="flaw">
+                <li>Not one seat can be clicked, and the labels read "G-", "F-"</li>
+                <li>Most of the map is orange, which is not in the legend at all</li>
+                <li>Hitting "Next" with nothing selected just assigns you a seat</li>
+              </ul>
+            </div>
+          </div>
+          <div class="frame after">
+            <div class="frame-label"><span class="sw"></span> After · try it</div>
+            <div class="frame-body">
+              <div class="browser">
+                <div class="bar"><i></i><i></i><i></i><span class="url">cinepax.com/book/seats</span></div>
+                <div class="view">
+                  <div class="screen-arc">SCREEN</div>
+                  <div class="screen-bar"></div>
+                  <div class="seatgrid after" id="grid-after"></div>
+                  <div class="legend">
+                    <span><i style="background:#2b2438"></i>Available</span>
+                    <span><i style="background:var(--good)"></i>Selected</span>
+                    <span><i style="background:#241f2b"></i>Sold</span>
+                  </div>
+                  <div class="seat-total">Seats <b id="seat-picked">D5, D6</b> · <span class="tnum" id="seat-price">Rs 1,400</span></div>
+                </div>
+              </div>
+              <ul class="fix">
+                <li>Seats you can actually tap, numbered, with the screen clearly marked</li>
+                <li>The legend matches the map, and the total updates as you pick</li>
+                <li>It can suggest the best seats, but it never forces them on you</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- reel 3: tickets -->
+      <div class="reel rv">
+        <div class="reel-head">
+          <span class="num">03 / TICKET SELECTION</span>
+          <h3>People are asked to buy database codes.</h3>
+          <p>The ticket screen shows raw system codes instead of names. Two of the options cost exactly the same and nothing explains the difference. There is no running total anywhere. The booking fee only turns up at the very end. Any one of these on its own is a good reason to abandon a cart.</p>
+        </div>
+        <div class="compare">
+          <div class="frame before">
+            <div class="frame-label"><span class="sw"></span> Before · live today</div>
+            <div class="frame-body">
+              <div class="browser">
+                <div class="bar"><i></i><i></i><i></i><span class="url">…/visSelectTickets.aspx</span></div>
+                <div class="view before">
+                  <div class="trow"><span class="code">CMAX.SILVER</span><span class="pr">700.00</span></div>
+                  <div class="trow"><span class="code">CMAX.SILVER+</span><span class="pr">700.00</span></div>
+                  <div class="trow"><span class="code">CMAX.SILVER.TOP</span><span class="pr">750.00</span></div>
+                  <div class="trow"><span class="code">CMAX.Gold</span><span class="pr">1000.00</span></div>
+                  <div class="fee">+ Pkr 25 booking fee revealed only at checkout</div>
+                </div>
+              </div>
+              <ul class="flaw">
+                <li>Raw till codes, and "SILVER" and "SILVER+" are both 700 with no reason given</li>
+                <li>No descriptions, and no running total on the screen</li>
+                <li>The fee stays hidden until the last step</li>
+              </ul>
+            </div>
+          </div>
+          <div class="frame after">
+            <div class="frame-label"><span class="sw"></span> After · one way it could work</div>
+            <div class="frame-body">
+              <div class="browser">
+                <div class="bar"><i></i><i></i><i></i><span class="url">cinepax.com/book/tickets</span></div>
+                <div class="view after">
+                  <div class="trow"><div><div class="name">Silver</div><div class="desc">Standard recliner, mid-house</div></div><div class="pr">Rs 700</div></div>
+                  <div class="trow sel"><div><div class="name">Silver Plus &nbsp;×2</div><div class="desc">Extra legroom, centre block</div></div><div class="pr">Rs 700</div></div>
+                  <div class="trow"><div><div class="name">Silver Top</div><div class="desc">Rear premium rows</div></div><div class="pr">Rs 750</div></div>
+                  <div class="trow"><div><div class="name">Gold</div><div class="desc">Full recliner + service</div></div><div class="pr">Rs 1000</div></div>
+                  <div class="totalbar"><span>Total <span class="fee">(incl. Rs 25 fee)</span></span><b class="tnum">Rs 1,425</b></div>
+                </div>
+              </div>
+              <ul class="fix">
+                <li>Plain names, with one line saying what each tier actually gets you</li>
+                <li>The total updates as you go, and the fee is shown up front</li>
+                <li>Food and drink can be added right here</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- strategy: bookme -->
+  <section class="strategy">
+    <div class="wrap">
+      <p class="eyebrow rv">The bigger cost</p>
+      <h2 class="rv" style="margin-top:12px;max-width:18ch">You are renting your own customers from Bookme.</h2>
+      <div class="strat-grid">
+        <div class="funnel rv">
+          <div class="fstep leak"><span class="amt">−%</span><span class="lbl"><b>A commission</b> on every ticket that sells through Bookme and the other resellers</span></div>
+          <div class="fstep leak"><span class="amt">−data</span><span class="lbl"><b>The customer.</b> Their email and their history sit with the reseller, not with you</span></div>
+          <div class="fstep leak"><span class="amt">−F&amp;B</span><span class="lbl"><b>The popcorn.</b> There is no food upsell on somebody else's checkout page</span></div>
+          <div class="fstep keep"><span class="amt">+own</span><span class="lbl"><b>Your own site, done well,</b> keeps the margin, the data and the upsell in house</span></div>
+        </div>
+        <div class="rv">
+          <p class="lead">The site is hard enough to use that a big share of Cinepax bookings go through third-party aggregators instead. That is convenient for the customer, and it is expensive for you. Every one of those tickets is a commission paid, a customer you never actually meet, and a snack sale that never happens.</p>
+          <p class="lead" style="margin-top:16px">The big chains abroad, like AMC and Vue and Cineworld, win by keeping all of that in house. Live seat maps, food ordered ahead to the seat, saved payment, their own loyalty scheme. Cinepax is big enough to do the same. What is missing is the storefront.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- build -->
+  <section class="build">
+    <div class="wrap">
+      <p class="eyebrow rv">The rebuild</p>
+      <h2 class="rv" style="margin-top:12px;max-width:24ch">A fast, mobile-first site, with every part earning its place.</h2>
+      <div class="bgrid">
+        <div class="bcard rv"><div class="ic">⚡</div><h3>Loads in under two seconds</h3><p>A rebuilt, mobile-first front end with the images sorted out, in place of the 14 MB, ad-heavy page you have now.</p><div class="out">Fewer people leave, more people book</div></div>
+        <div class="bcard rv"><div class="ic">🎟️</div><h3>A booking flow that finishes</h3><p>The three screens above put right. Real seat maps, ticket names people understand, a total they can see, prices up front.</p><div class="out">More carts actually check out</div></div>
+        <div class="bcard rv"><div class="ic">🍿</div><h3>Order food ahead</h3><p>Add popcorn and drinks to any booking, ready at the counter or brought to the seat.</p><div class="out">A new line of high-margin revenue</div></div>
+        <div class="bcard rv"><div class="ic">🔎</div><h3>Actually found on Google</h3><p>Real page titles, descriptions, a sitemap and showtime data, so a search for "movies in Lahore" turns up Cinepax.</p><div class="out">Traffic you do not pay for</div></div>
+        <div class="bcard rv"><div class="ic">💛</div><h3>Keep your own customers</h3><p>Accounts, saved seats and payment, and a Cinepax loyalty scheme, so the customer data stays with you.</p><div class="out">Repeat visits, and less paid to resellers</div></div>
+        <div class="bcard rv"><div class="ic">🔒</div><h3>A stack that is safe to run</h3><p>Current hosting and proper security headers, in place of server software that stopped getting security fixes back in 2023, on a page that handles payments.</p><div class="out">Less risk, and easier to look after</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- cta -->
+  <section class="cta">
+    <div class="wrap">
+      <p class="eyebrow">Next step</p>
+      <h2>Let's fix the screens that sell your tickets.</h2>
+      <p>I put this together on my own time because I think the Cinepax website should be as good as the cinemas are. Give me 20 minutes and I will walk you through the whole plan and a working prototype of the new booking flow.</p>
+      <a class="btn" href="mailto:syedhamza2135@gmail.com?subject=Cinepax%20website%20rebuild%2C%2020%20minutes%3F">Book a 20-minute call →</a>
+      <div class="contact">
+        <span>Syed Hamza · Web Developer</span>
+        <a href="mailto:syedhamza2135@gmail.com">syedhamza2135@gmail.com</a>
+        <a href="https://syedhamza.xyz" target="_blank" rel="noopener">syedhamza.xyz</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>Independent diagnostic of cinepax.com, prepared 12 Jul 2026</span>
+      <span>All metrics measured live · Not affiliated with Cinepax Ltd.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function(){
+    // build seat grids
+    var before=document.getElementById('grid-before');
+    if(before){
+      for(var i=0;i<45;i++){
+        var s=document.createElement('div');s.className='seat';
+        var r=Math.random();
+        if(i%9===3||i%9===4||i%9===5){s.className='seat o';}   // mystery orange band
+        else if(r<0.5){s.className='seat u';}                    // "sold"/unavailable
+        before.appendChild(s);
+      }
+    }
+    var after=document.getElementById('grid-after');
+    var picked=document.getElementById('seat-picked');
+    var priceEl=document.getElementById('seat-price');
+    function fmt(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+    if(after){
+      var rows=['A','B','C','D','E'];var sold={ 'A1':1,'A2':1,'B7':1,'C3':1,'C4':1,'E8':1,'E9':1 };
+      var chosen=[];
+      function refresh(){
+        if(picked)picked.textContent=chosen.length?chosen.join(', '):'none';
+        if(priceEl)priceEl.textContent='Rs '+fmt(chosen.length*700);
+      }
+      rows.forEach(function(rl){
+        for(var c=1;c<=9;c++){
+          var id=rl+c;var s=document.createElement('div');
+          s.className='seat';s.textContent=c;s.setAttribute('tabindex','0');
+          s.setAttribute('role','button');s.setAttribute('aria-label','Seat '+id);
+          if(sold[id]){s.className='seat sold';s.removeAttribute('tabindex');}
+          else if(id==='D5'||id==='D6'){s.className='seat sel';chosen.push(id);}
+          if(!sold[id]){
+            var toggle=function(el,idv){return function(){
+              if(el.classList.contains('sold'))return;
+              el.classList.toggle('sel');
+              if(el.classList.contains('sel')){if(chosen.indexOf(idv)<0)chosen.push(idv);}
+              else chosen=chosen.filter(function(x){return x!==idv;});
+              refresh();
+            };};
+            s.addEventListener('click',toggle(s,id));
+            s.addEventListener('keydown',function(t){return function(e){
+              if(e.key==='Enter'||e.key===' '){e.preventDefault();t();}
+            };}(toggle(s,id)));
+          }
+          after.appendChild(s);
+        }
+      });
+      refresh();
+    }
+    // reveal on scroll
+    var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var els=document.querySelectorAll('.rv');
+    if(reduce||!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});}
+    else{
+      var io=new IntersectionObserver(function(en){en.forEach(function(x){
+        if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}
+      });},{threshold:.12});
+      els.forEach(function(e){io.observe(e);});
+    }
+  })();
+</script>
+</body>
+</html>
